@@ -1,0 +1,3 @@
+[01-Sep-2020 11:50:02 Africa/Cairo] PHP Warning:  Unterminated comment starting line 96 in /home2/vqbmqumy/public_html/BeautyCenterApp/vendor/laravel/framework/src/Illuminate/View/Compilers/BladeCompiler.php on line 180
+[02-Sep-2020 22:48:21 Africa/Cairo] PHP Fatal error:  Cannot use Validator as Validator because the name is already in use in /home2/vqbmqumy/public_html/BeautyCenterApp/app/Http/Controllers/API/UserApiController.php on line 9
+[05-Sep-2020 01:37:06 Africa/Cairo] PHP Fatal error:  Cannot use [] for reading in /home2/vqbmqumy/public_html/BeautyCenterApp/app/Http/Controllers/API/CartController.php on line 192

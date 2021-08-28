@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e8102bbc-c031-4209-a718-4a33e2d741fb" name="blueHost" url="http://ftp.vqb.mqu.mybluehost.me">
+        <fileTransfer host="ftp.vqb.mqu.mybluehost.me" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

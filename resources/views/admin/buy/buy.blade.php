@@ -102,6 +102,7 @@
                                                 <th class="text-lg-center">{{trans('admin.product_name')}}</th>
                                                 <th class="text-lg-center">{{trans('admin.barcode')}}</th>
                                                 <th class="text-lg-center">{{trans('admin.quantity')}}</th>
+                                                <th class="text-lg-center">{{trans('admin.category')}}</th>
                                                 <th class="text-lg-center">{{trans('admin.price')}}</th>
                                                 <th class="text-lg-center">{{trans('admin.sale')}}</th>
                                             </tr>
@@ -131,6 +132,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-lg-center">{{trans('admin.product_name')}}</th>
+                                            <th class="text-lg-center">{{trans('admin.category')}}</th>
                                             <th class="text-lg-center">{{trans('admin.barcode')}}</th>
                                             <th class="text-lg-center">{{trans('admin.quantity')}}</th>
                                             <th class="text-lg-center">{{trans('admin.price')}}</th>
@@ -142,6 +144,7 @@
                                         @foreach($customer_bills_products as $product)
                                         <tr>
                                             <td class="text-lg-center">{{$product->name}}</td>
+                                            <td class="text-lg-center">{{$product->Product->Category->name}}</td>
                                             <td class="text-lg-center">{{$product->Product->barcode}}</td>
                                             <td class="text-lg-center">{{$product->quantity}}</td>
                                             <td class="text-lg-center">{{$product->price}}</td>

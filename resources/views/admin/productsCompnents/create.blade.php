@@ -1,4 +1,18 @@
 @extends('admin_temp')
+@section('styles')
+{{--    <link href="{{ asset('/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"--}}
+{{--          type="text/css"/>--}}
+{{--    <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>--}}
+{{--    <link href="{{ asset('/assets/plugins/switchery/dist/switchery.min.css') }}" rel="stylesheet"/>--}}
+{{--    <link href="{{ asset('/assets/plugins/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>--}}
+{{--    <link href="{{ asset('/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet"/>--}}
+{{--    <link href="{{ asset('/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css') }}"--}}
+{{--          rel="stylesheet"/>--}}
+{{--    <link href="{{ asset('/assets/plugins/multiselect/css/multi-select.css') }}" rel="stylesheet" type="text/css"/>--}}
+{{--    --}}
+
+    <link href="{{ asset('/css/pages/file-upload.css') }}" rel="stylesheet">
+@endsection
 @section('content')
     <div class="row page-titles" xmlns="http://www.w3.org/1999/html">
         <div class="col-md-5 align-self-center">
@@ -21,15 +35,10 @@
                     {{ Form::open( ['url' => ['products'],'method'=>'post',  'class'=>'form' , 'files'=>true] ) }}
                     {{ csrf_field() }}
                     <div class="form-group m-t-40 row">
-                        <label for="example-text-input" class="col-md-2 col-form-label">{{trans('admin.product_name')}}</label>
+                        <label for="example-text-input"
+                               class="col-md-2 col-form-label">{{trans('admin.product_name')}}</label>
                         <div class="col-md-10">
                             {{ Form::text('name',old('name'),["class"=>"form-control" ,"required",'placeholder'=>trans('admin.name')]) }}
-                        </div>
-                    </div>
-                    <div class="form-group m-t-40 row">
-                        <label for="example-text-input" class="col-md-2 col-form-label">{{trans('admin.quantity')}}</label>
-                        <div class="col-md-10">
-                            {{ Form::text('quantity',old('quantity'),["class"=>"form-control" ,"required",'placeholder'=>trans('admin.quantity')]) }}
                         </div>
                     </div>
                     <div class="form-group m-t-40 row">
@@ -40,13 +49,6 @@
                             {{--{{ Form::hidden('quantity',0,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.barcode')]) }}--}}
                         </div>
                     </div>
-{{--                    <div class="form-group m-t-40 row">--}}
-{{--                        <label for="example-text-input"--}}
-{{--                               class="col-md-2 col-form-label">{{trans('admin.alarm_quantity')}}</label>--}}
-{{--                        <div class="col-md-10">--}}
-{{--                            {{ Form::number('alarm_quantity',old('alarm_quantity'),["class"=>"form-control" ,"required",'placeholder'=>trans('admin.alarm_quantity')]) }}--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
                     {{ Form::hidden('price',0,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.price')]) }}
                     {{ Form::hidden('total_cost',0,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.price')]) }}
                     <div class="form-group m-t-40 row">
@@ -67,27 +69,42 @@
                         <label for="example-text-input"
                                class="col-md-2 col-form-label">{{trans('admin.category')}}</label>
                         <div class="col-md-10">
-                            {{ Form::select('category_id',App\Models\Category::where('type','product')->pluck('name','id'),old('category_id')
-                               ,["class"=>"form-control custom-select col-12 ",'id'=>'category_id' ]) }}
+
+                                @foreach($categories as $row)
+                                <div class="demo-checkbox row">
+                                    <div class="col-md-2">
+                                        <input name="categories[]" value="{{$row->id}}" style="display: none;" type="checkbox" id="basic_checkbox_{{$row->id}}" />
+                                        <label for="basic_checkbox_{{$row->id}}">{{$row->name}}</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ Form::number('quantity[]',old('quantity'),["class"=>"form-control" ,"min"=>0,'placeholder'=>trans('admin.quantity')]) }}
+                                    </div>
+                                    <div class="col-md-7"></div>
+                                </div>
+                                    <br>
+                                @endforeach
+
+                            {{--                            {{ Form::select('category_id',App\Models\Category::where('type','product')->pluck('name','id'),old('category_id')--}}
+                            {{--                               ,["class"=>"form-control custom-select col-12 ",'id'=>'category_id' ]) }}--}}
                         </div>
                     </div>
-                    <div class="form-group m-t-40 row">
-                        <label for="example-text-input"
-                               class="col-md-2 col-form-label">{{trans('admin.image')}}</label>
-                        <div class="col-md-10">
-                            {{ Form::file('image',array('class'=>'form-control')) }}
-                        </div>
-                    </div>
-{{--                    <div class="card m-b-20">--}}
-{{--                        <div class="card-header" style='text-align:right'><strong> مكونات المنتج </strong>--}}
-{{--                            <div class="card-body parent" style='text-align:right' id="parent">--}}
-{{--                                <button type='button' value='Add Button' id='addButton'>--}}
-{{--                                    <i class="fa fa-plus"></i></button>--}}
-{{--                                <div class="panel" style='text-align:right'>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+{{--                    <div class="form-group m-t-40 row">--}}
+{{--                        <label for="example-text-input"--}}
+{{--                               class="col-md-2 col-form-label">{{trans('admin.image')}}</label>--}}
+{{--                        <div class="col-md-10">--}}
+{{--                            {{ Form::file('image',array('class'=>'form-control')) }}--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
+                    {{--                    <div class="card m-b-20">--}}
+                    {{--                        <div class="card-header" style='text-align:right'><strong> مكونات المنتج </strong>--}}
+                    {{--                            <div class="card-body parent" style='text-align:right' id="parent">--}}
+                    {{--                                <button type='button' value='Add Button' id='addButton'>--}}
+                    {{--                                    <i class="fa fa-plus"></i></button>--}}
+                    {{--                                <div class="panel" style='text-align:right'>--}}
+                    {{--                                </div>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                     <div class="center">
                         {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
                     </div>
@@ -114,7 +131,7 @@
                 html += ' <div id="" class="form-group row">';
                 html += ' <div class="col-sm-6 ">';
                 //error here
-                    html += '<select class="form-control custom-select col-12 " id="base_id" name="rows[' + i + '][base_id]">' +
+                html += '<select class="form-control custom-select col-12 " id="base_id" name="rows[' + i + '][base_id]">' +
                     '<option selected="selected" value="">اختر الماده الخام</option>' + options +
 
                     '</select></div>';
@@ -127,4 +144,6 @@
             });
         });
     </script>
+
+    <script src="{{ asset('/js/jasny-bootstrap.js')}}"></script>
 @endsection

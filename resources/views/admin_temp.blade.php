@@ -1,7 +1,7 @@
 
 @include('layouts.admin_header')
 @include('layouts.admin_head')
-
+@include('sweetalert::alert')
 @include('layouts.admin_sidebar')
 
 @yield('content')

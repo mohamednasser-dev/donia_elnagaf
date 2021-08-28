@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\ProductBase;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Product;
 use App\Models\Base;
 
@@ -29,10 +30,11 @@ class productComponentsController extends Controller
      */
     public function create()
     {
+        $categories = Category::where('type','product')->get();
         $bases = Base::pluck('id', 'name');
         $bases = json_encode($bases);
 
-        return view('admin.productsCompnents.create', compact('bases'));
+        return view('admin.productsCompnents.create', compact('bases','categories'));
 
     }
 
@@ -44,27 +46,34 @@ class productComponentsController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $this->validate(\request(),
             [
                 'name' => 'required|unique:products',
-                'image' => 'sometimes|nullable',
                 'barcode' => 'required|unique:products',
-//                'alarm_quantity' => 'required',
                 'price' => 'required',
                 'total_cost' => 'required',
                 'gomla_price' => 'required',
-                'selling_price' => 'required',
-                'category_id' => 'required',
-//                for pivot
-                'quantity' => 'required',
-//                'base_id*' => 'required',
+                'selling_price' => 'required'
             ]);
         $data['user_id'] = Auth::user()->id;
-        if($request->image != null){
-            $data['image'] = $this->MoveImage($request->image);
-        }
         $data['total_cost'] = 0;
-        $product = Product::create($data);
+
+
+        if($request->categories != null){
+            unset($data['categories']);
+            foreach ($request->categories as $key => $row){
+                $data['category_id'] = $row;
+                if($request->quantity[$row-1] != null){
+                    $data['quantity'] = $request->quantity[$row-1];
+                    Product::create($data);
+                }
+            }
+        }else{
+
+            Alert::warning('تنبية', 'يجب أختيار مخزن اولا');
+            return redirect(url('products'));
+        }
 
         session()->flash('success', trans('admin.addedsuccess'));
         return redirect(url('products'));

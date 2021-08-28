@@ -26,8 +26,7 @@
                     <table class="table full-color-table full-primary-table">
                         <thead>
                         <tr>
-                            <th class="text-lg-center">{{trans('admin.name')}}</th>
-                            <th class="text-lg-center">{{trans('admin.type')}}</th>
+                            <th class="text-lg-center">{{trans('admin.category_name')}}</th>
                             <th class="text-lg-center">{{trans('admin.actions')}}</th>
                         </tr>
                         </thead>
@@ -36,7 +35,6 @@
                         @foreach($categories as $user)
                             <tr>
                                 <td class="text-lg-center">{{$user->name}}</td>
-                                <td class="text-lg-center">{{trans('admin.'.$user->type)}}</td>
                                 <td class="text-lg-center">
                                     <form method="get" id='delete-form-{{ $user->id }}'
                                           action="{{url('categories/'.$user->id.'/delete')}}"
@@ -79,18 +77,18 @@
                                             <label for="recipient-name" class="control-label">{{trans('admin.category_name')}}</label>
                                             {{ Form::text('name',null,["class"=>"form-control" ,"required"]) }}
                                         </div>
-                                        <div class="form-group">
-                                            <label for="message-text" class="control-label">{{trans('admin.type')}}</label>
-                                            {{ Form::select('type', ['base'=>(trans('admin.base')) ,
-                                                                    'product'=>(trans('admin.product'))]
-                                                                    , old('type'), ['class'=>' custom-select col-12 form-control',null]) }}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label for="message-text" class="control-label">{{trans('admin.type')}}</label>--}}
+{{--                                            {{ Form::select('type', ['base'=>(trans('admin.base')) ,--}}
+{{--                                                                    'product'=>(trans('admin.product'))]--}}
+{{--                                                                    , old('type'), ['class'=>' custom-select col-12 form-control',null]) }}--}}
 
-                                        </div>
+{{--                                        </div>--}}
 
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
-                                        Close
+                                        {{trans('admin.close')}}
                                     </button>
                                     {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
                                     {{ Form::close() }}

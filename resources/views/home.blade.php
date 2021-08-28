@@ -8,19 +8,19 @@
         </div>
     </div>
     <div class="row">
-    	<div class="col-lg-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="stats">
-                            <h1 class="text-white">{{$bases}}</h1>
-                            <h6 class="text-white">{{trans('admin.total_base')}}</h6>
-                        </div>
-                        <div class="stats-icon text-right ml-auto"><i class="mdi mdi-scale display-5 op-3 text-dark"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--    	<div class="col-lg-3">--}}
+{{--            <div class="card bg-success text-white">--}}
+{{--                <div class="card-body">--}}
+{{--                    <div class="d-flex">--}}
+{{--                        <div class="stats">--}}
+{{--                            <h1 class="text-white">{{$bases}}</h1>--}}
+{{--                            <h6 class="text-white">{{trans('admin.total_base')}}</h6>--}}
+{{--                        </div>--}}
+{{--                        <div class="stats-icon text-right ml-auto"><i class="mdi mdi-scale display-5 op-3 text-dark"></i></div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="col-lg-3">
             <div class="card bg-warning text-white">
                 <div class="card-body">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-    	
+
     </div>
-  
+
 @endsection

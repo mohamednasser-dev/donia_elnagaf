@@ -95,7 +95,7 @@ class BuyController extends Controller
             $query = $request->get('query');
             $type = $request->get('type');
             if($query != null){
-                $data = DB::table('products')
+                $data = Product::with('Category')
                     ->where('name', 'like', '%'.$query.'%')
                     ->orWhere('barcode', 'like', '%'.$query.'%')
                     ->orderBy('name', 'desc')
@@ -117,6 +117,7 @@ class BuyController extends Controller
                         <td class = "center" >'.$row->name.'</td>
                         <td class = "center" >'.$row->barcode.'</td>
                         <td class = "center" >'.$row->quantity.'</td>
+                        <td class = "center" >'.$row->Category->name.'</td>
                         <td class = "center" >'.$row->selling_price.'</td>
                         <td class = "center" >
                             <a class="btn btn-success btn-circle" data-product-id="'.$row->id.'"  data-price="'.$row->selling_price.'" data-quantity="'.$row->quantity.'" id="sale_btn" alt="default" data-toggle="modal" data-target="#sale-modal" >

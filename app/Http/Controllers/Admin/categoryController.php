@@ -48,7 +48,7 @@ class categoryController extends Controller
             ]);
         $user = Category::create($data);
         $user->save();
-        session()->flash('success', trans('admin.updatSuccess'));
+        session()->flash('success', trans('admin.added_s'));
         return redirect(url('categories'));
     }
 

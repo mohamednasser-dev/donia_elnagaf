@@ -2,6 +2,7 @@
 return [
 
     //new
+    'should_choose_category' => 'يجب اختيار مخزن اولا',
     'gomla_price' => 'سعر الجملة',
     'buy_price' => 'سعر البيع',
     'edit_customer' => 'تعديل بيانات العميل',
@@ -60,7 +61,7 @@ return [
     'nav_buy_part' => 'فاتورة بيع قطاعى',
     'nav_buy_gomla' => 'فاتورة بيع جمله',
     'nav_buy_back' => 'فاتورة مرتجع',
-    'categories' => 'التصنيفات',
+    'categories' => 'المخازن',
     'nav_products' => 'المنتجات',
     'nav_bases' => 'الخام',
     'view_bases' => 'رؤيه الخام',
@@ -83,8 +84,8 @@ return [
     'total_sales' => 'اجمالى فواتير البيع',
 
     //category
-    'category_name' => 'اسم التصنيف',
-    'category' => 'التصنيف',
+    'category_name' => 'اسم المخزن',
+    'category' => 'المخزن',
 
     //Base
     'quantity' => 'الكميه',
@@ -114,7 +115,7 @@ return [
     'type' => 'النوع',
     'base' => 'مواد خام',
     'product' => 'منتجات',
-    'add_category' => 'اضافة تصنيف',
+    'add_category' => 'اضافة مخزن',
     'product_name' => 'اسم المنتج',
     'pay' => 'المدفوع',
     'total' => 'الاجمالى',

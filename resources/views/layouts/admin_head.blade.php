@@ -4,7 +4,7 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">Shop manager</p>
+            <p class="loader__label">دنيا النجف</p>
         </div>
     </div>
     <!-- ============================================================== -->
@@ -22,8 +22,8 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.html">
                         <span>
-                            <img src="{{ asset('/assets/images/side_bar_image.png') }}" alt="homepage" class="dark-logo" style="width: 200px; height: 45px;"/> 
-                        </span> 
+                            <img src="{{ asset('/assets/images/side_bar_image.png') }}" alt="homepage" class="dark-logo" style="width: 200px; height: 45px;"/>
+                        </span>
                     </a>
                 </div>
                 <!-- ============================================================== -->
@@ -42,7 +42,7 @@
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
-                      
+
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->

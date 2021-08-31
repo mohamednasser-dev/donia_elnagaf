@@ -16,8 +16,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <button  alt="default" data-toggle="modal" data-target="#responsive-modal" class="btn btn-info btn-bg" >
-                    {{trans('admin.add_category')}}
+                    <button alt="default" data-toggle="modal" data-target="#responsive-modal"
+                            class="btn btn-info btn-bg">
+                        {{trans('admin.add_category')}}
                     </button>
 
                 </div>
@@ -73,18 +74,11 @@
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['categories'],'method'=>'post' , 'class'=>'form'] ) }}
                                     {{ csrf_field() }}
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">{{trans('admin.category_name')}}</label>
-                                            {{ Form::text('name',null,["class"=>"form-control" ,"required"]) }}
-                                        </div>
-{{--                                        <div class="form-group">--}}
-{{--                                            <label for="message-text" class="control-label">{{trans('admin.type')}}</label>--}}
-{{--                                            {{ Form::select('type', ['base'=>(trans('admin.base')) ,--}}
-{{--                                                                    'product'=>(trans('admin.product'))]--}}
-{{--                                                                    , old('type'), ['class'=>' custom-select col-12 form-control',null]) }}--}}
-
-{{--                                        </div>--}}
-
+                                    <div class="form-group">
+                                        <label for="recipient-name"
+                                               class="control-label">{{trans('admin.category_name')}}</label>
+                                        {{ Form::text('name',null,["class"=>"form-control" ,"required"]) }}
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
@@ -99,7 +93,6 @@
                     </div>
                     <!-- /.modal -->
                 </div>
-
             </div>
         </div>
     </div>

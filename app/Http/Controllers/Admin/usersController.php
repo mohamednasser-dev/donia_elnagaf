@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Model_has_role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +21,13 @@ class usersController extends Controller{
     }
 
     public function index(){
-        $users = $this->objectName::where('type','user')->orderBy('name','desc')->paginate(10);
+        $users = $this->objectName::where('deleted','0')->where('type','user')->orderBy('name','desc')->paginate(10);
         return view($this->folderView.'users',compact('users'));
+    }
+
+   public function show($id){
+        $data = $this->objectName::where('id',$id)->first();
+        return view($this->folderView.'details',compact('data'));
     }
 
     public function create(){
@@ -30,16 +36,38 @@ class usersController extends Controller{
     }
 
     public function store(Request $request){
+
         $data = $this->validate(\request(),
         [
             'name' => 'required|unique:users',
             'email' => 'required|unique:users',
+            'phone' => 'required',
+            'branch_number' => 'required',
+            'image' => '',
+            'specialist' => '',
+            'ident_image' => '',
+            'fesh_image' => '',
             'role_id' => 'required|exists:roles,id',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6',
         ]);
         if($request['password'] != null  && $request['password_confirmation'] != null ){
             $data['password'] = bcrypt(request('password'));
+            if($request->status == 'on'){
+                $data['status'] = 'active';
+            }else{
+                $data['status'] = 'unactive';
+            }
+            //store images
+            if($request->image != null){
+                $data['image'] = $this->MoveImage($request->image,'uploads/users_images');
+            }
+            if($request->ident_image != null){
+                $data['ident_image'] = $this->MoveImage($request->ident_image,'uploads/users_images/ident_images');
+            }
+            if($request->fesh_image != null){
+                $data['fesh_image'] = $this->MoveImage($request->fesh_image,'uploads/users_images/fesh_images');
+            }
             $user = User::create($data);
             if($user->save()){
                 $user->assignRole($request['role_id']);
@@ -104,8 +132,9 @@ class usersController extends Controller{
     public function destroy($id){
         $user = $this->objectName::where('id', $id)->first();
         try {
-            $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
+            $user->deleted = '1';
+            $user->save();
+            Alert::warning('الحذف', trans('admin.deleteSuccess'));
         }catch(Exception $exception){
             session()->flash('danger', trans('admin.emp_no_delete'));
         }

@@ -6,7 +6,8 @@ return [
     'gomla_price' => 'سعر الجملة',
     'buy_price' => 'سعر البيع',
     'edit_customer' => 'تعديل بيانات العميل',
-
+    'are_y_sure_delete' => 'هل أنت متأكد من الحذف ؟',
+    'details' => 'التفاصيل',
 
     // Public translation
     'public_Web_title' => 'عنوان الموقع',

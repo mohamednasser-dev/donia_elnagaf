@@ -80,23 +80,6 @@ class productComponentsController extends Controller
 
     }
 
-    public function MoveImage($request_file)
-    {
-        // This is Image Information ...
-        $file = $request_file;
-        $name = $file->getClientOriginalName();
-        $ext = $file->getClientOriginalExtension();
-        $size = $file->getSize();
-        $path = $file->getRealPath();
-        $mime = $file->getMimeType();
-
-        // Move Image To Folder ..
-        $fileNewName = 'file' . $size . '_' . time() . '.' . $ext;
-        $file->move(public_path('uploads/products'), $fileNewName);
-
-        return $fileNewName;
-    }
-
     /**
      * Display the specified resource.
      *

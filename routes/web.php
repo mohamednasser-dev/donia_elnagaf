@@ -18,13 +18,17 @@ Route::get('forgot', 'ForgotPasswordController@forgot');
 Route::post('reset', 'ForgotPasswordController@reset');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/login_user', 'Admin\LoginController@login')->name('login_user');
+Route::get('/logout_user', 'Admin\LoginController@logout')->name('logout_user');
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::resource('settings', 'Admin\SettingsController');
     //users  routes
     Route::resource('users', 'Admin\usersController');
     Route::get('users/{id}/delete', 'Admin\usersController@destroy')->name('users.delete');
     Route::get('users/{id}/details', 'Admin\usersController@show')->name('users.details');
     Route::post('users/actived', 'Admin\usersController@update_Actived')->name('users.actived');
+    Route::get('users/login/history', 'Admin\usersController@login_history')->name('users.login_history');
+    Route::get('users/login/settings', 'Admin\usersController@login_times')->name('users.login.settings');
 
     //user permissions and roles
     Route::resource('roles', 'Admin\roleController');

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Login_history;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Model_has_role;
 use App\Http\Controllers\Controller;
@@ -82,6 +83,17 @@ class usersController extends Controller{
         $roles = Role::all();
         $user_data = $this->objectName::where('id', $id)->first();
         return view($this->folderView.'edit', \compact('user_data','roles'));
+    }
+    public function login_history()
+    {
+        $data = Login_history::orderBy('created_at','desc')->paginate(20);
+        return view($this->folderView.'user_login', compact('data'));
+    }
+
+    public function login_times()
+    {
+        $data = Login_history::orderBy('created_at','desc')->paginate(20);
+        return view($this->folderView.'user_login', compact('data'));
     }
 
     public function update(Request $request, $id)

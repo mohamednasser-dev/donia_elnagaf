@@ -49,6 +49,7 @@
                             @can('permissions')
                                 <li><a href="{{url('roles')}} ">{{trans('admin.nav_permissions')}}</a></li>
                             @endcan
+                                <li><a href="{{route('users.login_history')}} ">سجل الدخول و الخروج</a></li>
                         </ul>
                     </li>
                     @can('Account statement')
@@ -70,19 +71,12 @@
                         <li>
                             <a class="waves-effect waves-dark" href="{{url('outgoing')}}" aria-expanded="false"><i class="mdi mdi-square-inc-cash"></i><span class="hide-menu">{{trans('admin.nav_outgoing')}}</span></a>
                         </li>
-
                     @endcan
                     <li>
-                        <a class="waves-effect waves-dark" href="{{url('inbox')}}" aria-expanded="false"><i class="fa fa-inbox"></i><span class="hide-menu">{{trans('admin.inbox')}}</span></a>
+                        <a class="waves-effect waves-dark" href="{{url('settings')}}" aria-expanded="false">
+                            <i class="mdi mdi-settings"></i><span class="hide-menu">الإعدادات</span></a>
+{{--                        ti-settings text-white--}}
                     </li>
-                    <li>
-                        <a class="waves-effect waves-dark" href="{{url('orders')}}" aria-expanded="false"><i class="fa fa-file"></i><span class="hide-menu">{{trans('admin.orders')}}</span></a>
-                    </li>
-                    @can('Lock a fiscal year')
-                        <li>
-                            <a class="waves-effect waves-dark" href="{{url('finatial_year')}}" aria-expanded="false"><i class="mdi mdi-cake-variant"></i><span class="hide-menu">{{trans('admin.nav_close_year')}}</span></a>
-                        </li>
-                    @endcan
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->

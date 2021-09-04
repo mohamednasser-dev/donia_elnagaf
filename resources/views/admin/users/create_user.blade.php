@@ -18,7 +18,6 @@
     <div class="row">
         <div class="col-sm-12">
             {{ Form::open( ['url'  => ['users'],'method'=>'post' , 'class'=>'form','files'=>true] ) }}
-            {{ csrf_field() }}
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{trans('admin.user_info')}}</h4>

@@ -4,7 +4,7 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label">دنيا النجف</p>
+            <p class="loader__label">{{settings()->name}}</p>
         </div>
     </div>
     <!-- ============================================================== -->
@@ -60,12 +60,10 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="fa fa-power-off" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <a class="fa fa-power-off" href="{{ route('logout_user') }}">
                                             {{trans('admin.logout')}}
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
+
                                     </li>
                                 </ul>
                             </div>

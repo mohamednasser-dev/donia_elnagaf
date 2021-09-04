@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Login_history;
+use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -17,11 +20,51 @@ class LoginController extends Controller
                 session()->flash('danger', trans('admin.not_auth'));
                 return redirect('login');
             }else{
-                return redirect('/home');
+                Login_history::create(['user_id'=>Auth::user()->id]);
+                if(Auth::user()->type == 'admin'){
+                    return redirect('/home');
+                }else{
+                    $setting = Setting::find(1);
+
+
+
+                    $mytime = Carbon::now();
+                    $today =  Carbon::parse($mytime->toDateTimeString())->format('Y-m-d H:i');
+                    $today_date_only =  Carbon::parse($mytime->toDateTimeString())->format('Y-m-d');
+                    //get start date of active selected gwla ...
+
+                        $open_time =  $setting->open_time;
+                        $close_time =  $setting->close_time;
+
+                        $open_date = $today_date_only.' '.$open_time ;
+                        $close_date = $today_date_only.' '.$close_time ;
+
+                        $final_Start = date("Y-m-d H:i", strtotime($open_date));
+                        $final_Start = Carbon::createFromFormat('Y-m-d H:i', $final_Start);
+
+                        $final_close = date("Y-m-d H:i", strtotime($close_date));
+                        $final_close = Carbon::createFromFormat('Y-m-d H:i', $final_close);
+
+
+                        //make if statement to avoid user to change his squad formation during active gwla ...
+                        if(($today >= $final_Start && $today <= $final_close)){
+                            return redirect('/home');
+                        }else{
+                            Auth::logout();
+                            session()->flash('danger', 'لا يمكن تسجيل الدخول الان .... الوقت الان خارج مواعيد العمل');
+                            return redirect('login');
+                        }
+
+                }
             }
         }else{
             session()->flash('danger',trans('admin.invaldemailorpassword'));
           return redirect('login');
         }
+    }
+    public function logout(){
+        Login_history::create([ 'user_id'=>Auth::user()->id ,'type'=>'logout' ]);
+        Auth::logout();
+        return redirect('login');
     }
 }

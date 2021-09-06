@@ -102,6 +102,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::resource('products', 'Admin\productComponentsController');
     Route::get('products/{id}/delete', 'Admin\productComponentsController@destroy');
+    Route::get('products/edit/price/with_barcode', 'Admin\productComponentsController@edit_price')->name('edit.product.price');
+    Route::post('products/search/price/with_barcode', 'Admin\productComponentsController@search_price')->name('search.products.update_price');
     //add quantity
     Route::post('addQuantity', 'Admin\productComponentsController@show');
 

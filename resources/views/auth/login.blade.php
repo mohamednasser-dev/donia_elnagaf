@@ -9,14 +9,14 @@
         <meta name="author" content="">
         <!-- Favicon icon -->
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
-        <title>{{trans('admin.website_title')}}</title>
+        <title>{{settings()->name}}</title>
         <!-- Bootstrap Core CSS -->
         <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- page css -->
         <link href="{{ asset('/css/pages/login-register-lock.css') }}" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-        
+
         <!-- You can change the theme colors from here -->
         <link href="{{ asset('/css/colors/default-dark.css') }}" id="theme" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -69,7 +69,7 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="form-group text-center m-t-20">
                             <div class="col-xs-12">
                                 <button class="btn btn-info btn-lg btn-block text-uppercase btn-rounded" type="submit">{{trans('admin.login')}} </button>
@@ -97,9 +97,9 @@
             $(function() {
                 $('[data-toggle="tooltip"]').tooltip()
             });
-            // ============================================================== 
-            // Login and Recover Password 
-            // ============================================================== 
+            // ==============================================================
+            // Login and Recover Password
+            // ==============================================================
             $('#to-recover').on("click", function() {
                 $("#loginform").slideUp();
                 $("#recoverform").fadeIn();

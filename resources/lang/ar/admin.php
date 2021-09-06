@@ -2,6 +2,8 @@
 return [
 
     //new
+    'barcode_search' => 'بحث بالباركود',
+    'price_new' => 'سعر البيع الجديد',
     'should_choose_category' => 'يجب اختيار مخزن اولا',
     'gomla_price' => 'سعر الجملة',
     'buy_price' => 'سعر البيع',

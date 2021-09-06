@@ -37,7 +37,6 @@
                             <th class="text-center">{{trans('admin.actions')}}</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         @foreach($products as $user)
                             <tr>
@@ -78,8 +77,6 @@
                         </tbody>
                     </table>
                 {{$products->links()}}
-
-
                     <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-dialog">
@@ -98,8 +95,6 @@
                                         {{ Form::number('quantity',null,["class"=>"form-control" ,"required", "min" => "1"]) }}
                                         {{ Form::hidden('id',null,["class"=>"form-control" ,"required",'id'=>'pro-id']) }}
                                     </div>
-
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
@@ -112,10 +107,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>

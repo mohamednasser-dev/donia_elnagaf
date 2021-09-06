@@ -111,6 +111,12 @@ class productComponentsController extends Controller
         $product = Product::where('id', $id)->with('Bases')->first();
         return view('admin.productsCompnents.edit', compact('product'));
     }
+    public function edit_price()
+    {
+//        $product = Product::where('id', $id)->with('Bases')->first();
+//        , compact('product')
+        return view('admin.productsCompnents.edit_price');
+    }
 
     /**
      * Update the specified resource in storage.
@@ -139,6 +145,26 @@ class productComponentsController extends Controller
         $product = Product::whereId($id)->update($data);
         session()->flash('success', trans('admin.updatSuccess'));
         return redirect(url('products'));
+    }
+
+    public function search_price(Request $request)
+    {
+        $data = $this->validate(\request(),
+            [
+                'barcode' => 'required',
+                'price' => 'required',
+            ]);
+
+        $product = Product::where('barcode',$request->barcode)->get();
+        if($product->count() > 0){
+            $input['selling_price'] = $request->price ;
+            Product::where('barcode',$request->barcode)->update($input);
+            session()->flash('success', 'تم تعديل سعر البيع بنجاح');
+            return redirect()->back();
+        }else{
+            session()->flash('danger', 'لا يوجد منتجات بهذا الباركود');
+            return redirect()->back();
+        }
     }
 
     /**

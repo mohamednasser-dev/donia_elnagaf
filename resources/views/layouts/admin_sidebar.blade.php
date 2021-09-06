@@ -22,8 +22,15 @@
                     @endcan
                     @can('products')
                         <li>
-                            <a class="waves-effect waves-dark" href="{{url('products')}}" aria-expanded="false"><i class="mdi mdi-rocket"></i><span class="hide-menu">{{trans('admin.nav_products')}}</span>
-                            </a>
+                            @if(Gate::check('products') )
+                                <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i class="mdi mdi-account-location"></i><span class="hide-menu">{{trans('admin.nav_products')}}</span></a>
+                            @endif
+                            <ul aria-expanded="false" class="collapse">
+                                @can('products')
+                                    <li><a href="{{url('products')}}">رؤية المنتجات</a></li>
+                                @endcan
+                                <li><a href="{{route('edit.product.price')}} ">تعديل السعر بالباركود</a></li>
+                            </ul>
                         </li>
                     @endcan
 

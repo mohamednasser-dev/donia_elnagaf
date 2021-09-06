@@ -17,7 +17,7 @@
         </style>
         <!-- Favicon icon -->
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
-        <title>{{trans('admin.website_title')}}</title>
+        <title>{{settings()->name}}</title>
         <!-- Bootstrap Core CSS -->
         <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
@@ -30,7 +30,7 @@
         <!-- Custom CSS -->
         <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/myStyles.css') }}" rel="stylesheet">
-        
+
         <!-- Dashboard 1 Page CSS -->
         <link href="{{ asset('/css/pages/dashboard1.css') }}" rel="stylesheet">
         <!-- You can change the theme colors from here -->

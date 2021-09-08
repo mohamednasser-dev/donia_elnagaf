@@ -165,8 +165,7 @@ class BuyController extends Controller
                     'quantity'     =>  $request->get('quantity'),
                     'price'     =>  $request->get('price'),
                     'user_id'     =>  Auth::user()->id,
-                    'total'     =>  $total,
-                    'date'     =>  $this->today
+                    'total'     =>  $total
                 ]);
                 if($bill_Product->save()){
                     $product->quantity = $product->quantity - $request->get('quantity') ;

@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     //buy bills
     Route::resource('buy-bills', 'Admin\buyBillsController');
     Route::get('buy-bills/{bill_id}/print', 'Admin\buyBillsController@print_bill');
+    Route::post('buy-bills/edit/product', 'Admin\buyBillsController@edit_product')->name('buy-bills.edit_product');
 
     //base bills
     Route::resource('base_bills', 'Admin\baseBillsController');

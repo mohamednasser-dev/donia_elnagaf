@@ -18,8 +18,9 @@ class productComponentsController extends Controller
     }
     public function index()
     {
-        $products = Product::paginate(10);
-        return view('admin.productsCompnents.index', compact('products'));
+        $selected_cat = Category::orderBy('id','asc')->first()->id;
+        $products = Product::where('category_id',$selected_cat)->paginate(20);
+        return view('admin.productsCompnents.index', compact('products','selected_cat'));
 
     }
 
@@ -37,6 +38,13 @@ class productComponentsController extends Controller
         return view('admin.productsCompnents.create', compact('bases','categories'));
 
     }
+    public function filter_category(Request $request)
+    {
+        $selected_cat = $request->category_id;
+        $products = Product::where('category_id',$selected_cat)->paginate(20);
+        return view('admin.productsCompnents.index', compact('products','selected_cat'));
+
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,7 +60,6 @@ class productComponentsController extends Controller
                 'name' => 'required|unique:products',
                 'barcode' => 'required|unique:products',
                 'price' => 'required',
-                'total_cost' => 'required',
                 'gomla_price' => 'required',
                 'selling_price' => 'required'
             ]);
@@ -70,14 +77,11 @@ class productComponentsController extends Controller
                 }
             }
         }else{
-
             Alert::warning('تنبية', 'يجب أختيار مخزن اولا');
             return redirect(url('products'));
         }
-
-        session()->flash('success', trans('admin.addedsuccess'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return redirect(url('products'));
-
     }
 
     /**
@@ -163,6 +167,50 @@ class productComponentsController extends Controller
             return redirect()->back();
         }else{
             session()->flash('danger', 'لا يوجد منتجات بهذا الباركود');
+            return redirect()->back();
+        }
+    }
+
+    public function pull_quantity(Request $request)
+    {
+        $data = $this->validate(\request(),
+            [
+                'quantity' => 'required',
+                'product_id' => 'required',
+                'category_id' => 'required',
+            ]);
+
+        $product = Product::where('id',$request->product_id)->first();
+        if($product){
+            if($request->category_id != $product->category_id){
+                $another_product = Product::where('category_id',$request->category_id)->where('barcode',$product->barcode)->first();
+                if($another_product){
+                    $another_product->quantity = $another_product->quantity + $request->quantity ;
+                    $another_product->save();
+                }else{
+
+                    $new_data['name'] = $product->name ;
+                    $new_data['barcode'] = $product->barcode ;
+                    $new_data['price'] = $product->price ;
+                    $new_data['total_cost'] = 0 ;
+                    $new_data['gomla_price'] = $product->gomla_price ;
+                    $new_data['selling_price'] = $product->selling_price ;
+                    $new_data['user_id'] = Auth::user()->id;
+                    $new_data['quantity'] = $request->quantity ;
+                    $new_data['category_id'] = $request->category_id ;
+                    Product::create($new_data);
+                }
+                $product->quantity = $product->quantity - $request->quantity ;
+                $product->save();
+                Alert::success('تمت العملية بنجاح', 'تم سحب الكمية الى المخزن المختار');
+                return redirect()->back();
+            }else{
+                Alert::warning('لم يتم سحب الكمية', 'يجب اختيار مخزن اخر غير مخزن المنتج نفسه');
+                return redirect()->back();
+            }
+
+        }else{
+            Alert::warning('خطأ', 'يجب اختيار منتج صحيح اولا');
             return redirect()->back();
         }
     }

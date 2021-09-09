@@ -16,11 +16,39 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{url('products/create')}}"
-                            class="btn btn-info btn-bg">
-                        {{trans('admin.add_product')}}
-                    </a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{url('products/create')}}"
+                               class="btn btn-info btn-bg">
+                                {{trans('admin.add_product')}}
+                            </a>
+                        </div>
+                        <div class="col-md-1">
+                        <label class="control-label">المخزن</label>
+                        </div>
 
+
+                        <div class="col-md-5">
+                            {{ Form::open( ['route'  => ['product.filter.cat'],'method'=>'get'] ) }}
+                            <div class="input-group">
+                                <select name="category_id" class="form-control custom-select">
+                                    @foreach(Categories() as $row)
+                                        @if($selected_cat == $row->id)
+                                            <option value="{{$row->id}}" selected > {{$row->name}} </option>
+                                        @else
+                                            <option value="{{$row->id}}">{{$row->name}}</option>
+
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <span class="input-group-btn">
+                                    <button title="بحث بالمخزن" type="submit" id="check-minutes" class="btn waves-effect waves-light btn-success"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                            {{ Form::close() }}
+                        </div>
+
+                    </div>
                 </div>
                 <div class="card-body">
                     <!-- Start home table -->
@@ -47,12 +75,19 @@
                                 <td class="text-center">{{$user->barcode}}</td>
                                 <td class="text-center">{{$user->category->name}}</td>
                                 <td class="text-lg-center">
+                                    <a class='btn btn-raised btn-info btn-circle' title="سحب كمية الى مخزن اخر"
+                                       href="" data-toggle="modal" data-target="#sahb-modal"
+                                       data-product-id="{{$user->id}}" data-quantity="{{$user->quantity}}"
+                                       data-cat="{{$user->category_id}}" id="sahb_btn">
+                                        <i class="fa fa-mail-reply-all"></i>
+                                    </a>
                                     <a class='btn btn-raised btn-success btn-circle'
                                        href=" {{url('products/'.$user->id.'/edit')}}"
                                        data-editid="{{$user->id}}" id="edit"><i class="fa fa-edit"></i></a>
                                     <a class='btn btn-raised btn-warning btn-circle'
                                        data-product-id="{{$user->id}}" id="add"
-                                       data-toggle="modal" data-target="#responsive-modal"><i class="fa fa-arrow-circle-down fa-arrow-circle-down"></i></a>
+                                       data-toggle="modal" data-target="#responsive-modal"><i
+                                            class="fa fa-arrow-circle-down fa-arrow-circle-down"></i></a>
 
                                     <form method="get" id='delete-form-{{ $user->id }}'
                                           action="{{url('products/'.$user->id.'/delete')}}"
@@ -76,37 +111,72 @@
                         @endforeach
                         </tbody>
                     </table>
-                {{$products->links()}}
-                    <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"
-                         aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">{{trans('admin.add_quantity')}}</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    {{ Form::open( ['url'  => ['addQuantity'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="control-label">{{trans('admin.quantity')}}</label>
+                    {{$products->links()}}
 
-                                        {{ Form::number('quantity',null,["class"=>"form-control" ,"required", "min" => "1"]) }}
-                                        {{ Form::hidden('id',null,["class"=>"form-control" ,"required",'id'=>'pro-id']) }}
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
-                                        Close
-                                    </button>
-                                    {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
-                                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
+    </div>
 
-                                </div>
-                            </div>
-                        </div>
+    <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{trans('admin.add_quantity')}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ Form::open( ['url'  => ['addQuantity'],'method'=>'post' , 'class'=>'form'] ) }}
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">{{trans('admin.quantity')}}</label>
+
+                        {{ Form::number('quantity',null,["class"=>"form-control" ,"required", "min" => "1"]) }}
+                        {{ Form::hidden('id',null,["class"=>"form-control" ,"required",'id'=>'pro-id']) }}
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
+                        Close
+                    </button>
+                    {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
+                    {{ Form::close() }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sahb-modal" class="modal fade" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">سحب كمية من مخزن الى مخزن اخر</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ Form::open( ['route'  => ['product.pull.quantity'],'method'=>'post' , 'class'=>'form'] ) }}
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">{{trans('admin.quantity')}}</label>
+                        {{ Form::number('quantity',null,["class"=>"form-control" ,"required", "min" => "1",'id'=>'txt_sahb_quantity']) }}
+                        {{ Form::hidden('product_id',null,["class"=>"form-control" ,"required",'id'=>'txt_product_id']) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">المخزن الاخر</label>
+                        {{ Form::select('category_id',App\Models\Category::where('type','product')->pluck('name','id'),old('category_id')
+                                   ,["class"=>"form-control custom-select col-12 ",'id'=>'category_id' ]) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
+                        إغلاق
+                    </button>
+                    {{ Form::submit( 'سحب الكمية' ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
+                    {{ Form::close() }}
+
                 </div>
             </div>
         </div>
@@ -115,10 +185,19 @@
 @section('scripts')
     <script>
         var id;
-        $(document).on('click', '#add', function() {
+        $(document).on('click', '#add', function () {
             id = $(this).data('product-id');
             console.log(id);
             $('#pro-id').val(id);
+        });
+
+        $(document).on('click', '#sahb_btn', function () {
+            quantity = $(this).data('quantity');
+            product_id = $(this).data('product-id');
+            console.log(product_id);
+            $("#txt_product_id").val(product_id);
+            $("#txt_sahb_quantity").val(quantity);
+            $('#txt_sahb_quantity').attr('max', quantity);
         });
     </script>
 @endsection

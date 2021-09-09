@@ -111,7 +111,7 @@ class buyBillsController extends Controller
             $total_all_bill = BillProduct::where('bill_id',$bill_product->bill_id)->get()->sum('total');
 
             $cust_bill = CustomerBill::find($bill_product->bill_id);
-   
+
             $cust_bill->total = $total_all_bill ;
             $cust_bill->remain = $total_all_bill - $cust_bill->pay;
             $cust_bill->save();

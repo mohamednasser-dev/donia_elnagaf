@@ -2,6 +2,8 @@
 return [
 
     //new
+    'choose_emp' => 'اختر موظف',
+    'emp_name' => 'اسم الموظف',
     'barcode_search' => 'بحث بالباركود',
     'price_new' => 'سعر البيع الجديد',
     'should_choose_category' => 'يجب اختيار مخزن اولا',
@@ -134,7 +136,7 @@ return [
     'sale_remain' => 'الباقى  ',
     'bill_date' => 'تاريخ الفاتور :',
     'bill_procusts' => 'منتجات الفاتورة',
-    'finish_bill' => 'أنهاء الفاتورة',
+    'finish_bill' => 'إنهاء الفاتورة',
     'products' => 'المنتجات',
     'delete_all' => 'حذف الكل',
 

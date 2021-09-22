@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\CustomerBill;
@@ -42,7 +43,9 @@ class BuyController extends Controller
             $bill_num = $customer_bills_selected->bill_num ;
             $customer_bills_products = BillProduct::where('bill_id',$customer_bills_selected->id)->orderBy('id','desc')->paginate(15);
         }
-        return view('admin.buy.buy',compact('bill_num','customer_bills_selected','customers','products','customer_bills_products','today','type'));
+
+        $emps = User::where('branch_number',Auth::user()->branch_number)->get()->pluck('name','id');
+        return view('admin.buy.buy',compact('emps','bill_num','customer_bills_selected','customers','products','customer_bills_products','today','type'));
     }
 
     public function store_cust_bill(Request $request){
@@ -75,7 +78,15 @@ class BuyController extends Controller
         $today = $this->today;
         $data['pay'] = $request->pay ;
         $data['remain'] = $request->remain ;
+        $data['emp_id'] = $request->emp_id ;
         CustomerBill::findOrFail($bill_id)->update($data);
+
+        //add total payment to emp
+        $emp_data = User::find($request->emp_id);
+        $emp_data->total_payment = $emp_data->total_payment + $request->pay ;
+        $emp_data->save();
+
+        //prepare data to print design paper ...
         $CustomerBill = CustomerBill::find($bill_id);
         $BillProduct =  BillProduct::where('bill_id',$bill_id)->get();
         return view('admin.buy.bill_design',compact('today','CustomerBill','BillProduct'));
@@ -161,7 +172,6 @@ class BuyController extends Controller
                     'name'    =>  $product->name,
                     'product_id'    =>  $request->get('product_id'),
                     'bill_id'     =>  $request->get('bill_id'),
-                    'date'     =>  $request->get('date'),
                     'quantity'     =>  $request->get('quantity'),
                     'price'     =>  $request->get('price'),
                     'user_id'     =>  Auth::user()->id,

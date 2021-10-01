@@ -7,6 +7,7 @@ use App\Models\Login_history;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
 {
@@ -17,7 +18,7 @@ class LoginController extends Controller
             //Check if active user or not
             if(Auth::user()->status != 'active'){
                 Auth::logout();
-                session()->flash('danger', trans('admin.not_auth'));
+                Alert::error('خطأ', trans('admin.not_auth'));
                 return redirect('login');
             }else{
                 Login_history::create(['user_id'=>Auth::user()->id]);
@@ -51,14 +52,14 @@ class LoginController extends Controller
                             return redirect('/home');
                         }else{
                             Auth::logout();
-                            session()->flash('danger', 'لا يمكن تسجيل الدخول الان .... الوقت الان خارج مواعيد العمل');
+                            Alert::error('تم', 'لا يمكن تسجيل الدخول الان .... الوقت الان خارج مواعيد العمل');
                             return redirect('login');
                         }
 
                 }
             }
         }else{
-            session()->flash('danger',trans('admin.invaldemailorpassword'));
+            Alert::error('خطأ',trans('admin.invaldemailorpassword'));
           return redirect('login');
         }
     }

@@ -56,24 +56,17 @@
                 <div class="card card-body printableArea">
                     <div class="row col-xs-12" style="text-align: left">
                         <div class="col-xs-5 ">
-                             <img src="{{ asset('/assets/images/bill_images/bill_header.png') }}" alt="homepage" class="dark-logo" style="width: 200px; height: 100px;"/>
+{{--                             <img src="{{ asset('/assets/images/bill_images/bill_header.png') }}" alt="homepage" class="dark-logo" style="width: 200px; height: 100px;"/>--}}
                         </div>
-
                         <br>
                         <div class="col-md-3 center">
-
-                                <img src="{{ asset('/assets/images/bill_images/main_logo.png') }}" alt="homepage" class="dark-logo" style="width: 200px; height: 120px;"/>
-
-
+                            <img src="{{ asset('/assets/images/logo.png') }}" alt="homepage" class="dark-logo" style="width: 200px; height: 120px;"/>
                         </div>
-
-
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <h3><p class="m-t-10"><b>{{trans('admin.bill_date')}}</b></i>{{$CustomerBill->date}}</p></h3>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -128,11 +121,21 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <h3><b>{{trans('admin.bill_address')}} </b>{{trans('admin.bill_address_txt')}}</h3>
+                        <h3><b>الفرع الاول : </b> شارع نعيم متفرع من شارع الجلاء - الزقازيق</h3>
+                    </div>
+                    <div class="row">
+                        <h3><b> 01091428014 - 0552348182</b></h3>
                     </div>
                     <br>
                     <div class="row">
-                        <h3><b>{{trans('admin.bill_phone')}}</b>{{trans('admin.bill_phone_txt')}}</h3>
+                        <h3><b>الفرع الثاني : </b>شارع السلام متفرع من شارع المحافظة و شارع مجمع المصالح - الزقازيق</h3>
+                    </div>
+                    <div class="row">
+                        <h3><b> 01020074409 - 0552359013</b></h3>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <h3><b>رقم الواتس : </b> 01064502658</h3>
                     </div>
                 </div>
             </div>

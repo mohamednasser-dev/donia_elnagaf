@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Model\Inbox;
 use Exception;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class categoryController extends Controller
 {
@@ -17,8 +18,8 @@ class categoryController extends Controller
 
     public function index()
     {
-        $categories =Category::paginate(10);
-        return view('admin.category.category',compact('categories'));
+        $categories = Category::paginate(10);
+        return view('admin.category.category', compact('categories'));
 
     }
 
@@ -29,33 +30,33 @@ class categoryController extends Controller
      */
     public function inbox()
     {
-        $categories =Inbox::paginate(10);
-        return view('admin.category.inbox',compact('categories'));
+        $categories = Inbox::paginate(10);
+        return view('admin.category.inbox', compact('categories'));
 
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $data = $this->validate(\request(),
             [
-                'name' => 'required|unique:categories'
+                'name' => 'required|unique:categories,name'
             ]);
         $user = Category::create($data);
         $user->save();
-        session()->flash('success', trans('admin.added_s'));
-        return redirect(url('categories'));
+        Alert::success('تم', trans('admin.added_s'));
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -66,7 +67,7 @@ class categoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -77,27 +78,34 @@ class categoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = $this->validate(\request(),
+            [
+                'name' => 'required|unique:categories,name,'.$request->id,
+            ]);
+        $user = Category::where('id', $request->id)->update(['name' => $request->name]);
+        Alert::success('تم', trans('admin.updatSuccess'));
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id){
+    public function destroy($id)
+    {
         $user = Category::where('id', $id)->first();
         try {
             $user->delete();
             session()->flash('success', trans('admin.deleteSuccess'));
-        }catch(Exception $exception){
+        } catch (Exception $exception) {
             session()->flash('danger', 'لا يمكن حذف تصنيف به منتجات او مواد خام');
         }
         return back();

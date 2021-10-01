@@ -11,6 +11,8 @@ use App\Models\Supplier;
 use App\Models\Base;
 use Carbon\Carbon;
 use Exception;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class baseBillsController extends Controller
 {
     public $today ;
@@ -75,7 +77,7 @@ class baseBillsController extends Controller
         $data['is_bill'] = 'y';
         $data['user_id'] = Auth::user()->id;
         SupplierSale::create($data);
-        session()->flash('success', trans('admin.fatora_open_success'));
+        Alert::success('تم', trans('admin.fatora_open_success'));
         return redirect(url('base_bills'));
     }
 
@@ -182,7 +184,7 @@ class baseBillsController extends Controller
         $update_total['total'] = $total ;
         $update_total['remain'] = $total ;
         SupplierSale::where('id',$data['supplier_sale_id'])->update($update_total);
-        session()->flash('success', trans('admin.addedsuccess'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return back();
 
     }
@@ -202,9 +204,9 @@ class baseBillsController extends Controller
             $update_total['total'] = $total ;
             $update_total['remain'] = $total ;
             SupplierSale::where('id',$supplierBillBase->supplier_sale_id)->update($update_total);
-            session()->flash('success', trans('admin.deleteSuccess'));
+            Alert::success('تم', trans('admin.deleteSuccess'));
         }catch(Exception $exception){
-            session()->flash('danger', trans('admin.deleteError'));
+            Alert::error('خطأ', trans('admin.deleteError'));
         }
         return back();
     }

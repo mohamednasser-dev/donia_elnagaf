@@ -104,7 +104,6 @@
                                 </div>
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['bases'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.name')}}</label>
@@ -175,7 +174,6 @@
                                 </div>
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['editbases'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
                                     {{ Form::hidden('id',null,["class"=>"form-control" ,"required",'id'=>'id']) }}
 
                                     <div class="form-group">

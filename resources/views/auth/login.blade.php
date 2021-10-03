@@ -9,7 +9,6 @@
         <meta name="author" content="">
         <!-- Favicon icon -->
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
-        <title>{{settings()->name}}</title>
         <!-- Bootstrap Core CSS -->
         <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- page css -->

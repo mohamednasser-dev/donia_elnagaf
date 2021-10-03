@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Models\Outgoing;
 
@@ -49,7 +50,7 @@ class OutgoingController extends Controller
         $data['user_id'] = Auth::user()->id;
         $user = Outgoing::create($data);
         $user->save();
-        session()->flash('success', trans('admin.addedsuccess'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return redirect(url('outgoing'));
     }
 
@@ -95,13 +96,8 @@ class OutgoingController extends Controller
      */
     public function destroy($id)
     {
-        $user = Outgoing::where('id', $id)->first();
-        try {
-            $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
-        } catch (Exception $exception) {
-            session()->flash('danger', 'لا يمكن حذف تصنيف به منتجات او مواد خام');
-        }
-        return back();
+       Outgoing::where('id', $id)->delete();
+       Alert::success('تم', trans('admin.deleteSuccess'));
+       return back();
     }
 }

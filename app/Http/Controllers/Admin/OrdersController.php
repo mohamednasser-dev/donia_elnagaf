@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OrdersController extends Controller
 {
@@ -77,9 +78,8 @@ class OrdersController extends Controller
                 'status' => 'required',
 
             ]);
-
-        $user = Order::whereId($id)->update($data);
-        session()->flash('success', trans('admin.updatSuccess'));
+        Order::whereId($id)->update($data);
+        Alert::success('تم', trans('admin.updatSuccess'));
         return redirect(url('orders'));
     }
 

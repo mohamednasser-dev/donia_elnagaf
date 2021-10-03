@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use Carbon\Carbon;
 use Exception;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class customerController extends Controller
 {
@@ -66,7 +67,7 @@ class customerController extends Controller
         $data['password'] = Hash::make($request->password);
         $user = Customer::create($data);
         $user->save();
-        session()->flash('success', trans('admin.addedsuccess'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return redirect(url('customer'));
     }
 
@@ -110,7 +111,7 @@ class customerController extends Controller
             $customerBills = CustomerBill::where('id', $bill_id)->update($data_bill);
 
         }
-        session()->flash('success', trans('admin.payment_success'));
+        Alert::success('تم', trans('admin.payment_success'));
         return back();
     }
 
@@ -128,7 +129,7 @@ class customerController extends Controller
         $data['is_bill'] = 'n';
         $data['total'] = $request->input('remain');
         CustomerBill::create($data);
-        session()->flash('success', trans('admin.old_pay_success'));
+        Alert::success('تم', trans('admin.old_pay_success'));
         return back();
     }
 
@@ -152,7 +153,7 @@ class customerController extends Controller
             $data['password'] = Hash::make($request->password);
         }
         $user = Customer::whereId($request->id)->update($data);
-        session()->flash('success', trans('admin.updatSuccess'));
+        Alert::success('تم', trans('admin.updatSuccess'));
         return redirect(url('customer'));
     }
 
@@ -167,9 +168,9 @@ class customerController extends Controller
         $user = Customer::where('id', $id)->first();
         try {
             $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
+            Alert::success('تم', trans('admin.deleteSuccess'));
         } catch (Exception $exception) {
-            session()->flash('danger', trans('admin.delete_no_Success'));
+            Alert::error('تم', trans('admin.delete_no_Success'));
         }
         return back();
     }
@@ -179,9 +180,9 @@ class customerController extends Controller
         $user = CustomerBill::where('id', $id)->first();
         try {
             $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
+            Alert::success('تم', trans('admin.deleteSuccess'));
         } catch (Exception $exception) {
-            session()->flash('danger', trans('admin.payment_no_delete') );
+            Alert::error('تم', trans('admin.payment_no_delete'));
         }
         return back();
     }

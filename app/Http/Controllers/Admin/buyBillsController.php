@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\CustomerBill;
 use App\Models\BillProduct;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
 
 class buyBillsController extends Controller
@@ -70,7 +71,7 @@ class buyBillsController extends Controller
             'price' => 'required|numeric|between:0,9999.9',
         ]);
         if ($validation->fails()) {
-            session()->flash('danger', $validation->messages()->getMessages());
+            Alert::error('خطأ',  $validation->messages()->getMessages());
             return back();
         } else {
             $bill_product = BillProduct::where('id', $request->product_id)->first();
@@ -87,7 +88,7 @@ class buyBillsController extends Controller
                         $store_product->save();
                     }
                 } else {
-                    session()->flash('danger', 'لا يوجد عدد كافي بالمخزن');
+                    Alert::error('خطأ',  'لا يوجد عدد كافي بالمخزن');
                     return back();
                 }
             }elseif($request->quantity < $bill_product->quantity){
@@ -115,8 +116,7 @@ class buyBillsController extends Controller
             $cust_bill->total = $total_all_bill ;
             $cust_bill->remain = $total_all_bill - $cust_bill->pay;
             $cust_bill->save();
-
-            session()->flash('success', 'تم التعديل بنجاح ');
+            Alert::success('تم',  'تم التعديل بنجاح');
             return back();
         }
     }

@@ -28,7 +28,6 @@
         <div class="content-wrapper">
             <!-- Headings -->
             {{ Form::open( ['url' => ['cust_bills'],'method'=>'post'] ) }}
-                {{ csrf_field() }}
                 <section id="html-headings-default" class="row match-height">
                     <div class="col-sm-12 col-md-12">
                         <div class="row">
@@ -121,7 +120,6 @@
                                 <h4 class="card-title"><span class="lstick"></span>{{trans('admin.bill_procusts')}}</h4>
                             <div class="card-block">
                                 {{ Form::open( ['url' => ['bill_products/'.$customer_bills_selected->id.'/destroy_all'],'method'=>'post'] ) }}
-                                    {{ csrf_field() }}
                                     <button type="submit" class="btn btn-outline-danger btn-rounded">
                                         <i class="fa fa-trash"></i>
                                         {{trans('admin.delete_all')}}
@@ -180,8 +178,11 @@
                         <div class="card-body">
                             <h4 class="card-title"><span class="lstick"></span>{{trans('admin.finish_bill')}}</h4>
                             {{ Form::open( ['url' => ['buy_bill_design/'.$customer_bills_selected->id.'/print'],'method'=>'post'] ) }}
-                                {{ csrf_field() }}
                                 <table class="table vm font-14">
+                                    <tr>
+                                        {{ Form::select('emp_id',$emps,null
+                                        ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id","style"=>"width: 100%; height:36px;","required",'placeholder'=>trans('admin.choose_emp') ]) }}
+                                    </tr>
                                     <tr>
                                         <td class="col-md-5">{{trans('admin.sale_total')}}</td>
                                         <td class="col-md-7 text-right font-medium b-0"> <input type="text" name="total" id="lbl_total" class='form-control center' value="{{$customer_bills_selected->total}}" readonly></td>
@@ -222,7 +223,6 @@
                         </button>
                     </div>
                     {{ Form::open( ['method'=>'post' ,'route'=>'buy.store'] ) }}
-                    {{ csrf_field() }}
                         <div class="modal-body">
                             <span id="form_output"></span>
                             {{ Form::hidden('product_id',null,["class"=>"form-control" ,"required",'id'=>'txt_product_id']) }}

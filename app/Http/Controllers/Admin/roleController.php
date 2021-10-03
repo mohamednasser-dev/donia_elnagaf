@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class RoleController extends Controller
     {
         $role = Role::create(['name' => $request->name]);
         $role->syncPermissions($request->permissions);
-        session()->flash('success', trans('admin.addedsuccess'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return redirect()->route('roles.index');
     }
     public function store_permission()
@@ -79,16 +80,16 @@ class RoleController extends Controller
 
             DB::delete("delete from role_has_permissions where role_id = ?", array($id));
             $role->syncPermissions($request->permissions);
-            session()->flash('success', trans('admin.updatSuccess'));
+            Alert::success('تم', trans('admin.updatSuccess'));
             return redirect()->route('roles.index');
         }
-        session()->flash('danger', trans('admin.error'));
+        Alert::error('خطأ', trans('admin.error'));
         return back();
     }
     public function destroy($id)
     {
         Role::destroy($id);
-        session()->flash('success', trans('admin.deleteSuccess'));
+        Alert::success('تم', trans('admin.deleteSuccess'));
         return redirect()->route('roles.index');
     }
 }

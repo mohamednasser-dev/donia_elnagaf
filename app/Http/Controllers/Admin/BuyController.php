@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\CustomerBill;
@@ -9,6 +10,7 @@ use App\Models\BillProduct;
 use App\Models\Customer;
 use App\Models\Product;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
 use Exception;
 use DB;
@@ -42,7 +44,9 @@ class BuyController extends Controller
             $bill_num = $customer_bills_selected->bill_num ;
             $customer_bills_products = BillProduct::where('bill_id',$customer_bills_selected->id)->orderBy('id','desc')->paginate(15);
         }
-        return view('admin.buy.buy',compact('bill_num','customer_bills_selected','customers','products','customer_bills_products','today','type'));
+
+        $emps = User::where('branch_number',Auth::user()->branch_number)->get()->pluck('name','id');
+        return view('admin.buy.buy',compact('emps','bill_num','customer_bills_selected','customers','products','customer_bills_products','today','type'));
     }
 
     public function store_cust_bill(Request $request){
@@ -62,7 +66,7 @@ class BuyController extends Controller
         $data_create['is_bill'] = 'y';
         $data_create['user_id'] = Auth::user()->id;
         CustomerBill::create($data_create);
-        session()->flash('success', trans('admin.fatora_open_success'));
+        Alert::success('تم',  trans('admin.fatora_open_success'));
         return back();
     }
 
@@ -75,7 +79,15 @@ class BuyController extends Controller
         $today = $this->today;
         $data['pay'] = $request->pay ;
         $data['remain'] = $request->remain ;
+        $data['emp_id'] = $request->emp_id ;
         CustomerBill::findOrFail($bill_id)->update($data);
+
+        //add total payment to emp
+        $emp_data = User::find($request->emp_id);
+        $emp_data->total_payment = $emp_data->total_payment + $request->pay ;
+        $emp_data->save();
+
+        //prepare data to print design paper ...
         $CustomerBill = CustomerBill::find($bill_id);
         $BillProduct =  BillProduct::where('bill_id',$bill_id)->get();
         return view('admin.buy.bill_design',compact('today','CustomerBill','BillProduct'));
@@ -151,7 +163,7 @@ class BuyController extends Controller
         $error_array = array();
         $success_output = '';
         if ($validation->fails()){
-            session()->flash('danger', $validation->messages()->getMessages());
+            Alert::error('خطأ',  $validation->messages()->getMessages());
             return back();
         }else{
             if($request->get('button_action') == "insert"){
@@ -161,7 +173,6 @@ class BuyController extends Controller
                     'name'    =>  $product->name,
                     'product_id'    =>  $request->get('product_id'),
                     'bill_id'     =>  $request->get('bill_id'),
-                    'date'     =>  $request->get('date'),
                     'quantity'     =>  $request->get('quantity'),
                     'price'     =>  $request->get('price'),
                     'user_id'     =>  Auth::user()->id,
@@ -174,8 +185,7 @@ class BuyController extends Controller
                         $cust_bill->total = $cust_bill->total + $total ;
                         $cust_bill->remain = $cust_bill->remain + $total ;
                         $cust_bill->save();
-
-                        session()->flash('success', trans('admin.added_bill_product'));
+                        Alert::success('تم',  trans('admin.added_bill_product'));
                         return back();
                     }
                 }
@@ -232,11 +242,11 @@ class BuyController extends Controller
                     $cust_bill->total = $cust_bill->total - $BillProduct->total ;
                     $cust_bill->remain = $cust_bill->remain - $BillProduct->total ;
                     $cust_bill->save();
-                    session()->flash('success', trans('admin.deleteSuccess'));
+                    Alert::success('تم',  trans('admin.deleteSuccess'));
                 }
             }
         }catch(Exception $exception){
-            session()->flash('danger', trans('admin.error'));
+            Alert::error('تم',  trans('admin.error'));
         }
         return back();
     }
@@ -256,7 +266,7 @@ class BuyController extends Controller
         $bill->total = 0 ;
         $bill->remain = 0 - $bill->pay ;
         $bill->save();
-        session()->flash('success', trans('admin.deleteAllSuccess'));
+        Alert::success('تم',  trans('admin.deleteAllSuccess'));
         return back();
     }
 }

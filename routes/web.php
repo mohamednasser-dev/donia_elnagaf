@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('users/actived', 'Admin\usersController@update_Actived')->name('users.actived');
     Route::get('users/login/history', 'Admin\usersController@login_history')->name('users.login_history');
     Route::get('users/login/settings', 'Admin\usersController@login_times')->name('users.login.settings');
+    Route::get('users/charts/banches', 'Admin\usersController@chart_branches')->name('users.charts');
+    Route::get('users/charts/banches/{id}', 'Admin\usersController@charts')->name('users.charts.branch');
 
     //user permissions and roles
     Route::resource('roles', 'Admin\roleController');
@@ -71,6 +73,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     //categories
     Route::resource('categories', 'Admin\categoryController');
     Route::get('categories/{id}/delete', 'Admin\categoryController@destroy');
+    Route::post('categories/update/new', 'Admin\categoryController@update')->name('category.new_update');
     Route::get('inbox', 'Admin\categoryController@inbox');
 
     //bases

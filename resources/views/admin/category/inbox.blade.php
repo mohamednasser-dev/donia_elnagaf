@@ -57,7 +57,6 @@
                                 </div>
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['categories'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
                                         <div class="form-group">
                                             <label for="recipient-name" class="control-label">{{trans('admin.category_name')}}</label>
                                             {{ Form::text('name',null,["class"=>"form-control" ,"required"]) }}
@@ -72,11 +71,10 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
-                                        Close
+                                        الغاء
                                     </button>
                                     {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
                                     {{ Form::close() }}
-
                                 </div>
                             </div>
                         </div>

@@ -23,38 +23,21 @@ class productComponentsController extends Controller
         return view('admin.productsCompnents.index', compact('products','selected_cat'));
 
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::where('type','product')->get();
         $bases = Base::pluck('id', 'name');
         $bases = json_encode($bases);
-
         return view('admin.productsCompnents.create', compact('bases','categories'));
-
     }
     public function filter_category(Request $request)
     {
         $selected_cat = $request->category_id;
         $products = Product::where('category_id',$selected_cat)->paginate(20);
         return view('admin.productsCompnents.index', compact('products','selected_cat'));
-
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-
         $data = $this->validate(\request(),
             [
                 'name' => 'required|unique:products',
@@ -83,13 +66,6 @@ class productComponentsController extends Controller
         Alert::success('تم', trans('admin.addedsuccess'));
         return redirect(url('products'));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request)
     {
         $data = $this->validate(\request(),
@@ -101,15 +77,9 @@ class productComponentsController extends Controller
         $product = Product::whereId($request->id)->first();
         $product->quantity = $product->quantity + $request->quantity;
         $product->save();
-        session()->flash('success', 'تم اضافه الكميه بنجاح!');
+        Alert::success('تم',  'تم اضافه الكميه بنجاح!');
         return back();
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $product = Product::where('id', $id)->with('Bases')->first();
@@ -117,18 +87,9 @@ class productComponentsController extends Controller
     }
     public function edit_price()
     {
-//        $product = Product::where('id', $id)->with('Bases')->first();
-//        , compact('product')
         return view('admin.productsCompnents.edit_price');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $data = $this->validate(\request(),
@@ -146,11 +107,10 @@ class productComponentsController extends Controller
             $data['image'] = $this->MoveImage($request->image);
 
         }
-        $product = Product::whereId($id)->update($data);
-        session()->flash('success', trans('admin.updatSuccess'));
+        Product::whereId($id)->update($data);
+        Alert::success('تم', trans('admin.updatSuccess'));
         return redirect(url('products'));
     }
-
     public function search_price(Request $request)
     {
         $data = $this->validate(\request(),
@@ -158,19 +118,17 @@ class productComponentsController extends Controller
                 'barcode' => 'required',
                 'price' => 'required',
             ]);
-
         $product = Product::where('barcode',$request->barcode)->get();
         if($product->count() > 0){
             $input['selling_price'] = $request->price ;
             Product::where('barcode',$request->barcode)->update($input);
-            session()->flash('success', 'تم تعديل سعر البيع بنجاح');
+            Alert::success('تم','تم تعديل سعر البيع بنجاح');
             return redirect()->back();
         }else{
-            session()->flash('danger', 'لا يوجد منتجات بهذا الباركود');
+            Alert::warning('تنبية','لا يوجد منتجات بهذا الباركود');
             return redirect()->back();
         }
     }
-
     public function pull_quantity(Request $request)
     {
         $data = $this->validate(\request(),
@@ -179,7 +137,6 @@ class productComponentsController extends Controller
                 'product_id' => 'required',
                 'category_id' => 'required',
             ]);
-
         $product = Product::where('id',$request->product_id)->first();
         if($product){
             if($request->category_id != $product->category_id){
@@ -208,29 +165,20 @@ class productComponentsController extends Controller
                 Alert::warning('لم يتم سحب الكمية', 'يجب اختيار مخزن اخر غير مخزن المنتج نفسه');
                 return redirect()->back();
             }
-
         }else{
             Alert::warning('خطأ', 'يجب اختيار منتج صحيح اولا');
             return redirect()->back();
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $user = Product::where('id', $id)->first();
         try {
             $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
+            Alert::success('تم', trans('admin.deleteSuccess'));
         } catch (Exception $exception) {
-            session()->flash('danger', '!لا يمكن حذف المنتج');
+            Alert::error('خطأ', '!لا يمكن حذف المنتج');
         }
         return back();
     }
-
 }

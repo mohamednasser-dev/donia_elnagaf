@@ -31,12 +31,17 @@
                             <th class="text-lg-center">{{trans('admin.actions')}}</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         @foreach($categories as $user)
                             <tr>
                                 <td class="text-lg-center">{{$user->name}}</td>
                                 <td class="text-lg-center">
+                                    <a class='btn btn-raised btn-warning btn-circle'
+                                       href=""
+                                       data-editid="{{$user->id}}" data-catname="{{$user->name}}" id="edit"
+                                       alt="default" data-toggle="modal" title="تعديل" data-target="#edit-modal"><i
+                                            class="fa fa-edit"></i></a>
+
                                     <form method="get" id='delete-form-{{ $user->id }}'
                                           action="{{url('categories/'.$user->id.'/delete')}}"
                                           style='display: none;'>
@@ -50,7 +55,7 @@
                                         }else {
                                         event.preventDefault();
                                         }"
-                                            class='btn btn-danger btn-circle' href=" "><i
+                                            class='btn btn-danger btn-circle' title="حذف" href=" "><i
                                             class="fa fa-trash" aria-hidden='true'>
                                         </i>
                                     </button>
@@ -73,7 +78,6 @@
                                 </div>
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['categories'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.category_name')}}</label>
@@ -91,10 +95,54 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.modal -->
+                    <!-- For edit -->
+                    <div id="edit-modal" class="modal fade" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{trans('admin.edit_base')}}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ Form::open( ['route'  => ['category.new_update'],'method'=>'post' , 'class'=>'form'] ) }}
+                                    <div class="form-group">
+                                        <label for="recipient-name"
+                                               class="control-label">{{trans('admin.category_name')}}</label>
+                                        {{ Form::hidden('id',null,["class"=>"form-control" ,"required" , 'id'=>'txt_id']) }}
+                                        {{ Form::text('name',null,["class"=>"form-control" ,"required",'id'=> 'txt_name']) }}
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
+                                        {{trans('admin.close')}}
+                                    </button>
+                                    {{ Form::submit( trans('admin.public_Edit') ,['class'=>'btn btn-warning','style'=>'margin:10px']) }}s
+                                    {{ Form::close() }}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        var id;
+        $(document).on('click', '#edit', function() {
+            id = $(this).data('editid');
+
+            cat_id = $(this).data('editid');
+            catname = $(this).data('catname');
+            $("#txt_id").val(cat_id);
+            $("#txt_name").val(catname);
+
+        });
+    </script>
 @endsection
 

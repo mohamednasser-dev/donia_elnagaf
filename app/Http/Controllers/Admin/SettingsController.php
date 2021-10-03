@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SettingsController extends Controller
 {
@@ -25,7 +26,7 @@ class SettingsController extends Controller
                 'close_time' => 'required',
             ]);
         Setting::where('id',1)->update($data);
-        session()->flash('success', trans('admin.updatSuccess'));
+        Alert::success('تم', trans('admin.updatSuccess'));
         return redirect()->back();
     }
 }

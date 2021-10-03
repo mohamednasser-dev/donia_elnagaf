@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Carbon\Carbon;
 use Exception;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class supllierController extends Controller
 {
@@ -61,7 +62,7 @@ class supllierController extends Controller
         $data['user_id'] = Auth::user()->id;
         $user = Supplier::create($data);
         $user->save();
-        session()->flash('success', trans('admin.addedsuccess'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return redirect(url('supplier'));
     }
 
@@ -103,7 +104,7 @@ class supllierController extends Controller
             $data_bill['pay'] = $SupplierSale->pay + $money ;
             $SupplierSale = SupplierSale::where('id',$bill_id)->update($data_bill);
         }
-        session()->flash('success', trans('admin.payment_success'));
+        Alert::success('تم', trans('admin.payment_success'));
         return back();
     }
 
@@ -120,7 +121,7 @@ class supllierController extends Controller
         $data['date'] = $this->today ;
         $data['total'] =  $request->input('remain');
         SupplierSale::create($data);
-        session()->flash('success', trans('admin.old_pay_success'));
+        Alert::success('تم', trans('admin.old_pay_success'));
         return back();
     }
 
@@ -138,7 +139,7 @@ class supllierController extends Controller
                 'address' => 'required',
             ]);
         $user = Supplier::whereId($request->id)->update($data);
-        session()->flash('success', trans('admin.updatSuccess'));
+        Alert::success('تم', trans('admin.updatSuccess'));
         return redirect(url('supplier'));
     }
 
@@ -153,26 +154,23 @@ class supllierController extends Controller
         $user = Supplier::where('id', $id)->first();
         try {
             $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
+            Alert::success('تم', trans('admin.deleteSuccess'));
         }catch(Exception $exception){
-            session()->flash('danger',trans('admin.delete_no_Success'));
+            Alert::error('خطأ', trans('admin.delete_no_Success'));
         }
         return back();
     }
-
     public function destroy_payment($id)
     {
         $user = SupplierSale::where('id', $id)->first();
         try {
             $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
+            Alert::success('تم', trans('admin.deleteSuccess'));
         }catch(Exception $exception){
-            session()->flash('danger', trans('admin.payment_no_delete'));
+            Alert::success('خطأ', trans('admin.payment_no_delete'));
         }
         return back();
     }
-
-    
     public function show_bill($id)
     {
         $bill_bases  = SupplierBillBase::where('supplier_sale_id', $id)->paginate(30);

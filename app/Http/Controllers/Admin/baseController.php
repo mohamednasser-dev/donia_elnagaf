@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Base;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class baseController extends Controller
 {
@@ -52,7 +53,7 @@ class baseController extends Controller
             ]);
         $data['user_id'] = Auth::user()->id;
         Base::create($data);
-        session()->flash('success', trans('admin.addedsuccess'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return redirect(url('bases'));
     }
 
@@ -100,7 +101,7 @@ class baseController extends Controller
                 'category_id' => 'required',
             ]);
         Base::whereId($request->id)->update($data);
-        session()->flash('success', trans('admin.updatSuccess'));
+        Alert::success('تم',  trans('admin.updatSuccess'));
         return redirect(url('bases'));
     }
 
@@ -115,9 +116,9 @@ class baseController extends Controller
         $user = Base::where('id', $id)->first();
         try {
             $user->delete();
-            session()->flash('success', trans('admin.deleteSuccess'));
+            Alert::success('تم',   trans('admin.deleteSuccess'));
         }catch(Exception $exception){
-            session()->flash('danger', '!لا يمكن حذف  مواد خام مستخدمه فى منتجات');
+            Alert::error('خطأ',   '!لا يمكن حذف  مواد خام مستخدمه فى منتجات');
         }
         return back();
     }

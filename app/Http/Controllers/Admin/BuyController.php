@@ -27,6 +27,7 @@ class BuyController extends Controller
     }
 
     public function show($type){
+        $user = auth()->user() ;
         $today = $this->today;
         $products = Product::pluck('id', 'name');
         $products = json_encode($products);
@@ -40,12 +41,12 @@ class BuyController extends Controller
         if(count($customer_bills) == 0){
             $bill_num = 1 ;
         }else{
-            $customer_bills_selected = CustomerBill::where('is_bill','y')->latest('bill_num')->first();
+            $customer_bills_selected = CustomerBill::where( 'branch_number' , $user->branch_number )->where('is_bill','y')->latest('bill_num')->first();
             $bill_num = $customer_bills_selected->bill_num ;
             $customer_bills_products = BillProduct::where('bill_id',$customer_bills_selected->id)->orderBy('id','desc')->paginate(15);
         }
 
-        $emps = User::where('branch_number',Auth::user()->branch_number)->get()->pluck('name','id');
+        $emps = User::where( 'branch_number' , $user->branch_number )->get()->pluck('name','id');
         return view('admin.buy.buy',compact('emps','bill_num','customer_bills_selected','customers','products','customer_bills_products','today','type'));
     }
 
@@ -65,6 +66,7 @@ class BuyController extends Controller
         $data_create['date'] = $this->today;
         $data_create['is_bill'] = 'y';
         $data_create['user_id'] = Auth::user()->id;
+        $data_create['branch_number'] = Auth::user()->branch_number;
         CustomerBill::create($data_create);
         Alert::success('تم',  trans('admin.fatora_open_success'));
         return back();
@@ -76,10 +78,12 @@ class BuyController extends Controller
     }
 
     public function bill_design(Request $request , $bill_id){
+        $user = auth()->user() ;
         $today = $this->today;
         $data['pay'] = $request->pay ;
         $data['remain'] = $request->remain ;
         $data['emp_id'] = $request->emp_id ;
+        $data['branch_number'] = $user->branch_number ;
         CustomerBill::findOrFail($bill_id)->update($data);
 
         //add total payment to emp
@@ -90,14 +94,16 @@ class BuyController extends Controller
         //prepare data to print design paper ...
         $CustomerBill = CustomerBill::find($bill_id);
         $BillProduct =  BillProduct::where('bill_id',$bill_id)->get();
-        return view('admin.buy.bill_design',compact('today','CustomerBill','BillProduct'));
+//        return view('admin.buy.bill_design',compact('today','CustomerBill','BillProduct'));
+        return view('admin.buy.invoice',compact('today','CustomerBill','BillProduct'));
     }
 
     public function bill_design_last($bill_id){
         $today = $this->today;
         $CustomerBill = CustomerBill::find($bill_id);
         $BillProduct =  BillProduct::where('bill_id',$bill_id)->get();
-        return view('admin.buy.last_bill',compact('today','CustomerBill','BillProduct'));
+//        return view('admin.buy.last_bill',compact('today','CustomerBill','BillProduct'));
+        return view('admin.buy.invoice',compact('today','CustomerBill','BillProduct'));
     }
 
     public function live_search(Request $request)

@@ -24,7 +24,7 @@ class buyBillsController extends Controller
 
     public function index()
     {
-        $customer_bills = CustomerBill::where('date', Carbon::now()->toDateString())->get();
+        $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date', Carbon::now()->toDateString())->get();
         return view('admin.buy_bills.buy_bills', compact('customer_bills'));
 
     }
@@ -51,16 +51,13 @@ class buyBillsController extends Controller
     public function store(Request $request)
     {
         if ($request->bill_num != null) {
-            $customer_bills = CustomerBill::where('bill_num', $request->bill_num)->get();
-
+            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('bill_num', $request->bill_num)->get();
         } elseif ($request->date != null) {
-            $customer_bills = CustomerBill::where('date', $request->date)->get();
+            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date', $request->date)->get();
         } else {
-            $customer_bills = CustomerBill::where('cust_id', $request->cust_id)->get();
-
+            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('cust_id', $request->cust_id)->get();
         }
         return view('admin.buy_bills.buy_bills', compact('customer_bills'));
-
     }
 
     public function edit_product(Request $request)

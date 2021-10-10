@@ -2,6 +2,7 @@
 return [
 
     //new
+    'edit_category' => 'تعديل المخزن',
     'choose_emp' => 'اختر موظف',
     'emp_name' => 'اسم الموظف',
     'barcode_search' => 'بحث بالباركود',

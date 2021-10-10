@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Outgoing extends Model
 {
     protected $fillable = [
-        'name', 'cost', 'date', 'user_id','type'
+        'name', 'cost', 'date', 'user_id','type','branch_number'
     ];
 
     public function employee()

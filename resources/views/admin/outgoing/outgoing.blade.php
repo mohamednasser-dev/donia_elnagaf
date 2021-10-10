@@ -30,7 +30,7 @@
                             <th class="text-lg-center">{{trans('admin.cost')}}</th>
                             <th class="text-lg-center">{{trans('admin.date')}}</th>
                             <th class="text-lg-center">{{trans('admin.employee')}}</th>
-                            <th></th>
+                            <th class="text-lg-center">{{trans('admin.public_delete')}}</th>
                         </tr>
                         </thead>
 
@@ -78,7 +78,6 @@
                                 </div>
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['outgoing'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.outgoing_name')}}</label>
@@ -92,7 +91,7 @@
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.date')}}</label>
-                                        {{ Form::date('date',null,["class"=>"form-control" ,"required"]) }}
+                                        {{ Form::date('date',$today,["class"=>"form-control" ,"required"]) }}
                                     </div>
 
 

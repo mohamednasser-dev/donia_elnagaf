@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Login_history;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Model_has_role;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,8 @@ class usersController extends Controller
 
     public function index()
     {
-        $users = $this->objectName::where('deleted', '0')->where('type', 'user')->orderBy('name', 'desc')->paginate(10);
+        $users = $this->objectName::where('branch_number' , Auth()->user()->branch_number)->where('deleted', '0')
+            ->where('type', 'user')->orderBy('name', 'desc')->paginate(10);
         return view($this->folderView . 'users', compact('users'));
     }
 
@@ -114,6 +116,7 @@ class usersController extends Controller
             if ($request->fesh_image != null) {
                 $data['fesh_image'] = $this->MoveImage($request->fesh_image, 'uploads/users_images/fesh_images');
             }
+            $data['branch_number'] = Auth::user()->branch_number ;
             $user = User::create($data);
             if ($user->save()) {
                 $user->assignRole($request['role_id']);

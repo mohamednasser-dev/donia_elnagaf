@@ -12,6 +12,7 @@ class AccountListController extends Controller
     {
         $this->middleware(['permission:Account statement']);
     }
+
     public function index()
     {
         return view('admin.account_list.accountlist');
@@ -31,23 +32,22 @@ class AccountListController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-            $customer_account = CustomerBill::where('cust_id',$request->cust_id)
-                ->whereBetween('date',[$request->fromdate,$request->todate])->get();
-            $from =$request->fromdate;
-            $to =$request->todate;
-        return view('admin.account_list.print',compact('customer_account','from','to'));
-
+        $customer_account = CustomerBill::where('branch_number', Auth()->user()->branch_number)->where('cust_id', $request->cust_id)
+            ->whereBetween('date', [$request->fromdate, $request->todate])->get();
+        $from = $request->fromdate;
+        $to = $request->todate;
+        return view('admin.account_list.print', compact('customer_account', 'from', 'to'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -58,7 +58,7 @@ class AccountListController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -69,8 +69,8 @@ class AccountListController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -81,7 +81,7 @@ class AccountListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

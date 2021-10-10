@@ -27,7 +27,7 @@ class customerController extends Controller
 
     public function index()
     {
-        $customers = Customer::paginate(10);
+        $customers = Customer::where('branch_number' , Auth()->user()->branch_number)->paginate(10);
         return view('admin.customer.index', compact('customers'));
 
     }
@@ -58,13 +58,14 @@ class customerController extends Controller
         $data = $this->validate(\request(),
             [
                 'name' => 'required|unique:customers',
-                'email' => 'required|unique:customers',
                 'phone' => 'required|unique:customers',
                 'address' => 'required',
-                'password' => 'required',
+//                'email' => 'required|unique:customers',
+//                'password' => 'required',
             ]);
         $data['user_id'] = Auth::user()->id;
         $data['password'] = Hash::make($request->password);
+        $data['branch_number'] = Auth()->user()->branch_number;
         $user = Customer::create($data);
         $user->save();
         Alert::success('تم', trans('admin.addedsuccess'));
@@ -145,14 +146,14 @@ class customerController extends Controller
         $data = $this->validate(\request(),
             [
                 'name' => 'required|unique:customers,name,' . $request->id,
-                'email' => 'required|unique:customers,email,' . $request->id,
                 'phone' => 'required|unique:customers,phone,' . $request->id,
-                'password' => 'sometimes|nullable',
+//                'email' => 'required|unique:customers,email,' . $request->id,
+//                'password' => 'sometimes|nullable',
              ]);
         if($request->password){
             $data['password'] = Hash::make($request->password);
         }
-        $user = Customer::whereId($request->id)->update($data);
+        Customer::whereId($request->id)->update($data);
         Alert::success('تم', trans('admin.updatSuccess'));
         return redirect(url('customer'));
     }

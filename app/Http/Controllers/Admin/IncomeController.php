@@ -22,13 +22,13 @@ class IncomeController extends Controller
     public function index()
     {
         $today = $this->today ;
-        $customer_bills = CustomerBill::where('date', $today)->paginate(20);
-        $outgoings = Outgoing::where('date', $today)->paginate(20);
-        $supplierPayments = SupplierSale::where('date', $today)->paginate(20);
+        $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date', $today)->paginate(20);
+        $outgoings = Outgoing::where('branch_number' , Auth()->user()->branch_number)->where('date', $today)->paginate(20);
+        $supplierPayments = SupplierSale::where('branch_number' , Auth()->user()->branch_number)->where('date', $today)->paginate(20);
 
-        $total_pay =CustomerBill::where('date',$today)->sum('pay');
-        $total_outgoing =Outgoing::where('date',$today)->sum('cost');
-        $total_supplierPayment =SupplierSale::where('date',$today)->sum('pay');
+        $total_pay = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date',$today)->sum('pay');
+        $total_outgoing = Outgoing::where('branch_number' , Auth()->user()->branch_number)->where('date',$today)->sum('cost');
+        $total_supplierPayment = SupplierSale::where('branch_number' , Auth()->user()->branch_number)->where('date',$today)->sum('pay');
         $remain = $total_pay - ($total_outgoing + $total_supplierPayment);
         $selected_method = 'daily';
         $selected_month = Carbon::now()->month ;

@@ -77,15 +77,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="example-password-input2" class="col-md-2 col-form-label">الفرع</label>
-                        <div class="col-md-10">
-                            <select name="branch_number" required class="form-control custom-select col-12">
-                                <option value="1" selected>الفرع الاول</option>
-                                <option value="2">الفرع الثاني</option>
-                            </select>
-                        </div>
-                    </div>
+{{--                    <div class="form-group row">--}}
+{{--                        <label for="example-password-input2" class="col-md-2 col-form-label">الفرع</label>--}}
+{{--                        <div class="col-md-10">--}}
+{{--                            <select name="branch_number" required class="form-control custom-select col-12">--}}
+{{--                                <option value="1" selected>الفرع الاول</option>--}}
+{{--                                <option value="2">الفرع الثاني</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="form-group row">
                         <label for="example-password-input2" class="col-md-2 col-form-label">تسجيل الدخول</label>
                         <div class="col-md-10">

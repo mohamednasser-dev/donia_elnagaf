@@ -26,13 +26,8 @@
                             <h4 class="card-title">{{trans('admin.Search_area')}}</h4>
                             <div class="row">
                                 <div>
-
-
                                     {{ Form::open( ['url'  => ['accounts'],'method'=>'post' ] ) }}
-                                    {{ csrf_field() }}
                                 </div>
-
-
                                 <div class="col-md-4">
                                     <div>
                                         <label>{{trans('admin.search_form_date')}}</label>
@@ -48,7 +43,7 @@
                                 <div class="col-md-4">
                                     <div>
                                         <label>{{trans('admin.search_by_cust_name')}}</label>
-                                        {{ Form::select('cust_id',App\Models\Customer::pluck('name','id'),null
+                                        {{ Form::select('cust_id',App\Models\Customer::where('branch_number', Auth()->user()->branch_number)->pluck('name','id'),null
                                         ,["class"=>"select2 form-control custom-select" ,'placeholder'=>trans('admin.choose_cust') ,'required' ]) }}
                                     </div>
                                 </div>

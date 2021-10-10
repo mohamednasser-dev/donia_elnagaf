@@ -30,7 +30,7 @@
                             <th class="text-center">{{trans('admin.name')}}</th>
                             <th class="text-center">{{trans('admin.phone')}}</th>
                             <th class="text-center">{{trans('admin.address')}}</th>
-                            <th class="text-center">{{trans('admin.employee')}}</th>
+{{--                            <th class="text-center">{{trans('admin.employee')}}</th>--}}
                             <th class="text-center">{{trans('admin.actions')}}</th>
                             <th class="text-center">{{trans('admin.public_delete')}}</th>
                         </tr>
@@ -41,7 +41,7 @@
                                 <td class="text-center">{{$cust->name}}</td>
                                 <td class="text-center">{{$cust->phone}}</td>
                                 <td class="text-center">{{$cust->address}}</td>
-                                <td class="text-center">{{$cust->employee->name}}</td>
+{{--                                <td class="text-center">{{$cust->employee->name}}</td>--}}
                                 <td class="text-lg-center">
                                     <a class='btn btn-raised btn-primary btn-sml'
                                        href=" {{url('customer/'.$cust->id.'/account')}}">
@@ -100,7 +100,6 @@
                                 </div>
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['customer'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.name')}}</label>
@@ -116,15 +115,15 @@
                                                class="control-label">{{trans('admin.address')}}</label>
                                         {{ Form::text('address',null,["class"=>"form-control" ,"required"]) }}
                                     </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name"
-                                               class="control-label">{{trans('admin.email')}}</label>
-                                        {{ Form::email('email',null,["class"=>"form-control" ,"required"]) }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name"  class="control-label">{{trans('admin.password')}}</label>
-                                        {{ Form::password('password',null,["class"=>"form-control" ,"required"]) }}
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="recipient-name"--}}
+{{--                                               class="control-label">{{trans('admin.email')}}</label>--}}
+{{--                                        {{ Form::email('email',null,["class"=>"form-control" ,"required"]) }}--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="recipient-name"  class="control-label">{{trans('admin.password')}}</label>--}}
+{{--                                        {{ Form::password('password',null,["class"=>"form-control" ,"required"]) }}--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
@@ -149,7 +148,6 @@
                                 </div>
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['editcustomer'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    {{ csrf_field() }}
                                     {{ Form::hidden('id',null,["class"=>"form-control" ,"required",'id'=>'id']) }}
 
                                     <div class="form-group">
@@ -167,15 +165,15 @@
                                                class="control-label">{{trans('admin.address')}}</label>
                                         {{ Form::text('address',null,["class"=>"form-control" ,"required",'id'=>'address']) }}
                                     </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name"
-                                               class="control-label">{{trans('admin.email')}}</label>
-                                        {{ Form::email('email',null,["class"=>"form-control" ,"required",'id'=>'email']) }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name"  class="control-label">{{trans('admin.password')}}</label>
-                                        {{ Form::password('password',null,["class"=>"form-control" ,"required"]) }}
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="recipient-name"--}}
+{{--                                               class="control-label">{{trans('admin.email')}}</label>--}}
+{{--                                        {{ Form::email('email',null,["class"=>"form-control" ,"required",'id'=>'email']) }}--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="recipient-name"  class="control-label">{{trans('admin.password')}}</label>--}}
+{{--                                        {{ Form::password('password',null,["class"=>"form-control" ,"required"]) }}--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
@@ -206,7 +204,6 @@
                     $('#name').val(html.data.name);
                     $('#phone').val(html.data.phone);
                     $('#address').val(html.data.address);
-                    $('#email').val(html.data.email);
                 }
             })
         });

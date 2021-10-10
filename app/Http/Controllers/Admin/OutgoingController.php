@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
@@ -18,8 +19,9 @@ class OutgoingController extends Controller
     public function index()
     {
         //outgoing
-        $outgoings = Outgoing::paginate(10);
-        return view('admin.outgoing.outgoing', compact('outgoings'));
+        $outgoings = Outgoing::where('branch_number' , Auth()->user()->branch_number)->paginate(10);
+        $today = Carbon::now();
+        return view('admin.outgoing.outgoing', compact('outgoings','today'));
 
     }
 
@@ -48,6 +50,7 @@ class OutgoingController extends Controller
                 'date' => 'required|date',
             ]);
         $data['user_id'] = Auth::user()->id;
+        $data['branch_number'] = Auth()->user()->branch_number;
         $user = Outgoing::create($data);
         $user->save();
         Alert::success('تم', trans('admin.addedsuccess'));

@@ -6,12 +6,12 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-themecolor">إحصائيات موظفين الفرع</h3>
+            <h3 class="text-themecolor">إحصائيات الانتاجية</h3>
         </div>
         <div class="col-md-7 align-self-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">إحصائيات موظفين الفرع</li>
-                <li class="breadcrumb-item active"><a href="{{route('users.charts')}}">إحصائيات الانتاجية</a></li>
+                <li class="breadcrumb-item">إحصائيات الانتاجية</li>
+{{--                <li class="breadcrumb-item active"><a href="{{route('users.charts')}}">إحصائيات الانتاجية</a></li>--}}
                 <li class="breadcrumb-item active"><a href="{{url('home')}}">{{trans('admin.nav_home')}}</a></li>
             </ol>
         </div>
@@ -38,6 +38,12 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <a class="btn btn-danger" href="{{route('users.charts.branch.clear',auth()->user()->branch_number)}}">تصفية الانتاجية للموظفين</a>
+            </div>
+        </div>
 @endsection
 @section('scripts')
 {{--    <script src="{{ asset('/assets/plugins/Chart.js/chartjs.init.js') }}"></script>--}}

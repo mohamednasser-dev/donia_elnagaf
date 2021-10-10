@@ -57,7 +57,7 @@
                                 <li><a href="{{url('roles')}} ">{{trans('admin.nav_permissions')}}</a></li>
                             @endcan
                                 <li><a href="{{route('users.login_history')}} ">سجل الدخول و الخروج</a></li>
-                                <li><a href="{{route('users.charts')}} ">إحصائيات الانتاجية</a></li>
+                                <li><a href="{{route('users.charts.branch',auth()->user()->branch_number)}}">إحصائيات الانتاجية</a></li>
                         </ul>
                     </li>
                     @can('Account statement')

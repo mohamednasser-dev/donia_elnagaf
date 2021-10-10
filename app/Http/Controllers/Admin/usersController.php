@@ -69,6 +69,12 @@ class usersController extends Controller
 
         return view($this->folderView . 'charts.charts', compact('sales_emp_names', 'sales_total_payments', 'stores_emp_names', 'stores_total_payments'));
     }
+    public function clear_emp_data($id)
+    {
+        $users = $this->objectName::where('type','user')->where('branch_number', $id)->update(['total_payment'=>0]);
+        Alert::success('تم','تم تصفية الانتاجية بنجاح');
+        return back();
+    }
 
     public function show($id)
     {
@@ -132,6 +138,8 @@ class usersController extends Controller
         $user_data = $this->objectName::where('id', $id)->first();
         return view($this->folderView . 'edit', \compact('user_data', 'roles'));
     }
+
+
 
     public function login_history()
     {

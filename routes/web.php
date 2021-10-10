@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('users/login/settings', 'Admin\usersController@login_times')->name('users.login.settings');
     Route::get('users/charts/banches', 'Admin\usersController@chart_branches')->name('users.charts');
     Route::get('users/charts/banches/{id}', 'Admin\usersController@charts')->name('users.charts.branch');
+    Route::get('users/charts/banches/clear/{id}', 'Admin\usersController@clear_emp_data')->name('users.charts.branch.clear');
 
     //user permissions and roles
     Route::resource('roles', 'Admin\roleController');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Product_history;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -191,6 +192,20 @@ class BuyController extends Controller
                         $cust_bill->total = $cust_bill->total + $total ;
                         $cust_bill->remain = $cust_bill->remain + $total ;
                         $cust_bill->save();
+
+                        // add product to history
+                        $history_data['billProduct_id'] = $bill_Product->id;
+                        $history_data['product_name'] = $product->name;
+                        $history_data['notes'] = 'بيع المنتج';
+                        $history_data['quantity'] = $request->get('quantity');
+                        $history_data['gomla_price'] = $product->gomla_price;
+                        $history_data['selling_price'] = $request->get('price');
+                        $history_data['product_id'] = $request->get('product_id');
+                        $history_data['category_id'] = $product->category_id;
+                        $history_data['type'] = 'remove';
+                        $history_data['user_id'] = Auth::user()->id;
+                        Product_history::create($history_data);
+
                         Alert::success('تم',  trans('admin.added_bill_product'));
                         return back();
                     }

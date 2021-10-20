@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product_history;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -16,26 +17,30 @@ class productComponentsController extends Controller
     {
         $this->middleware(['permission:products']);
     }
+
     public function index()
     {
-        $selected_cat = Category::orderBy('id','asc')->first()->id;
-        $products = Product::where('category_id',$selected_cat)->paginate(20);
-        return view('admin.productsCompnents.index', compact('products','selected_cat'));
+        $selected_cat = Category::orderBy('id', 'asc')->first()->id;
+        $products = Product::where('category_id', $selected_cat)->paginate(20);
+        return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
 
     }
+
     public function create()
     {
-        $categories = Category::where('type','product')->get();
+        $categories = Category::where('type', 'product')->get();
         $bases = Base::pluck('id', 'name');
         $bases = json_encode($bases);
-        return view('admin.productsCompnents.create', compact('bases','categories'));
+        return view('admin.productsCompnents.create', compact('bases', 'categories'));
     }
+
     public function filter_category(Request $request)
     {
         $selected_cat = $request->category_id;
-        $products = Product::where('category_id',$selected_cat)->paginate(20);
-        return view('admin.productsCompnents.index', compact('products','selected_cat'));
+        $products = Product::where('category_id', $selected_cat)->paginate(20);
+        return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
     }
+
     public function store(Request $request)
     {
         $data = $this->validate(\request(),
@@ -50,22 +55,33 @@ class productComponentsController extends Controller
         $data['total_cost'] = 0;
 
 
-        if($request->categories != null){
+        if ($request->categories != null) {
             unset($data['categories']);
-            foreach ($request->categories as $key => $row){
+            foreach ($request->categories as $key => $row) {
                 $data['category_id'] = $row;
-                if($request->quantity[$row-1] != null){
-                    $data['quantity'] = $request->quantity[$row-1];
-                    Product::create($data);
+                if ($request->quantity[$row - 1] != null) {
+                    $data['quantity'] = $request->quantity[$row - 1];
+                    $result = Product::create($data);
+                    $history_data['product_name'] = $request->name;
+                    $history_data['notes'] = 'اضافة منتج جديد';
+                    $history_data['quantity'] = $request->quantity[$row - 1];
+                    $history_data['gomla_price'] = $request->gomla_price;
+                    $history_data['selling_price'] = $request->selling_price;
+                    $history_data['product_id'] = $result->id;
+                    $history_data['category_id'] = $row;
+                    $history_data['type'] = 'add';
+                    $history_data['user_id'] = Auth::user()->id;
+                    Product_history::create($history_data);
                 }
             }
-        }else{
+        } else {
             Alert::warning('تنبية', 'يجب أختيار مخزن اولا');
             return redirect(url('products'));
         }
         Alert::success('تم', trans('admin.addedsuccess'));
         return redirect(url('products'));
     }
+
     public function show(Request $request)
     {
         $data = $this->validate(\request(),
@@ -77,14 +93,27 @@ class productComponentsController extends Controller
         $product = Product::whereId($request->id)->first();
         $product->quantity = $product->quantity + $request->quantity;
         $product->save();
-        Alert::success('تم',  'تم اضافه الكميه بنجاح!');
+
+        $history_data['product_name'] = $product->name;
+        $history_data['notes'] = 'اضافة كمية جديدة للمنتج';
+        $history_data['quantity'] = $request->quantity;
+        $history_data['gomla_price'] = $product->gomla_price;
+        $history_data['selling_price'] = $product->selling_price;
+        $history_data['product_id'] = $request->id;
+        $history_data['category_id'] = $product->category_id;
+        $history_data['type'] = 'add';
+        $history_data['user_id'] = Auth::user()->id;
+        Product_history::create($history_data);
+        Alert::success('تم', 'تم اضافه الكميه بنجاح!');
         return back();
     }
+
     public function edit($id)
     {
         $product = Product::where('id', $id)->with('Bases')->first();
         return view('admin.productsCompnents.edit', compact('product'));
     }
+
     public function edit_price()
     {
         return view('admin.productsCompnents.edit_price');
@@ -111,6 +140,7 @@ class productComponentsController extends Controller
         Alert::success('تم', trans('admin.updatSuccess'));
         return redirect(url('products'));
     }
+
     public function search_price(Request $request)
     {
         $data = $this->validate(\request(),
@@ -118,17 +148,18 @@ class productComponentsController extends Controller
                 'barcode' => 'required',
                 'price' => 'required',
             ]);
-        $product = Product::where('barcode',$request->barcode)->get();
-        if($product->count() > 0){
-            $input['selling_price'] = $request->price ;
-            Product::where('barcode',$request->barcode)->update($input);
-            Alert::success('تم','تم تعديل سعر البيع بنجاح');
+        $product = Product::where('barcode', $request->barcode)->get();
+        if ($product->count() > 0) {
+            $input['selling_price'] = $request->price;
+            Product::where('barcode', $request->barcode)->update($input);
+            Alert::success('تم', 'تم تعديل سعر البيع بنجاح');
             return redirect()->back();
-        }else{
-            Alert::warning('تنبية','لا يوجد منتجات بهذا الباركود');
+        } else {
+            Alert::warning('تنبية', 'لا يوجد منتجات بهذا الباركود');
             return redirect()->back();
         }
     }
+
     public function pull_quantity(Request $request)
     {
         $data = $this->validate(\request(),
@@ -137,39 +168,40 @@ class productComponentsController extends Controller
                 'product_id' => 'required',
                 'category_id' => 'required',
             ]);
-        $product = Product::where('id',$request->product_id)->first();
-        if($product){
-            if($request->category_id != $product->category_id){
-                $another_product = Product::where('category_id',$request->category_id)->where('barcode',$product->barcode)->first();
-                if($another_product){
-                    $another_product->quantity = $another_product->quantity + $request->quantity ;
+        $product = Product::where('id', $request->product_id)->first();
+        if ($product) {
+            if ($request->category_id != $product->category_id) {
+                $another_product = Product::where('category_id', $request->category_id)->where('barcode', $product->barcode)->first();
+                if ($another_product) {
+                    $another_product->quantity = $another_product->quantity + $request->quantity;
                     $another_product->save();
-                }else{
+                } else {
 
-                    $new_data['name'] = $product->name ;
-                    $new_data['barcode'] = $product->barcode ;
-                    $new_data['price'] = $product->price ;
-                    $new_data['total_cost'] = 0 ;
-                    $new_data['gomla_price'] = $product->gomla_price ;
-                    $new_data['selling_price'] = $product->selling_price ;
+                    $new_data['name'] = $product->name;
+                    $new_data['barcode'] = $product->barcode;
+                    $new_data['price'] = $product->price;
+                    $new_data['total_cost'] = 0;
+                    $new_data['gomla_price'] = $product->gomla_price;
+                    $new_data['selling_price'] = $product->selling_price;
                     $new_data['user_id'] = Auth::user()->id;
-                    $new_data['quantity'] = $request->quantity ;
-                    $new_data['category_id'] = $request->category_id ;
+                    $new_data['quantity'] = $request->quantity;
+                    $new_data['category_id'] = $request->category_id;
                     Product::create($new_data);
                 }
-                $product->quantity = $product->quantity - $request->quantity ;
+                $product->quantity = $product->quantity - $request->quantity;
                 $product->save();
                 Alert::success('تمت العملية بنجاح', 'تم سحب الكمية الى المخزن المختار');
                 return redirect()->back();
-            }else{
+            } else {
                 Alert::warning('لم يتم سحب الكمية', 'يجب اختيار مخزن اخر غير مخزن المنتج نفسه');
                 return redirect()->back();
             }
-        }else{
+        } else {
             Alert::warning('خطأ', 'يجب اختيار منتج صحيح اولا');
             return redirect()->back();
         }
     }
+
     public function destroy($id)
     {
         $user = Product::where('id', $id)->first();
@@ -180,5 +212,35 @@ class productComponentsController extends Controller
             Alert::error('خطأ', '!لا يمكن حذف المنتج');
         }
         return back();
+    }
+
+    public function product_history()
+    {
+        $selected_cat = Category::orderBy('id', 'asc')->first()->id;
+        $products = Product_history::orderBy('created_at', 'desc')->paginate(20);
+        $add = Product_history::where('type', 'add')->get()->sum('quantity');
+        $remove = Product_history::where('type', 'remove')->get()->sum('quantity');
+        $remain = $add - $remove;
+        return view('admin.productsCompnents.history.index', compact('products', 'selected_cat', 'add', 'remove', 'remain'));
+    }
+
+    public function filter_category_history(Request $request)
+    {
+        $selected_cat = $request->category_id;
+        $products = Product_history::where('category_id', $request->category_id)->orderBy('created_at', 'desc')->paginate(20);
+        $add = Product_history::where('category_id', $request->category_id)->where('type', 'add')->get()->sum('quantity');
+        $remove = Product_history::where('category_id', $request->category_id)->where('type', 'remove')->get()->sum('quantity');
+        $remain = $add - $remove;
+        return view('admin.productsCompnents.history.index', compact('products', 'selected_cat', 'add', 'remove', 'remain'));
+    }
+
+    public function filter_product_name_history(Request $request)
+    {
+        $selected_cat = Category::orderBy('id', 'asc')->first()->id;
+        $products = Product_history::where('product_name', $request->product_name)->orderBy('created_at', 'desc')->paginate(20);
+        $add = Product_history::where('product_name', $request->product_name)->where('type', 'add')->get()->sum('quantity');
+        $remove = Product_history::where('product_name', $request->product_name)->where('type', 'remove')->get()->sum('quantity');
+        $remain = $add - $remove;
+        return view('admin.productsCompnents.history.index', compact('products', 'selected_cat', 'add', 'remove', 'remain'));
     }
 }

@@ -30,6 +30,7 @@
                                     <li><a href="{{url('products')}}">رؤية المنتجات</a></li>
                                 @endcan
                                 <li><a href="{{route('edit.product.price')}} ">تعديل السعر بالباركود</a></li>
+                                <li><a href="{{route('product.history')}} ">حركة المنتاجات</a></li>
                             </ul>
                         </li>
                     @endcan

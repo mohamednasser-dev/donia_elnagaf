@@ -158,7 +158,6 @@
                 </div>
                 <div class="modal-body">
                     {{ Form::open( ['route'  => ['product.pull.quantity'],'method'=>'post' , 'class'=>'form'] ) }}
-
                     <div class="form-group">
                         <label for="recipient-name" class="control-label">{{trans('admin.quantity')}}</label>
                         {{ Form::number('quantity',null,["class"=>"form-control" ,"required", "min" => "1",'id'=>'txt_sahb_quantity']) }}

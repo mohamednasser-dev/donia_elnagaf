@@ -17,6 +17,7 @@
     </div>
     <div class="app-content content container-fluid">
         <div class="content-wrapper">
+            @if(auth()->user()->type == 'admin')
             <section id="html-headings-default" class="row match-height">
                 <div class="col-sm-12 col-md-12">
                     <div class="card">
@@ -42,7 +43,7 @@
                                 <div class="col-md-4">
                                     <div>
                                         <label>{{trans('admin.search_by_cust_name')}}</label>
-                                        {{ Form::select('cust_id',App\Models\Customer::pluck('name','id'),null
+                                        {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),null
                                         ,["class"=>"select2 form-control custom-select" ,'placeholder'=>trans('admin.choose_cust') ]) }}
                                     </div>
                                 </div>
@@ -55,6 +56,7 @@
                     </div>
                 </div>
             </section>
+            @endif
             <section id="html-headings-default" class="row match-height">
                 <div class="col-sm-12 col-md-12">
                     <div class="card">

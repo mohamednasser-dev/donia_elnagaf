@@ -146,16 +146,18 @@ class customerController extends Controller
         $data = $this->validate(\request(),
             [
                 'name' => 'required|unique:customers,name,' . $request->id,
-                'phone' => 'required|unique:customers,phone,' . $request->id,
+                'phone' => 'required',
+                'address' => 'required',
 //                'email' => 'required|unique:customers,email,' . $request->id,
 //                'password' => 'sometimes|nullable',
              ]);
-        if($request->password){
-            $data['password'] = Hash::make($request->password);
-        }
+//        if($request->password){
+//            $data['password'] = Hash::make($request->password);
+//        }
+
         Customer::whereId($request->id)->update($data);
         Alert::success('تم', trans('admin.updatSuccess'));
-        return redirect(url('customer'));
+        return redirect()->back();
     }
 
     /**

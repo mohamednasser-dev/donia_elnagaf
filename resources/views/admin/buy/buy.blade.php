@@ -59,10 +59,10 @@
                                                 <div class="col-md-9">
                                                     <div id="parent">
                                                         @if($customer_bills_selected != null)
-                                                            {{ Form::select('cust_id',App\Models\Customer::where('status','active')->pluck('name','id'),$customer_bills_selected->cust_id
+                                                            {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),$customer_bills_selected->cust_id
                                                               ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id","style"=>"width: 100%; height:36px;",'placeholder'=>trans('admin.choose_cust') ]) }}
                                                         @else
-                                                            {{ Form::select('cust_id',App\Models\Customer::where('status','active')->pluck('name','id'),null
+                                                            {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),null
                                                               ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id",'placeholder'=>trans('admin.choose_cust') ]) }}
                                                         @endif
                                                     </div>
@@ -180,13 +180,19 @@
                             {{ Form::open( ['url' => ['buy_bill_design/'.$customer_bills_selected->id.'/print'],'method'=>'post'] ) }}
                                 <table class="table vm font-14">
                                     <tr>
-                                        {{ Form::select('emp_id',$emps,null
+                                        {{ Form::select('emp_id',$emps,$customer_bills_selected->emp_id
                                         ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id","style"=>"width: 100%; height:36px;","required",'placeholder'=>trans('admin.choose_emp') ]) }}
                                     </tr>
                                     <tr>
                                         <td class="col-md-5">{{trans('admin.sale_total')}}</td>
                                         <td class="col-md-7 text-right font-medium b-0"> <input type="text" name="total" id="lbl_total" class='form-control center' value="{{$customer_bills_selected->total}}" readonly></td>
                                     </tr>
+                                    @if(auth()->user()->type == 'admin')
+                                    <tr>
+                                        <td class="col-md-5">الخصم</td>
+                                        <td class="col-md-7 text-right font-medium">{!! Form::number('pay',$customer_bills_selected->discount,['class'=>'form-control center','step' =>'0.01','id' =>'txt_pay','max'=>$customer_bills_selected->total,'min'=>'0' ]) !!}</td>
+                                    </tr>
+                                    @endif
                                     <tr>
                                         <td class="col-md-5">{{trans('admin.sale_pay')}}</td>
                                         <td class="col-md-7 text-right font-medium">{!! Form::number('pay',$customer_bills_selected->pay,['class'=>'form-control center','step' =>'0.01','id' =>'txt_pay','max'=>$customer_bills_selected->total,'min'=>'0' ]) !!}</td>
@@ -199,7 +205,11 @@
                                 <div class="card-body text-center">
                                     <button  type="submit" class="m-t-10 m-b-20 waves-effect waves-dark btn btn-success btn-md btn-rounded">
                                         <i class="fa fa-print"></i>
+                                        @if($customer_bills_selected->emp_id == null)
                                         {{trans('admin.public_Save')}}
+                                        @else
+                                            {{trans('admin.print')}}
+                                        @endif
                                     </button>
                                 </div>
                             {{ Form::close() }}

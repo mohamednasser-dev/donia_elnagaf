@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Product_history;
 use Illuminate\Http\Request;
 use App\Models\CustomerBill;
 use App\Models\BillProduct;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Validator;
 
@@ -83,6 +85,17 @@ class buyBillsController extends Controller
                     if ($bill_product->save()) {
                         $store_product->quantity = $store_product->quantity - $new_quantity;
                         $store_product->save();
+
+                        $history_data['product_name'] = $store_product->name;
+                        $history_data['notes'] = 'تعديل على المنتج';
+                        $history_data['quantity'] = $new_quantity;
+                        $history_data['gomla_price'] = $store_product->gomla_price;
+                        $history_data['selling_price'] = $store_product->selling_price;
+                        $history_data['product_id'] = $bill_product->product_id;
+                        $history_data['category_id'] = $store_product->category_id;
+                        $history_data['type'] = 'remove';
+                        $history_data['user_id'] = Auth::user()->id;
+                        Product_history::create($history_data);
                     }
                 } else {
                     Alert::error('خطأ',  'لا يوجد عدد كافي بالمخزن');
@@ -97,6 +110,17 @@ class buyBillsController extends Controller
                 if ($bill_product->save()) {
                     $store_product->quantity = $store_product->quantity + $new_quantity;
                     $store_product->save();
+
+                    $history_data['product_name'] = $store_product->name;
+                    $history_data['notes'] = 'تعديل على المنتج';
+                    $history_data['quantity'] = $new_quantity;
+                    $history_data['gomla_price'] = $store_product->gomla_price;
+                    $history_data['selling_price'] = $store_product->selling_price;
+                    $history_data['product_id'] = $bill_product->product_id;
+                    $history_data['category_id'] = $store_product->category_id;
+                    $history_data['type'] = 'add';
+                    $history_data['user_id'] = Auth::user()->id;
+                    Product_history::create($history_data);
                 }
             }elseif ($request->quantity == $bill_product->quantity){
                 $bill_product->price = $request->price;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Customer;
 use App\Models\Login_history;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -32,14 +33,21 @@ class usersController extends Controller
         return view($this->folderView . 'users', compact('users'));
     }
 
+    public function admin_update_branch(Request $request){
+        $data['branch_number'] = $request->status ;
+        User::where('id', 1)->update($data);
+        return 1;
+    }
+
     public function chart_branches()
     {
         $users = $this->objectName::where('deleted', '0')->where('type', 'user')->orderBy('name', 'desc')->paginate(10);
         return view($this->folderView . 'charts.index', compact('users'));
     }
 
-    public function charts($id)
+    public function charts()
     {
+        $id = auth()->user()->branch_number ;
         $sales_emp_names[] = null;
         $sales_total_payments[] = null;
 

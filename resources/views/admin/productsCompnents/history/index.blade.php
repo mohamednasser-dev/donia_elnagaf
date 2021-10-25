@@ -126,6 +126,7 @@
                             <th class="text-center">{{trans('admin.category')}}</th>
                             <th class="text-center">{{trans('admin.type')}}</th>
                             <th class="text-center">{{trans('admin.notes')}}</th>
+                            <th class="text-center">التاريخ</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -136,6 +137,7 @@
                                 <td class="text-center">{{$row->Category->name}}</td>
                                 <td class="text-center">@if($row->type == 'add') اضافة @elseif($row->type == 'remove') بيع @endif</td>
                                 <td class="text-center">{{$row->notes}}</td>
+                                <td class="text-center">{{$row->created_at->format('Y-m-d')}}</td>
                             </tr>
                         @endforeach
                         </tbody>

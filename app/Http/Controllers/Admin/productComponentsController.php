@@ -87,8 +87,7 @@ class productComponentsController extends Controller
         $data = $this->validate(\request(),
             [
                 'quantity' => 'required|numeric',
-                'id' => 'required',
-
+                'id' => 'required'
             ]);
         $product = Product::whereId($request->id)->first();
         $product->quantity = $product->quantity + $request->quantity;
@@ -123,18 +122,39 @@ class productComponentsController extends Controller
     {
         $data = $this->validate(\request(),
             [
-                'name' => 'required|unique:products,name,' . $id,
-                'barcode' => 'required|unique:products,barcode,' . $id,
-                'image' => 'sometimes|nullable',
+                'name' => 'required',
+                'barcode' => 'required',
                 'gomla_price' => 'required',
                 'selling_price' => 'required',
-                'category_id' => 'required',
                 'quantity' => 'required',
             ]);
         $data['user_id'] = Auth::user()->id;
-        if ($request->image != null) {
-            $data['image'] = $this->MoveImage($request->image);
+        $basic_product = Product::where('id', $id)->first();
 
+        if ($request->quantity > $basic_product->quantity) {
+            $new_quantity = $basic_product->quantity - $request->quantity;
+            $history_data['product_name'] = $basic_product->name;
+            $history_data['notes'] = 'تعديل المنتج';
+            $history_data['quantity'] = $new_quantity;
+            $history_data['gomla_price'] = $basic_product->gomla_price;
+            $history_data['selling_price'] = $basic_product->selling_price;
+            $history_data['product_id'] = $id;
+            $history_data['category_id'] = $basic_product->category_id;
+            $history_data['type'] = 'add';
+            $history_data['user_id'] = Auth::user()->id;
+            Product_history::create($history_data);
+        }elseif($request->quantity < $basic_product->quantity){
+            $new_quantity = $basic_product->quantity - $request->quantity;
+            $history_data['product_name'] = $basic_product->name;
+            $history_data['notes'] = 'تعديل المنتج';
+            $history_data['quantity'] = $new_quantity;
+            $history_data['gomla_price'] = $basic_product->gomla_price;
+            $history_data['selling_price'] = $basic_product->selling_price;
+            $history_data['product_id'] = $id;
+            $history_data['category_id'] = $basic_product->category_id;
+            $history_data['type'] = 'remove';
+            $history_data['user_id'] = Auth::user()->id;
+            Product_history::create($history_data);
         }
         Product::whereId($id)->update($data);
         Alert::success('تم', trans('admin.updatSuccess'));

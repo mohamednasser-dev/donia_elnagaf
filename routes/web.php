@@ -22,6 +22,7 @@ Route::get('/logout_user', 'Admin\LoginController@logout')->name('logout_user');
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::resource('settings', 'Admin\SettingsController');
+    Route::post('admin/update/branch', 'Admin\usersController@admin_update_branch')->name('admin.update.branch');
     //users  routes
     Route::resource('users', 'Admin\usersController');
     Route::get('users/{id}/delete', 'Admin\usersController@destroy')->name('users.delete');
@@ -30,7 +31,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('users/login/history', 'Admin\usersController@login_history')->name('users.login_history');
     Route::get('users/login/settings', 'Admin\usersController@login_times')->name('users.login.settings');
     Route::get('users/charts/banches', 'Admin\usersController@chart_branches')->name('users.charts');
-    Route::get('users/charts/banches/{id}', 'Admin\usersController@charts')->name('users.charts.branch');
+    Route::get('users/charts/banches', 'Admin\usersController@charts')->name('users.charts.branch');
     Route::get('users/charts/banches/clear/{id}', 'Admin\usersController@clear_emp_data')->name('users.charts.branch.clear');
 
     //user permissions and roles

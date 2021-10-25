@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.phone')}}</label>
-                                        {{ Form::number('phone',null,["class"=>"form-control" ,"required"]) }}
+                                        {{ Form::text('phone',null,["class"=>"form-control" ,"required"]) }}
                                     </div>
                                     <div class="form-group">
                                         <label for="recipient-name"
@@ -149,7 +149,6 @@
                                 <div class="modal-body">
                                     {{ Form::open( ['url'  => ['editcustomer'],'method'=>'post' , 'class'=>'form'] ) }}
                                     {{ Form::hidden('id',null,["class"=>"form-control" ,"required",'id'=>'id']) }}
-
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.name')}}</label>
@@ -158,7 +157,7 @@
                                     <div class="form-group">
                                         <label for="recipient-name"
                                                class="control-label">{{trans('admin.phone')}}</label>
-                                        {{ Form::number('phone',null,["class"=>"form-control" ,"required",'id'=>'phone']) }}
+                                        {{ Form::text('phone',null,["class"=>"form-control" ,"required",'id'=>'phone']) }}
                                     </div>
                                     <div class="form-group">
                                         <label for="recipient-name"

@@ -57,27 +57,6 @@
                             {{ Form::number('selling_price',$product->selling_price,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.buy_price')]) }}
                         </div>
                     </div>
-                    <div class="form-group m-t-40 row">
-                        <label for="example-text-input"
-                               class="col-md-2 col-form-label">{{trans('admin.category')}}</label>
-                        <div class="col-md-10">
-                            {{ Form::select('category_id',App\Models\Category::where('type','product')->pluck('name','id'),$product->category_id
-                                               ,["class"=>"form-control custom-select col-12 ",'id'=>'category_id' ]) }}
-
-                        </div>
-                    </div>
-                    <div class="form-group m-t-40 row">
-                        <label for="example-text-input"
-                               class="col-md-2 col-form-label">{{trans('admin.image')}}</label>
-                        <div class="col-md-10">
-                            {{ Form::file('image',array('class'=>'form-control')) }}
-                        </div>
-                    </div>
-                    <div class="form-group m-t-40 row">
-                        <div class="col-md-10">
-                            <img src="{{url($product->image)}}" width="150px" height="150px">
-                        </div>
-                    </div>
                     <div class="center">
                         {{ Form::submit( trans('admin.public_Edit') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
                     </div>

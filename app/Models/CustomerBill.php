@@ -19,4 +19,10 @@ class CustomerBill extends Model
     {
         return $this->hasOne('App\Models\Customer', 'id', 'cust_id');
     }
+
+
+    public function Saler_man()
+    {
+        return $this->belongsTo(User::class, 'emp_id');
+    }
 }

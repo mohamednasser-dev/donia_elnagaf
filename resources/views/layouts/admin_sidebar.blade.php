@@ -15,6 +15,14 @@
                             </a>
                         </li>
                     @endcan
+                    @can('buy back')
+                        <li>
+                            <a class="waves-effect waves-dark" href="{{url('buy/back')}}" aria-expanded="false">
+                                <i class="mdi mdi-cart"></i>
+                                <span class="hide-menu">{{trans('admin.nav_buy_back')}}</span>
+                            </a>
+                        </li>
+                    @endcan
                     @can('categories')
                         <li>
                             <a class="waves-effect waves-dark" href="{{url('categories')}}" aria-expanded="false"><i class="mdi mdi-animation"></i><span class="hide-menu">{{trans('admin.categories')}}</span></a>
@@ -58,7 +66,7 @@
                                 <li><a href="{{url('roles')}} ">{{trans('admin.nav_permissions')}}</a></li>
                             @endcan
                                 <li><a href="{{route('users.login_history')}} ">سجل الدخول و الخروج</a></li>
-                                <li><a href="{{route('users.charts.branch',auth()->user()->branch_number)}}">إحصائيات الانتاجية</a></li>
+                                <li><a href="{{route('users.charts.branch')}}">إحصائيات الانتاجية</a></li>
                         </ul>
                     </li>
                     @can('Account statement')

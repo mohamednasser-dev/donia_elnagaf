@@ -11,26 +11,21 @@
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
 <div id="main-wrapper">
-    <!-- ============================================================== -->
-    <!-- Topbar header - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <header class="topbar">
-        <nav class="navbar top-navbar navbar-expand-md navbar-light">
-            <!-- ============================================================== -->
-            <!-- Logo -->
-            <!-- ============================================================== -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">
-                        <span>
-                            <img src="{{ asset('/assets/images/side_bar_image.png') }}" alt="homepage" class="dark-logo"
-                                 style="width: 200px; height: 45px;"/>
-                        </span>
-                </a>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Logo -->
-            <!-- ============================================================== -->
-            <div class="navbar-collapse">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+{{--                    <a class="navbar-brand" href="index.html">--}}
+{{--                        <span>--}}
+{{--                            <img src="{{ asset('/assets/images/side_bar_image.png') }}" alt="homepage" class="dark-logo" style="width: 200px; height: 45px;"/>--}}
+{{--                        </span>--}}
+{{--                    </a>--}}
+                </div>
                 <!-- ============================================================== -->
                 <!-- toggle and nav items -->
                 <!-- ============================================================== -->

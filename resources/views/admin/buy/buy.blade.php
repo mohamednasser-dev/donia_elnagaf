@@ -190,7 +190,7 @@
                                     @if(auth()->user()->type == 'admin')
                                     <tr>
                                         <td class="col-md-5">الخصم</td>
-                                        <td class="col-md-7 text-right font-medium">{!! Form::number('pay',$customer_bills_selected->discount,['class'=>'form-control center','step' =>'0.01','id' =>'txt_pay','max'=>$customer_bills_selected->total,'min'=>'0' ]) !!}</td>
+                                        <td class="col-md-7 text-right font-medium">{!! Form::number('pay',$customer_bills_selected->discount,['class'=>'form-control center','step' =>'0.01','id' =>'txt_khasm','max'=>$customer_bills_selected->total,'min'=>'0' ]) !!}</td>
                                     </tr>
                                     @endif
                                     <tr>

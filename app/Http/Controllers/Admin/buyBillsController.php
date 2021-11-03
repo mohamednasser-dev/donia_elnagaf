@@ -41,7 +41,15 @@ class buyBillsController extends Controller
         $today = $this->today;
         $CustomerBill = CustomerBill::find($bill_id);
         $BillProduct = BillProduct::where('bill_id', $bill_id)->get();
-        return view('admin.buy.bill_design', compact('today', 'CustomerBill', 'BillProduct'));
+        return view('admin.buy.new_invoice', compact('today', 'CustomerBill', 'BillProduct'));
+    }
+
+    public function print_bill_store($bill_id)
+    {
+        $today = $this->today;
+        $CustomerBill = CustomerBill::find($bill_id);
+        $BillProduct = BillProduct::where('bill_id', $bill_id)->get();
+        return view('admin.buy.new_invoice_store', compact('today', 'CustomerBill', 'BillProduct'));
     }
 
     /**
@@ -151,7 +159,7 @@ class buyBillsController extends Controller
     public function show($id)
     {
         $bill_product = BillProduct::where('bill_id', $id)->get();
-        return view('admin.buy_bills.bill_product', compact('bill_product'));
+        return view('admin.buy_bills.bill_product', compact('bill_product','id'));
     }
 
     /**

@@ -186,14 +186,11 @@
         var id;
         $(document).on('click', '#add', function () {
             id = $(this).data('product-id');
-            console.log(id);
             $('#pro-id').val(id);
         });
-
         $(document).on('click', '#sahb_btn', function () {
             quantity = $(this).data('quantity');
             product_id = $(this).data('product-id');
-            console.log(product_id);
             $("#txt_product_id").val(product_id);
             $("#txt_sahb_quantity").val(quantity);
             $('#txt_sahb_quantity').attr('max', quantity);

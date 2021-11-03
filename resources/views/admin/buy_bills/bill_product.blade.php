@@ -23,6 +23,12 @@
             <section id="html-headings-default" class="row match-height">
                 <div class="col-sm-12 col-md-12">
                     <div class="card">
+                        <div class="card-header">
+                            <a target="_blank" href="{{url('buy-bills/'.$id.'/print')}}" class="btn btn-info">
+                                <i class="fa fa-print"></i>  طباعة الفاتورة </a>
+                            <a target="_blank" href="{{url('buy-bills-store/'.$id.'/print')}}" class="btn btn-warning">
+                                <i class="fa fa-print"></i>  طباعة فاتورة للمخازن </a>
+                        </div>
                         <div class="card-body" style="text-align: center;">
                             <div class="card-block">
                                 <table id="supplier_bases_tbl" class="table full-color-table full-primary-table">

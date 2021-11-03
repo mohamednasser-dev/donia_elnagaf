@@ -91,7 +91,8 @@
                                                         <div class="dropdown-menu animated lightSpeedIn" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -2px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                             <a class="dropdown-item" href=" {{url('buy-bills/'.$user->id)}}">{{trans('admin.bill_procusts')}}</a>
                                                             <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href=" {{url('buy-bills/'.$user->id.'/print')}}">{{trans('admin.print_bill')}}</a>
+                                                            <a target="_blank" class="dropdown-item" href=" {{url('buy-bills/'.$user->id.'/print')}}">{{trans('admin.print_bill')}}</a>
+                                                            <a target="_blank" class="dropdown-item" href=" {{url('buy-bills-store/'.$user->id.'/print')}}">طباعة للمخازن</a>
                                                         </div>
                                                     </div>
                                                 </td>

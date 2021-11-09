@@ -94,7 +94,11 @@ class BuyController extends Controller
         $user = auth()->user();
         $today = $this->today;
         $selected_bill = CustomerBill::findOrFail($bill_id)->first();
-        if ($selected_bill->emp_id != null) {
+        if ($selected_bill->emp_id == null) {
+            if($request->reservation == 'on'){
+                $data['reservation'] = '1';
+            }
+            $data['khasm'] = $request->khasm;
             $data['pay'] = $request->pay;
             $data['remain'] = $request->remain;
             $data['emp_id'] = $request->emp_id;
@@ -127,8 +131,8 @@ class BuyController extends Controller
 //            ->addItem($item);
 //
 //        return $invoice->stream();
-
-        return view('admin.buy.invoice', compact('today', 'CustomerBill', 'BillProduct'));
+        return view('admin.buy.new_invoice', compact('today', 'CustomerBill', 'BillProduct'));
+//        return view('admin.buy.invoice', compact('today', 'CustomerBill', 'BillProduct'));
     }
 
     public function bill_design_last($bill_id)

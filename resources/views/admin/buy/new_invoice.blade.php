@@ -1,36 +1,33 @@
-@extends('admin_temp')
-{{--@section('styles')--}}
-{{--    <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">--}}
-{{--    <!-- Custom CSS -->--}}
-{{--    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">--}}
-{{--    <!-- You can change the theme colors from here -->--}}
-{{--    <link href="{{ asset('/css/colors/default-dark.css') }}" id="theme" rel="stylesheet">--}}
-{{--    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>--}}
-{{--    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>--}}
-{{--@endsection--}}
-@section('content')
-
-    <div class="row page-titles">
-        <div class="col-md-5 align-self-center">
-            <h3 class="text-themecolor">{{trans('admin.print_bill')}}</h3>
-        </div>
-        <div class="col-md-7 align-self-center">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">{{trans('admin.print_bill')}}</li>
-                <li class="breadcrumb-item active"><a href="{{url('home')}}">{{trans('admin.nav_home')}}</a></li>
-            </ol>
-        </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
+    <title>Admin Pro Admin Template - The Ultimate Bootstrap 4 Admin Template</title>
+    <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" id="theme" rel="stylesheet">
+    <link href="{{ asset('/css/style.css') }}" id="theme" rel="stylesheet">
+    <link href="{{ asset('/css/pages/error-pages.css') }}" id="theme" rel="stylesheet">
+    <link href="{{ asset('/css/colors/default-dark.css') }}" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="fix-header card-no-border fix-sidebar">
+<section id="wrapper" class="error-page">
     <div class="row">
         <div class="col-md-12">
             <div class="card card-body printableArea">
                 <hr>
                 <div class="row">
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-7 col-md-12">
-                        <div class="table-responsive m-t-40" style="clear: both;">
+                    <div class="col-md-7">
+                        <div class="table-responsive" style="clear: both;">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -59,31 +56,17 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div >
-                            <table class="">
-                                <tbody>
-                                <tr>
-                                    <td class="">ت :</td>
-                                    <td class="">{{$CustomerBill->Customer->phone}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="{{ asset('/assets/images/logo.png') }}" alt="homepage" class="dark-logo"
-                             style="width: 200px; height: 120px;"/>
-                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive m-t-40" style="clear: both;">
-                            <table class="table table-hover">
+                            <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th class="text-lg-center">{{trans('admin.product_bill')}}</th>
-                                    <th class="text-lg-center">{{trans('admin.quantity_bill')}}</th>
-                                    <th class="text-lg-center">{{trans('admin.price_bill')}}</th>
-                                    <th class="text-lg-center">{{trans('admin.total')}}</th>
+                                    <th class="text-center">{{trans('admin.product_bill')}}</th>
+                                    <th class="text-center">{{trans('admin.quantity_bill')}}</th>
+                                    <th class="text-center">{{trans('admin.price_bill')}}</th>
+                                    <th class="text-center">{{trans('admin.total')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -105,14 +88,20 @@
                             <table class="table table-hover">
                                 <tbody>
                                 <tr>
-                                    <td class="text-center">{{trans('admin.sale_remain')}}</td>
-                                    <td class="text-center">{{trans('admin.sale_pay')}}</td>
                                     <td class="text-center">{{trans('admin.sale_total')}}</td>
+                                    @if($CustomerBill->khasm > 0)
+                                        <td class="text-center">الخصم</td>
+                                    @endif
+                                    <td class="text-center">{{trans('admin.sale_pay')}}</td>
+                                    <td class="text-center">{{trans('admin.sale_remain')}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-center">{{$CustomerBill->remain}}</td>
-                                    <td class="text-center">{{$CustomerBill->pay}}</td>
                                     <td class="text-center">{{$CustomerBill->total}}</td>
+                                    @if($CustomerBill->khasm > 0)
+                                        <td class="text-center">{{$CustomerBill->khasm}}</td>
+                                    @endif
+                                    <td class="text-center">{{$CustomerBill->pay}}</td>
+                                    <td class="text-center">{{$CustomerBill->remain}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -145,32 +134,17 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right">
-                <a href="{{ URL::previous() }}">{{trans('admin.back')}}</a>
-                <button id="print" class="btn btn-default btn-outline" type="button"><span><i class="fa fa-print"></i> {{trans('admin.print')}}</span>
-                </button>
-            </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script src="{{ asset('/js/jquery.PrintArea.js') }}" type="text/JavaScript"></script>
-
-    <script>
-        $(document).ready(function () {
-            $("#print").click(function () {
-                var mode = 'iframe'; //popup
-                var close = mode == "popup";
-                var options = {
-                    mode: mode,
-                    popClose: close
-                };
-                $("div.printableArea").printArea(options);
-            });
-        });
-    </script>
-    <script src="{{ asset('/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
-{{--    <script>--}}
-{{--        window.print();--}}
-{{--    </script>--}}
-@endsection
+</section>
+<script src="{{ asset('/assets/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('/assets/plugins/bootstrap/js/popper.min.js') }}"></script>
+<script src="{{ asset('/assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/js/waves.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        window.print();
+    });
+</script>
+</body>
+</html>

@@ -177,7 +177,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title"><span class="lstick"></span>{{trans('admin.finish_bill')}}</h4>
-                            {{ Form::open( ['url' => ['buy_bill_design/'.$customer_bills_selected->id.'/print'],'method'=>'post'] ) }}
+                            {{ Form::open( ['url' => ['buy_bill_design/'.$customer_bills_selected->id.'/print'],'target' => '_blank','method'=>'post'] ) }}
                                 <table class="table vm font-14">
                                     <tr>
                                         {{ Form::select('emp_id',$emps,$customer_bills_selected->emp_id
@@ -190,7 +190,8 @@
                                     @if(auth()->user()->type == 'admin')
                                     <tr>
                                         <td class="col-md-5">الخصم</td>
-                                        <td class="col-md-7 text-right font-medium">{!! Form::number('pay',$customer_bills_selected->discount,['class'=>'form-control center','step' =>'0.01','id' =>'txt_khasm','max'=>$customer_bills_selected->total,'min'=>'0' ]) !!}</td>
+                                        <td class="col-md-7 text-right font-medium">
+                                        {!! Form::number('khasm',$customer_bills_selected->khasm,['class'=>'form-control center','step' =>'0.01','id' =>'txt_khasm','max'=>$customer_bills_selected->total,'min'=>'0' ]) !!}</td>
                                     </tr>
                                     @endif
                                     <tr>
@@ -203,6 +204,10 @@
                                     </tr>
                                 </table>
                                 <div class="card-body text-center">
+                                    <div class="switch">
+                                        <label>
+                                            <input name="reservation" type="checkbox" @if($customer_bills_selected->reservation == '1') checked @endif ><span class="lever switch-col-light-green"></span> الحجز </label>
+                                    </div>
                                     <button  type="submit" class="m-t-10 m-b-20 waves-effect waves-dark btn btn-success btn-md btn-rounded">
                                         <i class="fa fa-print"></i>
                                         @if($customer_bills_selected->emp_id == null)
@@ -260,7 +265,6 @@
             </div>
         </div>
     @endif
-
 @endsection
 @section('scripts')
     @if($customer_bills_selected != null)
@@ -292,7 +296,9 @@
             var selected_Date;
             var selected_price;
             var pay;
+            var khasm;
             var remain;
+            var khasmtotla;
             var total;
             var final_total;
             $(document).on('click', '#sale_btn', function() {
@@ -304,15 +310,24 @@
                 $('#txt_quantity').attr('max', quantity);
             });
             $(document).on('keyup', '#txt_pay', function() {
-
                 //To View Updated remain value afer pay on view
                 pay = document.getElementById("txt_pay").value;
+                khasm = document.getElementById("txt_khasm").value;
                 total = document.getElementById("lbl_total").value;
-                final_total = total-pay;
+                khasmtotla = total - khasm;
+                final_total = khasmtotla - pay;
+                $("#lbl_remain").val(final_total);
+            });
+            $(document).on('keyup', '#txt_khasm', function() {
+                //To View Updated remain value afer pay on view
+                pay = document.getElementById("txt_pay").value;
+                khasm = document.getElementById("txt_khasm").value;
+                total = document.getElementById("lbl_total").value;
+                khasmtotla = total - khasm;
+                final_total = khasmtotla - pay;
                 $("#lbl_remain").val(final_total);
             });
         });
     </script>
     @endif
 @endsection
-

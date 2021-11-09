@@ -89,11 +89,17 @@
                                 <tbody>
                                 <tr>
                                     <td class="text-center">{{trans('admin.sale_total')}}</td>
+                                    @if($CustomerBill->khasm > 0)
+                                        <td class="text-center">الخصم</td>
+                                    @endif
                                     <td class="text-center">{{trans('admin.sale_pay')}}</td>
                                     <td class="text-center">{{trans('admin.sale_remain')}}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-center">{{$CustomerBill->total}}</td>
+                                    @if($CustomerBill->khasm > 0)
+                                        <td class="text-center">{{$CustomerBill->khasm}}</td>
+                                    @endif
                                     <td class="text-center">{{$CustomerBill->pay}}</td>
                                     <td class="text-center">{{$CustomerBill->remain}}</td>
                                 </tr>

@@ -28,11 +28,17 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="table-responsive" style="clear: both;">
-                            <table class="table">
+                            <table class="table"  style="border: none;">
                                 <tbody>
                                 <tr>
-                                    <td class="">الرقم :</td>
-                                    <td class="">{{$CustomerBill->bill_num}}</td>
+                                    <td style="border: none;">الرقم :</td>
+                                    <td style="border: none;">{{$CustomerBill->bill_num}}</td>
+                                    <td style="border: none;"></td>
+                                    <td style="border: none;"></td>
+                                    <td style="border: none;" rowspan="2">
+                                        <img src="{{ asset('/assets/images/logo.png') }}" alt="homepage" class="dark-logo"
+                                             style="width: 200px; height: 120px;"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="">تحريرا في :</td>
@@ -42,7 +48,6 @@
                                     <td class="">المطلوب من العميل :</td>
                                     <td class="">{{$CustomerBill->Customer->name}}</td>
                                     <td class="">ت :{{$CustomerBill->Customer->phone}}</td>
-
                                 </tr>
                                 <tr>
                                     <td class="">العنوان :</td>

@@ -17,12 +17,18 @@
                     @endcan
                     @can('buy back')
                         <li>
-                            <a class="waves-effect waves-dark" href="{{url('buy/back')}}" aria-expanded="false">
+                            <a class="waves-effect waves-dark" href="{{route('buy-bills.reservation')}}" aria-expanded="false">
                                 <i class="mdi mdi-cart"></i>
-                                <span class="hide-menu">{{trans('admin.nav_buy_back')}}</span>
+                                <span class="hide-menu">الحجوزات</span>
                             </a>
                         </li>
                     @endcan
+                    <li>
+                        <a class="waves-effect waves-dark" href="{{url('buy/back')}}" aria-expanded="false">
+                            <i class="mdi mdi-cart"></i>
+                            <span class="hide-menu">{{trans('admin.nav_buy_back')}}</span>
+                        </a>
+                    </li>
                     @can('categories')
                         <li>
                             <a class="waves-effect waves-dark" href="{{url('categories')}}" aria-expanded="false"><i class="mdi mdi-animation"></i><span class="hide-menu">{{trans('admin.categories')}}</span></a>

@@ -30,6 +30,12 @@ class buyBillsController extends Controller
         return view('admin.buy_bills.buy_bills', compact('customer_bills'));
 
     }
+    public function reservation()
+    {
+        $customer_bills = CustomerBill::where('reservation' ,'1')->get();
+        return view('admin.buy_bills.buy_bills', compact('customer_bills'));
+
+    }
 
     /**
      * Show the form for creating a new resource.

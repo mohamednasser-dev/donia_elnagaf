@@ -39,6 +39,7 @@
                                             <div class="form-group m-t-40 row">
                                                 <label for="example-text-input" class="col-md-3 col-form-label">{{trans('admin.bill_num')}}</label>
                                                 <div class="col-md-3">
+                                                  {{ Form::hidden('type',$type,["class"=>"form-control center" , "required"]) }}
                                                   {{ Form::text('bill_num',$bill_num,["class"=>"form-control center" , "id" => "txt_bill_num", "required" , "readonly"]) }}
                                                 </div>
                                                 <div class="col-md-4">

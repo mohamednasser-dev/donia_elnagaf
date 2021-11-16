@@ -64,6 +64,7 @@ class BuyController extends Controller
     {
         $data = $this->validate(\request(),
             [
+                'type' => 'required',
                 'bill_num' => 'required',
                 'cust_id' => 'required|exists:customers,id'
             ]);
@@ -75,6 +76,7 @@ class BuyController extends Controller
         }
         $data_create['cust_id'] = $request->cust_id;
         $data_create['date'] = $this->today;
+        $data_create['type'] = $request->type;
         $data_create['is_bill'] = 'y';
         $data_create['user_id'] = Auth::user()->id;
         $data_create['branch_number'] = Auth::user()->branch_number;

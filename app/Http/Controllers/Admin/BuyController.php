@@ -133,7 +133,6 @@ class BuyController extends Controller
 //            ->addItem($item);
 //
 //        return $invoice->stream();
-
         return view('admin.buy.new_invoice', compact('today', 'CustomerBill', 'BillProduct'));
 //        return view('admin.buy.invoice', compact('today', 'CustomerBill', 'BillProduct'));
     }

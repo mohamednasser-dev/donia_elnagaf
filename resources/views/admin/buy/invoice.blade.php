@@ -26,8 +26,11 @@
             <div class="card card-body printableArea">
                 <hr>
                 <div class="row">
-                    <div class="col-md-7">
-                        <div class="table-responsive" style="clear: both;">
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-7 col-md-12">
+                        <div class="table-responsive m-t-40" style="clear: both;">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -56,8 +59,22 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="row">
+                    <div class="col-md-2">
+                        <div >
+                            <table class="">
+                                <tbody>
+                                <tr>
+                                    <td class="">ت :</td>
+                                    <td class="">{{$CustomerBill->Customer->phone}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ asset('/assets/images/logo.png') }}" alt="homepage" class="dark-logo"
+                             style="width: 200px; height: 120px;"/>
+                    </div>
                     <div class="col-md-12">
                         <div class="table-responsive m-t-40" style="clear: both;">
                             <table class="table table-hover">

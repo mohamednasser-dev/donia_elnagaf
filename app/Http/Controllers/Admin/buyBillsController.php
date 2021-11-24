@@ -26,15 +26,14 @@ class buyBillsController extends Controller
 
     public function index()
     {
-        $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date', Carbon::now()->toDateString())->get();
+        $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date', Carbon::now()->toDateString())->paginate(10);
         return view('admin.buy_bills.buy_bills', compact('customer_bills'));
 
     }
     public function reservation()
     {
-        $customer_bills = CustomerBill::where('reservation' ,'1')->get();
-        return view('admin.buy_bills.buy_bills', compact('customer_bills'));
-
+        $customer_bills = CustomerBill::where('branch_number',Auth()->user()->branch_number)->where('reservation' ,'1')->orderBy('created_at','desc')->paginate(10);
+        return view('admin.reservation.index', compact('customer_bills'));
     }
 
     /**
@@ -67,11 +66,11 @@ class buyBillsController extends Controller
     public function store(Request $request)
     {
         if ($request->bill_num != null) {
-            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('bill_num', $request->bill_num)->get();
+            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('bill_num', $request->bill_num)->paginate(10);
         } elseif ($request->date != null) {
-            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date', $request->date)->get();
+            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('date', $request->date)->paginate(10);
         } else {
-            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('cust_id', $request->cust_id)->get();
+            $customer_bills = CustomerBill::where('branch_number' , Auth()->user()->branch_number)->where('cust_id', $request->cust_id)->paginate(10);
         }
         return view('admin.buy_bills.buy_bills', compact('customer_bills'));
     }

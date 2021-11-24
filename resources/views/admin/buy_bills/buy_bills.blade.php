@@ -26,7 +26,6 @@
                             <div class="row">
                                 <div>
                                     {{ Form::open( ['url'  => ['buy-bills'],'method'=>'post' ] ) }}
-                                    {{ csrf_field() }}
                                 </div>
                                 <div class="col-md-4">
                                     <div>
@@ -100,6 +99,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                {{ $customer_bills->links() }}
                             </div>
                         </div>
                     </div>

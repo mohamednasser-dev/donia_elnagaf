@@ -25,7 +25,7 @@ class CreateCustomerBillsTable extends Migration
             $table->float('total_profit')->default('0');
             $table->date('date');
             $table->string('notes')->nullable();
-            $table->enum('type',['buy','back'])->default('buy');
+            $table->enum('type',['buy','back','part'])->default('buy');
             $table->enum('is_bill',['y','n'])->default('y');
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');

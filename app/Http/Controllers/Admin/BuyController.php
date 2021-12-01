@@ -51,13 +51,14 @@ class BuyController extends Controller
         if (count($customer_bills) == 0) {
             $bill_num = 1;
         } else {
-            $customer_bills_selected = CustomerBill::where('branch_number', $user->branch_number)->where('is_bill', 'y')->latest('bill_num')->first();
+            $customer_bills_selected = CustomerBill::where('branch_number', $user->branch_number)->where('type',$type)->where('is_bill', 'y')->orderBy('created_at','desc')->latest('bill_num')->first();
             $bill_num = $customer_bills_selected->bill_num;
             $customer_bills_products = BillProduct::where('bill_id', $customer_bills_selected->id)->orderBy('id', 'desc')->paginate(15);
         }
 
         $emps = User::where('branch_number', $user->branch_number)->get()->pluck('name', 'id');
-        return view('admin.buy.buy', compact('emps', 'bill_num', 'customer_bills_selected', 'customers', 'products', 'customer_bills_products', 'today', 'type'));
+        return view('admin.buy.buy', compact('emps', 'bill_num', 'customer_bills_selected',
+            'customers', 'products', 'customer_bills_products', 'today', 'type'));
     }
 
     public function store_cust_bill(Request $request)

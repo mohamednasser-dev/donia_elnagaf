@@ -26,40 +26,26 @@
             <div class="card card-body printableArea">
                 <hr>
                 <div class="row">
-                    <div class="col-md-7">
-                        <div class="table-responsive" style="clear: both;">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td class="">الرقم :</td>
-                                    <td class="">{{$CustomerBill->bill_num}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="">تحريرا في :</td>
-                                    <td class="">{{$CustomerBill->date}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive m-t-40" style="clear: both;">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">{{trans('admin.product_bill')}}</th>
-                                    <th class="text-center">{{trans('admin.quantity_bill')}}</th>
-                                    <th class="text-center">اسم المخزن</th>
+                                    <th class="text-center">{{trans('admin.product_name')}}</th>
+                                    <th class="text-center">{{trans('admin.quantity')}}</th>
+                                    <th class="text-center">{{trans('admin.gomla_price')}}</th>
+                                    <th class="text-center">{{trans('admin.buy_price')}}</th>
+                                    <th class="text-center">{{trans('admin.barcode')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($BillProduct as $product)
+                                @foreach($products as $user)
                                     <tr>
-                                        <td class="text-center">{{$product->name}}</td>
-                                        <td class="text-center">{{$product->quantity}}</td>
-                                        <td class="text-center">{{$product->Product->Category->name}}</td>
+                                        <td class="text-center">{{$user->name}}</td>
+                                        <td class="text-center">{{$user->quantity}}</td>
+                                        <td class="text-center">{{$user->gomla_price}}</td>
+                                        <td class="text-center">{{$user->selling_price}}</td>
+                                        <td class="text-center">{{$user->barcode}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

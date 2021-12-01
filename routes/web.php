@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('buy-bills/bills/reservation', 'Admin\buyBillsController@reservation')->name('buy-bills.reservation');
     Route::get('buy-bills-store/{bill_id}/print', 'Admin\buyBillsController@print_bill_store');
     Route::post('buy-bills/edit/product', 'Admin\buyBillsController@edit_product')->name('buy-bills.edit_product');
-
+    Route::post('buy-bills/actived', 'Admin\buyBillsController@update_reservation')->name('buy-bills.actived');
     //base bills
     Route::resource('base_bills', 'Admin\baseBillsController');
     // Route::get('base_bills/{id}/delete', 'Admin\baseBillsController@destroy');
@@ -77,8 +77,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     //categories
     Route::resource('categories', 'Admin\categoryController');
     Route::get('categories/{id}/delete', 'Admin\categoryController@destroy');
+    Route::get('categories/{id}/print', 'Admin\categoryController@print')->name('category.print');
     Route::post('categories/update/new', 'Admin\categoryController@update')->name('category.new_update');
     Route::get('inbox', 'Admin\categoryController@inbox');
+
 
     //bases
     Route::resource('bases', 'Admin\baseController');

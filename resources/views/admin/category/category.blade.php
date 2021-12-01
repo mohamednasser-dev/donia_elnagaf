@@ -37,9 +37,8 @@
                                 <td class="text-lg-center">{{$user->name}}</td>
                                 <td class="text-lg-center">
                                     <a class='btn btn-raised btn-info btn-circle'
-                                       href=""
-                                       data-editid="{{$user->id}}" data-catname="{{$user->name}}" id="edit"
-                                       alt="default" data-toggle="modal" title="طباعة منتجات المخزن" data-target="#edit-modal"><i
+                                       href="{{route('category.print',$user->id)}}" target="_blank"
+                                       alt="default" title="طباعة منتجات المخزن"><i
                                             class="fa fa-print"></i></a>
                                     <a class='btn btn-raised btn-warning btn-circle'
                                        href=""

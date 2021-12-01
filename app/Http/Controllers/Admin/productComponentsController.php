@@ -195,6 +195,7 @@ class productComponentsController extends Controller
                 if ($another_product) {
                     $another_product->quantity = $another_product->quantity + $request->quantity;
                     $another_product->save();
+
                 } else {
 
                     $new_data['name'] = $product->name;
@@ -206,10 +207,33 @@ class productComponentsController extends Controller
                     $new_data['user_id'] = Auth::user()->id;
                     $new_data['quantity'] = $request->quantity;
                     $new_data['category_id'] = $request->category_id;
-                    Product::create($new_data);
+                    $new_product_added = Product::create($new_data);
                 }
                 $product->quantity = $product->quantity - $request->quantity;
                 $product->save();
+
+                //add to history ...
+                $history_data['product_name'] = $product->name;
+                $history_data['notes'] = 'اضافة كمية مسحوبة من مخزن اخر';
+                $history_data['quantity'] = $request->quantity;
+                $history_data['gomla_price'] = $product->gomla_price;
+                $history_data['selling_price'] = $product->selling_price;
+                $history_data['product_id'] = $request->product_id;
+                $history_data['category_id'] = $request->category_id;
+                $history_data['type'] = 'add';
+                $history_data['user_id'] = Auth::user()->id;
+                Product_history::create($history_data);
+                //remove to history ...
+                $history_data['product_name'] = $product->name;
+                $history_data['notes'] = 'سحب الكمية من المخزن الى مخزن اخر';
+                $history_data['quantity'] = $request->quantity;
+                $history_data['gomla_price'] = $product->gomla_price;
+                $history_data['selling_price'] = $product->selling_price;
+                $history_data['product_id'] = $request->product_id;
+                $history_data['category_id'] = $product->category_id;
+                $history_data['type'] = 'remove';
+                $history_data['user_id'] = Auth::user()->id;
+                Product_history::create($history_data);
                 Alert::success('تمت العملية بنجاح', 'تم سحب الكمية الى المخزن المختار');
                 return redirect()->back();
             } else {

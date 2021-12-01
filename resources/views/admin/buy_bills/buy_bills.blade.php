@@ -70,6 +70,7 @@
                                             <th class="center">{{trans('admin.pay')}}</th>
                                             <th class="center">{{trans('admin.remain')}}</th>
                                             <th class="center">{{trans('admin.date')}}</th>
+                                            <th class="center">{{trans('admin.reservation_status')}}</th>
                                             <th class="center">{{trans('admin.actions')}}</th>
                                         </tr>
                                     </thead>
@@ -82,6 +83,15 @@
                                                 <td class="text-lg-center">{{$user->pay}}</td>
                                                 <td class="text-lg-center">{{$user->remain}}</td>
                                                 <td class="text-lg-center">{{$user->date}}</td>
+                                                <td class="text-lg-center">
+                                                    <div class="switch">
+                                                        <label>
+                                                            <input onchange="update_active(this)" value="{{ $user->id }}"
+                                                                   type="checkbox" <?php if ($user->reservation == 1) echo "checked";?> >
+                                                            <span class="lever switch-col-indigo"></span>
+                                                        </label>
+                                                    </div>
+                                                </td>
                                                 <td class="text-lg-center">
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -108,4 +118,42 @@
         </div>
     </div>
 @endsection
-
+@section('scripts')
+    <script>
+        var id;
+        $(document).on('click', '#edit', function () {
+            id = $(this).data('editid');
+            console.log(id);
+            $.ajax({
+                url: "customer/" + id,
+                dataType: "json",
+                success: function (html) {
+                    $('#id').val(html.data.id);
+                    $('#name').val(html.data.name);
+                    $('#phone').val(html.data.phone);
+                    $('#address').val(html.data.address);
+                }
+            })
+        });
+    </script>
+    <script type="text/javascript">
+        function update_active(el) {
+            if (el.checked) {
+                var status = 1;
+            } else {
+                var status = 0;
+            }
+            $.post('{{ route('buy-bills.actived') }}', {
+                _token: '{{ csrf_token() }}',
+                id: el.value,
+                status: status
+            }, function (data) {
+                if (data == 1) {
+                    toastr.success("{{trans('admin.statuschanged')}}");
+                } else {
+                    toastr.error("{{trans('admin.statuschanged')}}");
+                }
+            });
+        }
+    </script>
+@endsection

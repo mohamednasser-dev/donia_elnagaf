@@ -49,6 +49,12 @@ class buyBillsController extends Controller
         return view('admin.buy.new_invoice', compact('today', 'CustomerBill', 'BillProduct'));
     }
 
+    public function update_reservation(Request $request){
+        $data['reservation'] = $request->status ;
+        $user = CustomerBill::where('id', $request->id)->update($data);
+        return 1;
+    }
+
     public function print_bill_store($bill_id)
     {
         $today = $this->today;

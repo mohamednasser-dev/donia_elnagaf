@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Model\Inbox;
@@ -14,6 +15,12 @@ class categoryController extends Controller
     public function __construct()
     {
         $this->middleware(['permission:categories']);
+    }
+
+    public function print($id)
+    {
+        $products = Product::where('category_id', $id)->get();
+        return view('admin.category.print_category_products', compact('products'));
     }
 
     public function index()

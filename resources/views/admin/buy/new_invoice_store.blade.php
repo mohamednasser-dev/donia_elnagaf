@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
-    <title>Admin Pro Admin Template - The Ultimate Bootstrap 4 Admin Template</title>
+    <title>{{settings()->name}}</title>
     <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" id="theme" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" id="theme" rel="stylesheet">
     <link href="{{ asset('/css/pages/error-pages.css') }}" id="theme" rel="stylesheet">
@@ -18,6 +18,55 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        body {
+            font: 15pt Georgia, "Times New Roman", Times, serif;
+            /*line-height: 0.3;*/
+            background: #fff !important;
+            color: #000;
+            text-align: center;
+        }
+        .ticket { border: 1px dotted #000;
+            width: 8cm;
+            display: inline-block;
+        }
+        .table {
+            width: 100%;
+            font: 9pt Georgia, "Times New Roman", Times, serif;
+        }
+        .right,.table {
+            text-align: right;
+        }
+        .timedate {
+            font: 10pt;
+        }
+        .qrcode {text-align: center;}
+        @media print {
+            body {
+                font: 15pt Georgia, "Times New Roman", Times, serif;
+                line-height: 1.0;
+                background: #fff !important;
+                color: #000;
+                text-align: inherit;
+            }
+            .ticket {border: none;
+                width: 100%;
+                display: auto;}
+            .table {
+                width: 100%;
+                font: 10pt Georgia, "Times New Roman", Times, serif;
+            }
+            .timedate {
+                font: 6pt;
+            }
+        }
+
+        @page {
+            size: auto;   /* auto is the initial value */
+            margin: .2cm;  /* this affects the margin in the printer settings */
+            font-family: emoji !important;
+        }
+    </style>
 </head>
 <body class="fix-header card-no-border fix-sidebar">
 <section id="wrapper" class="error-page">
@@ -26,26 +75,15 @@
             <div class="card card-body printableArea">
                 <hr>
                 <div class="row">
-                    <div class="col-md-7">
-                        <div class="table-responsive" style="clear: both;">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td class="">الرقم :</td>
-                                    <td class="">{{$CustomerBill->bill_num}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="">تحريرا في :</td>
-                                    <td class="">{{$CustomerBill->date}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="col-lg-6" style="width: 48%;">
+                        <br>
+                        الرقم   :    {{$CustomerBill->bill_num}}<br><br>
+                        تحريرا في    :    <small class="timedate">{{$CustomerBill->date}} </small><br><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="table-responsive m-t-40" style="clear: both;">
+                        <div class="table-responsive m-t-10" style="clear: both;">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>

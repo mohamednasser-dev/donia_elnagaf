@@ -96,17 +96,17 @@ class BuyController extends Controller
     {
         $user = auth()->user();
         $today = $this->today;
-        $selected_bill = CustomerBill::findOrFail($bill_id)->first();
+        $selected_bill = CustomerBill::find($bill_id);
+        if($request->reservation == 'on'){
+            $data['reservation'] = '1';
+        }
+        $data['khasm'] = $request->khasm;
+        $data['pay'] = $request->pay;
+        $data['remain'] = $request->remain;
+        $data['emp_id'] = $request->emp_id;
+        $data['branch_number'] = $user->branch_number;
+        CustomerBill::where('id',$bill_id)->update($data);
         if ($selected_bill->emp_id == null) {
-            if($request->reservation == 'on'){
-                $data['reservation'] = '1';
-            }
-            $data['khasm'] = $request->khasm;
-            $data['pay'] = $request->pay;
-            $data['remain'] = $request->remain;
-            $data['emp_id'] = $request->emp_id;
-            $data['branch_number'] = $user->branch_number;
-            CustomerBill::findOrFail($bill_id)->update($data);
             //add total payment to emp
             $emp_data = User::find($request->emp_id);
             $emp_data->total_payment = $emp_data->total_payment + $request->pay;
@@ -115,27 +115,7 @@ class BuyController extends Controller
         //prepare data to print design paper ...
         $CustomerBill = CustomerBill::find($bill_id);
         $BillProduct = BillProduct::where('bill_id', $bill_id)->get();
-
-        //new way to make invoice ....
-//        $customer = new Buyer([
-//            'name'          => 'John Doe',
-//            'custom_fields' => [
-//                'email' => 'test@example.com',
-//            ],
-//        ]);
-//
-//        $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
-//
-//        $invoice = Invoice::make()
-//            ->buyer($customer)
-//            ->discountByPercent(10)
-//            ->taxRate(15)
-//            ->shipping(1.99)
-//            ->addItem($item);
-//
-//        return $invoice->stream();
         return view('admin.buy.new_invoice', compact('today', 'CustomerBill', 'BillProduct'));
-//        return view('admin.buy.invoice', compact('today', 'CustomerBill', 'BillProduct'));
     }
 
     public function bill_design_last($bill_id)
@@ -157,7 +137,7 @@ class BuyController extends Controller
                 $data = Product::with('Category')
                     ->where('name', 'like', '%' . $query . '%')
                     ->orWhere('barcode', 'like', '%' . $query . '%')
-                    ->orderBy('name', 'desc')
+                    ->orderBy('name', 'desc')->where('deleted','0')
                     ->get();
             } else {
                 $data = null;

@@ -21,7 +21,7 @@ class productComponentsController extends Controller
     public function index()
     {
         $selected_cat = Category::orderBy('id', 'asc')->first()->id;
-        $products = Product::where('category_id', $selected_cat)->paginate(20);
+        $products = Product::where('category_id', $selected_cat)->where('deleted','0')->paginate(20);
         return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
 
     }
@@ -37,7 +37,7 @@ class productComponentsController extends Controller
     public function filter_category(Request $request)
     {
         $selected_cat = $request->category_id;
-        $products = Product::where('category_id', $selected_cat)->paginate(20);
+        $products = Product::where('category_id', $selected_cat)->where('deleted','0')->paginate(20);
         return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
     }
 
@@ -168,7 +168,7 @@ class productComponentsController extends Controller
                 'barcode' => 'required',
                 'price' => 'required',
             ]);
-        $product = Product::where('barcode', $request->barcode)->get();
+        $product = Product::where('barcode', $request->barcode)->where('deleted','0')->get();
         if ($product->count() > 0) {
             $input['selling_price'] = $request->price;
             Product::where('barcode', $request->barcode)->update($input);
@@ -188,16 +188,14 @@ class productComponentsController extends Controller
                 'product_id' => 'required',
                 'category_id' => 'required',
             ]);
-        $product = Product::where('id', $request->product_id)->first();
+        $product = Product::where('id', $request->product_id)->where('deleted','0')->first();
         if ($product) {
             if ($request->category_id != $product->category_id) {
-                $another_product = Product::where('category_id', $request->category_id)->where('barcode', $product->barcode)->first();
+                $another_product = Product::where('category_id', $request->category_id)->where('barcode', $product->barcode)->where('deleted','0')->first();
                 if ($another_product) {
                     $another_product->quantity = $another_product->quantity + $request->quantity;
                     $another_product->save();
-
                 } else {
-
                     $new_data['name'] = $product->name;
                     $new_data['barcode'] = $product->barcode;
                     $new_data['price'] = $product->price;
@@ -211,7 +209,6 @@ class productComponentsController extends Controller
                 }
                 $product->quantity = $product->quantity - $request->quantity;
                 $product->save();
-
                 //add to history ...
                 $history_data['product_name'] = $product->name;
                 $history_data['notes'] = 'اضافة كمية مسحوبة من مخزن اخر';
@@ -250,7 +247,8 @@ class productComponentsController extends Controller
     {
         $user = Product::where('id', $id)->first();
         try {
-            $user->delete();
+            $user->deleted = '1';
+            $user->save();
             Alert::success('تم', trans('admin.deleteSuccess'));
         } catch (Exception $exception) {
             Alert::error('خطأ', '!لا يمكن حذف المنتج');

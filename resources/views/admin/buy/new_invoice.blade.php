@@ -53,10 +53,12 @@
                                     <td class="">العنوان :</td>
                                     <td class="">{{$CustomerBill->Customer->address}}</td>
                                 </tr>
-                                <tr>
-                                    <td class="">اسم البائع :</td>
-                                    <td class="">{{$CustomerBill->Saler_man->name}}</td>
-                                </tr>
+                                @if($CustomerBill->Saler_man)
+                                    <tr>
+                                        <td class="">اسم البائع :</td>
+                                        <td class="">{{$CustomerBill->Saler_man->name}}</td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>

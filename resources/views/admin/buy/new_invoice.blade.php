@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
-    <title>Admin Pro Admin Template - The Ultimate Bootstrap 4 Admin Template</title>
+    <title>{{settings()->name}}</title>
     <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" id="theme" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" id="theme" rel="stylesheet">
     <link href="{{ asset('/css/pages/error-pages.css') }}" id="theme" rel="stylesheet">

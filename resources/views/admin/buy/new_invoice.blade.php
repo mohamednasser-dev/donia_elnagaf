@@ -20,42 +20,68 @@
     <![endif]-->
     <style>
         body {
-            font: 15pt Georgia, "Times New Roman", Times, serif;
-            /*line-height: 0.3;*/
+            font-family: 'Helvetica';
+            font-weight: normal;
+            font-style: normal;
+            font-variant: normal;
+            line-height: 1.0;
             background: #fff !important;
             color: #000;
             text-align: center;
         }
-        .ticket { border: 1px dotted #000;
+
+        .ticket {
+            border: 1px dotted #000;
             width: 8cm;
             display: inline-block;
         }
+
         .table {
             width: 100%;
-            font: 9pt Georgia, "Times New Roman", Times, serif;
+            font-family: 'Helvetica';
+            font-weight: normal;
+            font-style: normal;
+            font-variant: normal;
         }
-        .right,.table {
+
+        .right, .table {
             text-align: right;
         }
+
         .timedate {
             font: 10pt;
         }
-        .qrcode {text-align: center;}
+
+        .qrcode {
+            text-align: center;
+        }
+
         @media print {
             body {
-                font: 15pt Georgia, "Times New Roman", Times, serif;
+                font-family: 'Helvetica';
+                font-weight: normal;
+                font-style: normal;
+                font-variant: normal;
                 line-height: 1.0;
                 background: #fff !important;
                 color: #000;
                 text-align: inherit;
             }
-            .ticket {border: none;
+
+            .ticket {
+                border: none;
                 width: 100%;
-                display: auto;}
+                display: auto;
+            }
+
             .table {
                 width: 100%;
-                font: 10pt Georgia, "Times New Roman", Times, serif;
+                font-family: 'Helvetica';
+                font-weight: normal;
+                font-style: normal;
+                font-variant: normal;
             }
+
             .timedate {
                 font: 6pt;
             }
@@ -77,16 +103,23 @@
                 <div class="row">
                     <div class="col-lg-6" style="width: 48%;">
                         <br>
-                        الرقم   :    {{$CustomerBill->bill_num}}<br><br>
-                        تحريرا في    :    <small class="timedate">{{$CustomerBill->date}} </small><br><br>
-                        المطلوب من العميل    :    {{$CustomerBill->Customer->name}}<br><br>
-                        ت    :    {{$CustomerBill->Customer->phone}}<br><br>
-                        العنوان    :    {{$CustomerBill->Customer->address}}<br><br>
-                           اسم البائع     : {{$CustomerBill->Saler_man->name}}<br><br>
+                        الرقم : {{$CustomerBill->bill_num}}<br><br>
+                        تحريرا في : <small class="timedate">{{$CustomerBill->date}} </small><br><br>
+                        المطلوب من العميل : {{$CustomerBill->Customer->name}}<br><br>
+                        العنوان : {{$CustomerBill->Customer->address}} <br><br>
                     </div>
                     <div class="col-lg-6" style="width: 48%; text-align: left;">
                         <img src="{{ asset('/assets/images/logo.png') }}" alt="homepage" class="dark-logo"
-                             style="width: 200px; height: 120px;"/>
+                             style="width: 180px; height: 100px;"/>
+                        <br><br>
+                        اسم البائع : {{$CustomerBill->Saler_man->name}}<br><br>
+                        ت : {{$CustomerBill->Customer->phone}}<br><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" style="width: 48%;">
+
+
                     </div>
                 </div>
                 <div class="row">
@@ -143,21 +176,21 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td class="text-center">الفرع الثاني</td>
-                                    <td class="text-center"></td>
                                     <td class="text-center">الفرع الاول</td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">الفرع الثاني</td>
                                 </tr>
                                 <tr>
+                                    <td class="text-center"> شارع نعيم متفرع من شارع الجلاء - الزقازيق</td>
+                                    <td class="text-center">رقم الواتس</td>
                                     <td class="text-center">شارع السلام متفرع من شارع المحافظة و شارع مجمع المصالح -
                                         الزقازيق
                                     </td>
-                                    <td class="text-center">رقم الواتس</td>
-                                    <td class="text-center"> شارع نعيم متفرع من شارع الجلاء - الزقازيق</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-center">01020074409 - 0552359013</td>
-                                    <td class="text-center">01064502658</td>
                                     <td class="text-center"> 01091428014 - 0552348182</td>
+                                    <td class="text-center">01064502658</td>
+                                    <td class="text-center">01020074409 - 0552359013</td>
                                 </tr>
                                 </tbody>
                             </table>

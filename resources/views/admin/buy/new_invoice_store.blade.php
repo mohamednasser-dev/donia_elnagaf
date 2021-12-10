@@ -20,42 +20,68 @@
     <![endif]-->
     <style>
         body {
-            font: 15pt Georgia, "Times New Roman", Times, serif;
-            /*line-height: 0.3;*/
+            font-family: 'Helvetica';
+            font-weight: normal;
+            font-style: normal;
+            font-variant: normal;
+            line-height: 1.0;
             background: #fff !important;
             color: #000;
             text-align: center;
         }
-        .ticket { border: 1px dotted #000;
+
+        .ticket {
+            border: 1px dotted #000;
             width: 8cm;
             display: inline-block;
         }
+
         .table {
             width: 100%;
-            font: 9pt Georgia, "Times New Roman", Times, serif;
+            font-family: 'Helvetica';
+            font-weight: normal;
+            font-style: normal;
+            font-variant: normal;
         }
-        .right,.table {
+
+        .right, .table {
             text-align: right;
         }
+
         .timedate {
             font: 10pt;
         }
-        .qrcode {text-align: center;}
+
+        .qrcode {
+            text-align: center;
+        }
+
         @media print {
             body {
-                font: 15pt Georgia, "Times New Roman", Times, serif;
+                font-family: 'Helvetica';
+                font-weight: normal;
+                font-style: normal;
+                font-variant: normal;
                 line-height: 1.0;
                 background: #fff !important;
                 color: #000;
                 text-align: inherit;
             }
-            .ticket {border: none;
+
+            .ticket {
+                border: none;
                 width: 100%;
-                display: auto;}
+                display: auto;
+            }
+
             .table {
                 width: 100%;
-                font: 10pt Georgia, "Times New Roman", Times, serif;
+                font-family: 'Helvetica';
+                font-weight: normal;
+                font-style: normal;
+                font-variant: normal;
             }
+
             .timedate {
                 font: 6pt;
             }

@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::resource('buy-bills', 'Admin\buyBillsController');
     Route::get('buy-bills/{bill_id}/print', 'Admin\buyBillsController@print_bill');
     Route::get('buy-bills/bills/reservation', 'Admin\buyBillsController@reservation')->name('buy-bills.reservation');
+    Route::get('reservation/{id}/pay', 'Admin\buyBillsController@reservation_second_pay')->name('reservation_second_pay');
     Route::get('buy-bills-store/{bill_id}/print', 'Admin\buyBillsController@print_bill_store');
     Route::post('buy-bills/edit/product', 'Admin\buyBillsController@edit_product')->name('buy-bills.edit_product');
     Route::post('buy-bills/actived', 'Admin\buyBillsController@update_reservation')->name('buy-bills.actived');

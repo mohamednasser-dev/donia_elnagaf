@@ -25,14 +25,14 @@ class IncomeController extends Controller
         $today = $this->today;
         $customer_bills = CustomerBill::where('branch_number', Auth()->user()->branch_number)->where('type','!=','back')->where('date', $today)->paginate(20);
         $customer_bills_back = CustomerBill::where('branch_number', Auth()->user()->branch_number)->where('type','back')->where('date', $today)->paginate(20);
-        $outgoings = Outgoing::where('branch_number', Auth()->user()->branch_number)->where('type','!=','back')->where('date', $today)->paginate(20);
-        $supplierPayments = SupplierSale::where('branch_number', Auth()->user()->branch_number)->where('type','!=','back')->where('date', $today)->paginate(20);
+        $outgoings = Outgoing::where('branch_number', Auth()->user()->branch_number)->where('date', $today)->paginate(20);
+        $supplierPayments = SupplierSale::where('branch_number', Auth()->user()->branch_number)->where('date', $today)->paginate(20);
 
         $total_pay = CustomerBill::where('branch_number', Auth()->user()->branch_number)->where('type','!=','back')->where('date', $today)->sum('pay');
         $total_back = CustomerBill::where('branch_number', Auth()->user()->branch_number)->where('type','back')->where('date', $today)->sum('pay');
-        $total_outgoing = Outgoing::where('branch_number', Auth()->user()->branch_number)->where('type','!=','back')->where('date', $today)->sum('cost');
-        $total_supplierPayment = SupplierSale::where('branch_number', Auth()->user()->branch_number)->where('type','!=','back')->where('date', $today)->sum('pay');
-        $remain = $total_pay - ($total_outgoing + $total_supplierPayment);
+        $total_outgoing = Outgoing::where('branch_number', Auth()->user()->branch_number)->where('date', $today)->sum('cost');
+        $total_supplierPayment = SupplierSale::where('branch_number', Auth()->user()->branch_number)->where('date', $today)->sum('pay');
+        $remain = $total_pay - ($total_outgoing + $total_supplierPayment) - $total_back;
         $selected_method = 'daily';
         $selected_month = Carbon::now()->month;
         $selected_year = Carbon::now()->year;
@@ -83,7 +83,7 @@ class IncomeController extends Controller
             $total_back = CustomerBill::where('branch_number', Auth()->user()->branch_number)->where('type','back')->where('date', $request->date)->sum('pay');
             $total_outgoing = Outgoing::where('branch_number', Auth()->user()->branch_number)->where('date', $request->date)->sum('cost');
             $total_supplierPayment = SupplierSale::where('branch_number', Auth()->user()->branch_number)->where('date', $request->date)->sum('pay');
-            $remain = $total_pay - ($total_outgoing + $total_supplierPayment);
+            $remain = $total_pay - ($total_outgoing + $total_supplierPayment) - $total_back;
             $today = $request->date;
             $selected_method = 'daily';
             $selected_month = Carbon::now()->month;
@@ -99,7 +99,7 @@ class IncomeController extends Controller
             $total_supplierPayment = SupplierSale::where('branch_number', Auth()->user()->branch_number)->whereMonth('date', $request->month)
                 ->whereYear('date', $request->year)
                 ->sum('pay');
-            $remain = $total_pay - ($total_outgoing + $total_supplierPayment);
+            $remain = $total_pay - ($total_outgoing + $total_supplierPayment) - $total_back;
             $today = '';
             $selected_method = 'monthly';
             $selected_month = $request->month;
@@ -114,7 +114,7 @@ class IncomeController extends Controller
             $total_outgoing = Outgoing::where('branch_number', Auth()->user()->branch_number)->whereYear('date', $request->year)->sum('cost');
             $total_supplierPayment = SupplierSale::where('branch_number', Auth()->user()->branch_number)->whereYear('date', $request->year)
                 ->sum('pay');
-            $remain = $total_pay - ($total_outgoing + $total_supplierPayment);
+            $remain = $total_pay - ($total_outgoing + $total_supplierPayment) - $total_back;
             $today = '';
             $selected_method = 'yearly';
             $selected_month = $request->month;

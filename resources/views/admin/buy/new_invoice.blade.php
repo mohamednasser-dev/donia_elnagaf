@@ -156,15 +156,26 @@
                                     @if($CustomerBill->khasm > 0)
                                         <td class="text-center">الخصم</td>
                                     @endif
-                                    <td class="text-center">{{trans('admin.sale_pay')}}</td>
+                                    @if( $CustomerBill->reservation == '1' && $CustomerBill->second_pay > 0)
+                                        <td class="text-center">المدفوع مسبقا</td>
+                                        <td class="text-center">المدفوع حاليا</td>
+                                    @else
+                                        <td class="text-center">{{trans('admin.sale_pay')}}</td>
+                                    @endif
                                     <td class="text-center">{{trans('admin.sale_remain')}}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-center">{{$CustomerBill->total}}</td>
-                                    @if($CustomerBill->khasm > 0)
+                                    @if( $CustomerBill->khasm > 0)
                                         <td class="text-center">{{$CustomerBill->khasm}}</td>
                                     @endif
-                                    <td class="text-center">{{$CustomerBill->pay}}</td>
+                                    @if( $CustomerBill->reservation == '1' && $CustomerBill->second_pay > 0)
+                                        <td class="text-center">{{$CustomerBill->first_pay}}</td>
+                                        <td class="text-center">{{$CustomerBill->second_pay}}</td>
+                                    @else
+                                        <td class="text-center">{{$CustomerBill->pay}}</td>
+                                    @endif
+
                                     <td class="text-center">{{$CustomerBill->remain}}</td>
                                 </tr>
                                 </tbody>

@@ -173,6 +173,18 @@ class buyBillsController extends Controller
         return view('admin.buy_bills.bill_product', compact('bill_product','id'));
     }
 
+
+    public function reservation_second_pay($id)
+    {
+        $bill = CustomerBill::where('id', $id)->first();
+        $bill->second_pay = $bill->remain;
+        $bill->pay = $bill->pay + $bill->remain;
+        $bill->remain = 0;
+        $bill->save() ;
+        Alert::success('تم', 'تم الدفع بنجاح');
+        return redirect()->back();
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

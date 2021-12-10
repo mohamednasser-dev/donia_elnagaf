@@ -31,6 +31,7 @@
                                         <th class="center">{{trans('admin.pay')}}</th>
                                         <th class="center">{{trans('admin.remain')}}</th>
                                         <th class="center">{{trans('admin.date')}}</th>
+                                        <th class="center">الدفع</th>
                                         <th class="center">{{trans('admin.actions')}}</th>
                                     </tr>
                                     </thead>
@@ -43,6 +44,28 @@
                                             <td class="text-lg-center">{{$user->pay}}</td>
                                             <td class="text-lg-center">{{$user->remain}}</td>
                                             <td class="text-lg-center">{{$user->date}}</td>
+                                            <td class="text-lg-center">
+                                                @if($user->remain > 0)
+                                                    <form  method="get" id='delete-form-{{ $user->id }}'
+                                                          action="{{url('reservation/'.$user->id.'/pay')}}"
+                                                          style='display: none;'>
+                                                    {{csrf_field()}}
+                                                    <!-- {{method_field('delete')}} -->
+                                                    </form>
+                                                    <button title="دفع المبلغ المتبقي" onclick="
+                                                        if(confirm('هل انت متأكد من الدفع ؟'))
+                                                        {
+                                                        event.preventDefault();
+                                                        document.getElementById('delete-form-{{ $user->id }}').submit();
+                                                        }else {
+                                                        event.preventDefault();
+                                                        }"
+                                                            class='btn btn-success' href=" ">
+                                                        <i class="fa fa-money" aria-hidden='true'></i>
+                                                        دفع الباقي
+                                                    </button>
+                                                @endif
+                                            </td>
                                             <td class="text-lg-center">
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

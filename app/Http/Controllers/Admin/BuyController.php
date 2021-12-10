@@ -41,18 +41,20 @@ class BuyController extends Controller
         $today = $this->today;
         $products = Product::pluck('id', 'name');
         $products = json_encode($products);
-
         $customers = Customer::all();
-        $customer_bills = CustomerBill::where('branch_number', $user->branch_number)->where('is_bill', 'y')->get();
+        $customer_bills = CustomerBill::where('type',$type)->where('branch_number', $user->branch_number)->where('is_bill', 'y')->get();
         $bill_num = null;
         $customer_bills_selected = null;
         $customer_bills_products = null;
-
         if (count($customer_bills) == 0) {
             $bill_num = 1;
         } else {
             $customer_bills_selected = CustomerBill::where('branch_number', $user->branch_number)->where('type',$type)->where('is_bill', 'y')->orderBy('created_at','desc')->latest('bill_num')->first();
-            $bill_num = $customer_bills_selected->bill_num;
+            if($customer_bills_selected){
+                $bill_num = $customer_bills_selected->bill_num;
+            }else{
+                $bill_num = 1;
+            }
             $customer_bills_products = BillProduct::where('bill_id', $customer_bills_selected->id)->orderBy('id', 'desc')->paginate(15);
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerBill;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AccountListController extends Controller
 {
@@ -37,11 +38,16 @@ class AccountListController extends Controller
      */
     public function store(Request $request)
     {
-        $customer_account = CustomerBill::where('branch_number', Auth()->user()->branch_number)->where('cust_id', $request->cust_id)
+        $customer_account = CustomerBill::with('Customer')->where('branch_number', Auth()->user()->branch_number)->where('cust_id', $request->cust_id)
             ->whereBetween('date', [$request->fromdate, $request->todate])->get();
-        $from = $request->fromdate;
-        $to = $request->todate;
-        return view('admin.account_list.print', compact('customer_account', 'from', 'to'));
+        if (count($customer_account) > 0) {
+            $from = $request->fromdate;
+            $to = $request->todate;
+            return view('admin.account_list.print', compact('customer_account', 'from', 'to'));
+        } else {
+            Alert::error('تم', 'لا يوجد فواتير');
+            return redirect()->back();
+        }
     }
 
     /**

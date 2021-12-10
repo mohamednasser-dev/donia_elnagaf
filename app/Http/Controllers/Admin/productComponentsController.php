@@ -40,6 +40,12 @@ class productComponentsController extends Controller
         $products = Product::where('category_id', $selected_cat)->where('deleted','0')->paginate(20);
         return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
     }
+    public function filter_name(Request $request)
+    {
+        $selected_cat = $request->category_id;
+        $products = Product::where('category_id', $selected_cat)->where('name','like','%'.$request->search.'%')->where('deleted','0')->paginate(20);
+        return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
+    }
 
     public function store(Request $request)
     {

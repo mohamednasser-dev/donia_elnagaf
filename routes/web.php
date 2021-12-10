@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('products/edit/price/with_barcode', 'Admin\productComponentsController@edit_price')->name('edit.product.price');
     Route::post('products/search/price/with_barcode', 'Admin\productComponentsController@search_price')->name('search.products.update_price');
     Route::post('products/pull/quantity', 'Admin\productComponentsController@pull_quantity')->name('product.pull.quantity');
+    Route::get('products/filter/name', 'Admin\productComponentsController@filter_name')->name('product.filter.name');
     Route::get('products/filter/category', 'Admin\productComponentsController@filter_category')->name('product.filter.cat');
     Route::get('products/filter/category/history', 'Admin\productComponentsController@filter_category_history')->name('product.filter.cat.history');
     Route::get('products/filter/product_name/history', 'Admin\productComponentsController@filter_product_name_history')->name('product.filter.product_name.history');

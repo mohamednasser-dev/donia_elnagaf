@@ -106,12 +106,15 @@ class BuyController extends Controller
         $data['emp_id'] = $request->emp_id;
         $data['branch_number'] = $user->branch_number;
         CustomerBill::where('id',$bill_id)->update($data);
-        if ($selected_bill->emp_id == null) {
-            //add total payment to emp
-            $emp_data = User::find($request->emp_id);
-            $emp_data->total_payment = $emp_data->total_payment + $request->pay;
-            $emp_data->save();
+        if($selected_bill->type != 'back'){
+            if ($selected_bill->emp_id == null) {
+                //add total payment to emp
+                $emp_data = User::find($request->emp_id);
+                $emp_data->total_payment = $emp_data->total_payment + $request->pay;
+                $emp_data->save();
+            }
         }
+
         //prepare data to print design paper ...
         $CustomerBill = CustomerBill::find($bill_id);
         $BillProduct = BillProduct::where('bill_id', $bill_id)->get();
@@ -208,7 +211,11 @@ class BuyController extends Controller
                     'total' => $total
                 ]);
                 if ($bill_Product->save()) {
-                    $product->quantity = $product->quantity - $request->get('quantity');
+                    if($request->type == 'back'){
+                        $product->quantity = $product->quantity + $request->get('quantity');
+                    }else{
+                        $product->quantity = $product->quantity - $request->get('quantity');
+                    }
                     if ($product->save()) {
                         $cust_bill = CustomerBill::find($request->get('bill_id'));
                         $cust_bill->total = $cust_bill->total + $total;
@@ -218,23 +225,26 @@ class BuyController extends Controller
                         // add product to history
                         $history_data['billProduct_id'] = $bill_Product->id;
                         $history_data['product_name'] = $product->name;
-                        $history_data['notes'] = 'بيع المنتج';
+                        if($request->type == 'back'){
+                            $history_data['notes'] = 'منتج مرتجع';
+                            $history_data['type'] = 'add';
+                        }else{
+                            $history_data['notes'] = 'بيع المنتج';
+                            $history_data['type'] = 'remove';
+                        }
                         $history_data['quantity'] = $request->get('quantity');
                         $history_data['gomla_price'] = $product->gomla_price;
                         $history_data['selling_price'] = $request->get('price');
                         $history_data['product_id'] = $request->get('product_id');
                         $history_data['category_id'] = $product->category_id;
-                        $history_data['type'] = 'remove';
                         $history_data['user_id'] = Auth::user()->id;
                         Product_history::create($history_data);
-
                         Alert::success('تم', trans('admin.added_bill_product'));
                         return back();
                     }
                 }
             }
         }
-
     }
 
     /**
@@ -271,7 +281,7 @@ class BuyController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request ,$id )
     {
         $BillProduct = BillProduct::where('id', $id)->first();
         try {
@@ -279,7 +289,11 @@ class BuyController extends Controller
             if ($BillProduct->delete()) {
                 //reEnter Product back quantity ..
                 $product = Product::find($BillProduct->product_id);
-                $product->quantity = $product->quantity + $BillProduct->quantity;
+                if($request->type == 'back'){
+                    $product->quantity = $product->quantity - $BillProduct->quantity;
+                }else{
+                    $product->quantity = $product->quantity + $BillProduct->quantity;
+                }
                 if ($product->save()) {
                     //update Bill total
                     $cust_bill = CustomerBill::find($BillProduct->bill_id);
@@ -295,7 +309,7 @@ class BuyController extends Controller
         return back();
     }
 
-    public function destroy_all($bill_id)
+    public function destroy_all(Request $request,$bill_id)
     {
         $BillProducts = BillProduct::where('bill_id', $bill_id)->get();
         foreach ($BillProducts as $product) {
@@ -303,12 +317,16 @@ class BuyController extends Controller
             $pro = BillProduct::where('id', $product->id)->first();
             if ($pro->delete()) {
                 //reEnter Product back quantity ..
-                $edit_product = Product::findOrFail($product->product_id);
-                $edit_product->quantity = $edit_product->quantity + $product->quantity;
+                $edit_product = Product::find($product->product_id);
+                if($request->type == 'back'){
+                    $edit_product->quantity = $edit_product->quantity - $product->quantity;
+                }else{
+                    $edit_product->quantity = $edit_product->quantity + $product->quantity;
+                }
                 $edit_product->save();
             }
         }
-        $bill = CustomerBill::findOrFail($bill_id);
+        $bill = CustomerBill::find($bill_id);
         $bill->total = 0;
         $bill->remain = 0 - $bill->pay;
         $bill->save();

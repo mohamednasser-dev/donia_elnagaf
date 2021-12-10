@@ -121,6 +121,7 @@
                                 <h4 class="card-title"><span class="lstick"></span>{{trans('admin.bill_procusts')}}</h4>
                             <div class="card-block">
                                 {{ Form::open( ['url' => ['bill_products/'.$customer_bills_selected->id.'/destroy_all'],'method'=>'post'] ) }}
+                                {{ Form::hidden('type',$type,["class"=>"form-control" ,"required",'id'=>'txt_type']) }}
                                     <button type="submit" class="btn btn-outline-danger btn-rounded">
                                         <i class="fa fa-trash"></i>
                                         {{trans('admin.delete_all')}}
@@ -153,6 +154,7 @@
                                                     action="{{url('buy/'.$product->id.'/delete')}}"
                                                     style='display: none;'>
                                                     {{csrf_field()}}
+                                                    {{ Form::hidden('type',$type,["class"=>"form-control" ,"required",'id'=>'txt_type']) }}
                                                     <!-- {{method_field('delete')}} -->
                                                 </form>
                                                 <button onclick="if(confirm('{{trans('admin.deleteConfirmation')}}'))
@@ -241,6 +243,7 @@
                     {{ Form::open( ['method'=>'post' ,'route'=>'buy.store'] ) }}
                         <div class="modal-body">
                             <span id="form_output"></span>
+                            {{ Form::hidden('type',$type,["class"=>"form-control" ,"required",'id'=>'txt_type']) }}
                             {{ Form::hidden('product_id',null,["class"=>"form-control" ,"required",'id'=>'txt_product_id']) }}
                             {{ Form::hidden('bill_id',$customer_bills_selected->id ,["class"=>"form-control" ,"required",'id'=>'txt_bill_id']) }}
                             <div class="form-group">

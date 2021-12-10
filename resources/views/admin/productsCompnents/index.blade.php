@@ -17,18 +17,28 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-2">
+                            <label class="control-label"></label>
+                            <br>
                             <a href="{{url('products/create')}}"
                                class="btn btn-info btn-bg">
                                 {{trans('admin.add_product')}}
                             </a>
                         </div>
-                        <div class="col-md-1">
-                        <label class="control-label">المخزن</label>
+                        <div class="col-md-4">
+                            <label class="control-label">بحث بالاسم</label>
+                            {{ Form::open( ['route'  => ['product.filter.name'],'method'=>'get'] ) }}
+                            <div class="input-group">
+                                {{ Form::hidden('category_id',$selected_cat,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.name')]) }}
+                                {{ Form::text('search',null,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.name')]) }}
+                                <span class="input-group-btn">
+                                    <button title="بحث بالاسم" type="submit" id="check-minutes" class="btn waves-effect waves-light btn-success"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                            {{ Form::close() }}
                         </div>
-
-
-                        <div class="col-md-5">
+                        <div class="col-md-6">
+                            <label class="control-label">بحث بالمخزن</label>
                             {{ Form::open( ['route'  => ['product.filter.cat'],'method'=>'get'] ) }}
                             <div class="input-group">
                                 <select name="category_id" class="form-control custom-select">

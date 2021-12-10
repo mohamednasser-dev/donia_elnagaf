@@ -120,7 +120,7 @@
                 </div>
             </section>
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex no-block">
@@ -133,7 +133,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex no-block">
+                                <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ asset('assets/images/icon/total2.png') }}" alt="Income"></div>
+                                <div class="align-self-center">
+                                    <h6 class="text-muted m-t-10 m-b-0">المرتجع</h6>
+                                    <h2 class="m-t-0">{{$total_back}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex no-block">
@@ -179,6 +192,7 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home8" role="tab"><span>{{trans('admin.nav_buy')}}<i class="ti-shopping-cart"></i></span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home_back" role="tab"><span>المرتجع<i class="ti-shopping-cart"></i></span></a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile8" role="tab"><span>{{trans('admin.nav_outgoing')}}<i class="ti-money"></i></span></a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages8" role="tab"><span>{{trans('admin.suppliers_accounts')}}<i class="ti-user"></i></span></a> </li>
                             </ul>
@@ -207,6 +221,33 @@
                                                     <td class="text-lg-center">{{$user->date}}</td>
                                                 </tr>
                                             @endforeach
+                                        </tbody>
+                                    </table>
+                                    {{$customer_bills->links()}}
+                                </div>
+                                <div class="tab-pane p-20" id="home_back" role="tabpanel">
+                                    <table id="supplier_bases_tbl" class="table full-color-table full-primary-table">
+                                        <thead>
+                                        <tr>
+                                            <th class="center">{{trans('admin.bill_num')}}</th>
+                                            <th class="center">{{trans('admin.customer')}}</th>
+                                            <th class="center">{{trans('admin.total')}}</th>
+                                            <th class="center">{{trans('admin.pay')}}</th>
+                                            <th class="center">{{trans('admin.remain')}}</th>
+                                            <th class="center">{{trans('admin.date')}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($customer_bills_back as $user)
+                                            <tr>
+                                                <td class="text-lg-center">{{$user->bill_num}}</td>
+                                                <td class="text-lg-center">{{$user->Customer->name}}</td>
+                                                <td class="text-lg-center">{{$user->total}}</td>
+                                                <td class="text-lg-center">{{$user->pay}}</td>
+                                                <td class="text-lg-center">{{$user->remain}}</td>
+                                                <td class="text-lg-center">{{$user->date}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                     {{$customer_bills->links()}}

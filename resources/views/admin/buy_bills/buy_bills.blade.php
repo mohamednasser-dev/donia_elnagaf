@@ -65,6 +65,7 @@
                                     <thead>
                                         <tr>
                                             <th class="center">{{trans('admin.bill_num')}}</th>
+                                            <th class="center">نوع الفاتورة</th>
                                             <th class="center">{{trans('admin.customer')}}</th>
                                             <th class="center">{{trans('admin.total')}}</th>
                                             <th class="center">{{trans('admin.pay')}}</th>
@@ -78,6 +79,7 @@
                                         @foreach($customer_bills as $user)
                                             <tr>
                                                 <td class="text-lg-center">{{$user->bill_num}}</td>
+                                                <td class="text-lg-center">@if($user->type == 'back') فاتورة مرتجع @else فاتورة بيع @endif </td>
                                                 <td class="text-lg-center">{{$user->Customer->name}}</td>
                                                 <td class="text-lg-center">{{$user->total}}</td>
                                                 <td class="text-lg-center">{{$user->pay}}</td>

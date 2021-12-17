@@ -204,6 +204,11 @@ class BuyController extends Controller
             Alert::error('خطأ', $validation->messages()->getMessages());
             return back();
         } else {
+            $exist_bill = CustomerBill::find($request->get('bill_id'));
+            if($exist_bill->emp_id != null){
+                Alert::error('خطأ', 'لا تستطيع اضافة منتج جديد في فاتوره تم حفظها');
+            return back();
+            }
             if ($request->get('button_action') == "insert") {
                 $total = $request->get('quantity') * $request->get('price');
                 $product = Product::find($request->get('product_id'));

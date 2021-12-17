@@ -69,7 +69,7 @@ class customerController extends Controller
         $user = Customer::create($data);
         $user->save();
         Alert::success('تم', trans('admin.addedsuccess'));
-        return redirect(url('customer'));
+        return redirect()->back();
     }
 
     /**

@@ -138,7 +138,7 @@ class productComponentsController extends Controller
         $basic_product = Product::where('id', $id)->first();
 
         if ($request->quantity > $basic_product->quantity) {
-            $new_quantity = $basic_product->quantity - $request->quantity;
+            $new_quantity = $request->quantity - $basic_product->quantity ;
             $history_data['product_name'] = $basic_product->name;
             $history_data['notes'] = 'تعديل المنتج';
             $history_data['quantity'] = $new_quantity;

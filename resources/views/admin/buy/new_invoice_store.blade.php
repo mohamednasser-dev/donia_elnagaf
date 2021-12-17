@@ -104,7 +104,7 @@
                     <div class="col-lg-6" style="width: 48%;">
                         <br>
                         @if($CustomerBill->type == 'back')
-                            {{trans('admin.nav_buy_back')}}
+                            {{trans('admin.back_product')}}
                         @endif
                         <br>
                         <br>

@@ -61,7 +61,7 @@
                                             <label for="example-text-input"
                                                    class="col-md-3 col-form-label">{{trans('admin.cust_name')}}</label>
                                             <div class="col-md-9">
-                                                <div id="parent">
+                                                <div id="parent" class="input-group">
                                                     @if($customer_bills_selected != null)
                                                         {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),$customer_bills_selected->cust_id
                                                           ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id","style"=>"width: 100%; height:36px;",'placeholder'=>trans('admin.choose_cust') ]) }}
@@ -69,6 +69,9 @@
                                                         {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),null
                                                           ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id",'placeholder'=>trans('admin.choose_cust') ]) }}
                                                     @endif
+                                                    <span class="input-group-btn">
+                                                        <a href="" title="اضافة عميل جديد" data-toggle="modal" data-target="#responsive-modal" class="btn waves-effect waves-light btn-success"><i class="fa fa-plus"></i></a>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,7 +83,7 @@
                 </div>
             </section>
             {{ Form::close() }}
-            @if($customer_bills_selected != null)
+            @if($customer_bills_selected != null && $customer_bills_selected->emp_id == null)
                 {{ Form::hidden('type',$type ,["class"=>"form-control" ,"required",'id'=>'txt_type']) }}
                 <section id="html-headings-default" class="row match-height">
                     <div class="col-sm-12 col-md-9">
@@ -246,6 +249,45 @@
             @endif
         </div>
     </div>
+       <!-- Add  modal content -->
+                    <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{trans('admin.add_customer')}}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{ Form::open( ['url'  => ['customer'],'method'=>'post' , 'class'=>'form'] ) }}
+                                    <div class="form-group">
+                                        <label for="recipient-name"
+                                               class="control-label">{{trans('admin.name')}}</label>
+                                        {{ Form::text('name',null,["class"=>"form-control" ,"required"]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name"
+                                               class="control-label">{{trans('admin.phone')}}</label>
+                                        {{ Form::text('phone',null,["class"=>"form-control" ,"required"]) }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name"
+                                               class="control-label">{{trans('admin.address')}}</label>
+                                        {{ Form::text('address',null,["class"=>"form-control" ,"required"]) }}
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
+                                        {{trans('admin.public_Cancel')}}
+                                    </button>
+                                    {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
+                                    {{ Form::close() }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal -->
     <!-- /.modal -->
     @if($customer_bills_selected != null)
         {{--edit  modal --}}

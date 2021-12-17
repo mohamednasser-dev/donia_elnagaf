@@ -99,16 +99,17 @@ class BuyController extends Controller
         $user = auth()->user();
         $today = $this->today;
         $selected_bill = CustomerBill::find($bill_id);
-        if($request->reservation == 'on'){
-            $data['reservation'] = '1';
-            $data['first_pay'] = $request->pay;
+        if($request->reservation){
+            if ($request->reservation == 'on') {
+                $data['reservation'] = '1';
+                $data['first_pay'] = $request->pay;
+            }
         }
         $data['khasm'] = $request->khasm;
         $data['pay'] = $request->pay;
         $data['remain'] = $request->remain;
         $data['emp_id'] = $request->emp_id;
         $data['branch_number'] = $user->branch_number;
-
         CustomerBill::where('id',$bill_id)->update($data);
         if($selected_bill->type != 'back'){
             if ($selected_bill->emp_id == null) {
@@ -140,6 +141,7 @@ class BuyController extends Controller
             $output = '';
             $query = $request->get('query');
             $type = $request->get('type');
+
             if ($query != null) {
                 $data = Product::with('Category')
                     ->where('name', 'like', '%' . $query . '%')

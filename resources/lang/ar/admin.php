@@ -2,6 +2,7 @@
 return [
 
     //new
+    'back_product' => 'مرتجع',
     'reservation_status' => 'حالة الحجز',
     'edit_category' => 'تعديل المخزن',
     'choose_emp' => 'اختر موظف',

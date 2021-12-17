@@ -103,6 +103,11 @@
                 <div class="row">
                     <div class="col-lg-6" style="width: 48%;">
                         <br>
+                        @if($CustomerBill->type == 'back')
+                            {{trans('admin.nav_buy_back')}}
+                        @endif
+                        <br>
+                        <br>
                         الرقم   :    {{$CustomerBill->bill_num}}<br><br>
                         تحريرا في    :    <small class="timedate">{{$CustomerBill->date}} </small><br><br>
                     </div>

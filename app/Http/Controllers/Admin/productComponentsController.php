@@ -43,7 +43,7 @@ class productComponentsController extends Controller
     public function filter_name(Request $request)
     {
         $selected_cat = $request->category_id;
-        $products = Product::where('category_id', $selected_cat)->where('name','like','%'.$request->search.'%')->where('deleted','0')->paginate(20);
+        $products = Product::where('name','like','%'.$request->search.'%')->where('deleted','0')->paginate(20);
         return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
     }
 

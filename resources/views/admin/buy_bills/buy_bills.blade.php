@@ -86,6 +86,7 @@
                                                 <td class="text-lg-center">{{$user->remain}}</td>
                                                 <td class="text-lg-center">{{$user->date}}</td>
                                                 <td class="text-lg-center">
+                                                    @if($user->type != 'back') 
                                                     <div class="switch">
                                                         <label>
                                                             <input onchange="update_active(this)" value="{{ $user->id }}"
@@ -93,6 +94,7 @@
                                                             <span class="lever switch-col-indigo"></span>
                                                         </label>
                                                     </div>
+                                                    @endif
                                                 </td>
                                                 <td class="text-lg-center">
                                                     <div class="btn-group">

@@ -39,13 +39,14 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 //    Route::get('/store_permission', 'Admin\roleController@store_permission')->name('store_permission');
     Route::get('/roles/edit/{id}', 'Admin\roleController@edit')->name('roles.edit');
     Route::post('/roles/update_permission/{id}', 'Admin\roleController@update')->name('roles.update_permission');
-    Route::post('roles/store_permission', 'Admin\roleController@store_permission')->name('roles.store_permission');
+    Route::post('roles/store_permission', 'Admin\roleController@store_permission')->name('roles.store_permission;');
     Route::get('/roles/destroy/{id}', 'Admin\roleController@destroy')->name('roles.destroy');
 
     //buy page part and gomla and back products
     Route::get('buy/{part}', 'Admin\BuyController@show')->middleware(['permission:buy part']);
     Route::get('buy/{gomla}', 'Admin\BuyController@show')->middleware(['permission:buy gomla']);
     Route::get('buy/{back}', 'Admin\BuyController@show')->middleware(['permission:buy back']);
+    Route::get('search_customer', 'Admin\BuyController@search_customer');
     Route::resource('buy', 'Admin\BuyController');
     Route::post('select_products', 'Admin\BuyController@select_products');
     Route::post('bill_products/{bill_id}/destroy_all', 'Admin\BuyController@destroy_all');
@@ -59,8 +60,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     //buy bills
     Route::resource('buy-bills', 'Admin\buyBillsController');
     Route::get('buy-bills/{bill_id}/print', 'Admin\buyBillsController@print_bill');
-    Route::get('buy-bills/bills/reservation', 'Admin\buyBillsController@reservation')->name('buy-bills.reservation');
-    Route::get('reservation/{id}/pay', 'Admin\buyBillsController@reservation_second_pay')->name('reservation_second_pay');
+    Route::get('buy-bills/bills/reservation', 'Admin\buyBillsController@reservation')->name('buy-bills.reservation')->middleware(['permission:buy gomla']);
+    Route::get('reservation/{id}/pay', 'Admin\buyBillsController@reservation_second_pay')->name('reservation_second_pay')->middleware(['permission:buy gomla']);
     Route::get('buy-bills-store/{bill_id}/print', 'Admin\buyBillsController@print_bill_store');
     Route::post('buy-bills/edit/product', 'Admin\buyBillsController@edit_product')->name('buy-bills.edit_product');
     Route::post('buy-bills/actived', 'Admin\buyBillsController@update_reservation')->name('buy-bills.actived');
@@ -128,6 +129,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::resource('outgoing', 'Admin\OutgoingController');
     Route::get('outgoing/{id}/delete', 'Admin\OutgoingController@destroy');
 
+
     //income pages Routes
     Route::resource('income', 'Admin\IncomeController');
     Route::post('income_search', 'Admin\IncomeController@search');
@@ -139,6 +141,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::resource('accounts', 'Admin\AccountListController');
     //order list
     Route::resource('orders', 'Admin\OrdersController');
+
+    Route::get('backup', 'HomeController@backup')->middleware(['permission:orders']);
 });
 
 Route::get('/customer_login', 'front\landingController@show_login');

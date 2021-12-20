@@ -94,6 +94,19 @@ class BuyController extends Controller
         return Datatables::of($bill_products)->make(true);
     }
 
+    public function search_customer(Request $request)
+    {
+//        $data = Customer::select("id", "name")->get();
+        if ($request->has('q')) {
+            $search = $request->q;
+            $data = Customer
+                ::select("id", "name")
+                ->where('name', 'LIKE', "%$search%")
+                ->orWhere('phone', 'LIKE', "%$search%")
+                ->get();
+        }
+        return response()->json($data);
+    }
     public function bill_design(Request $request, $bill_id)
     {
         $user = auth()->user();

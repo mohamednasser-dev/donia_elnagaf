@@ -63,11 +63,16 @@
                                             <div class="col-md-9">
                                                 <div id="parent" class="input-group">
                                                     @if($customer_bills_selected != null)
+{{--                                                        <select  class="itemName2 form-control" style="text-align-last: right;"--}}
+{{--                                                                 name="cust_id">--}}
+{{--                                                        </select>--}}
                                                         {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),$customer_bills_selected->cust_id
                                                           ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id","style"=>"width: 100%; height:36px;",'placeholder'=>trans('admin.choose_cust') ]) }}
+
                                                     @else
                                                         {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),null
                                                           ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id",'placeholder'=>trans('admin.choose_cust') ]) }}
+
                                                     @endif
                                                     <span class="input-group-btn">
                                                         <a href="" title="اضافة عميل جديد" data-toggle="modal" data-target="#responsive-modal" class="btn waves-effect waves-light btn-success"><i class="fa fa-plus"></i></a>
@@ -399,6 +404,33 @@
                     final_total = khasmtotla - pay;
                     $("#lbl_remain").val(final_total);
                 });
+            });
+
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                $('.itemName2').select2({
+                    placeholder: '  ابحث باسم العميل او رقم جوال العميل',
+                    dir: 'rtl',
+                    dropdownParent: $('#parent'),
+                    ajax: {
+                        url: '/search_customer',
+                        dataType: 'json',
+                        delay: 1500,
+                        processResults: function (data) {
+                            return {
+                                results: $.map(data, function (item) {
+                                    return {
+                                        text: item.name,
+                                        id: item.id
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+
             });
         </script>
     @endif

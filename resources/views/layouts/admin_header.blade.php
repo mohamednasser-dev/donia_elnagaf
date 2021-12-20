@@ -29,6 +29,7 @@
         <link href="{{ asset('/css/pages/card-page.css') }}" rel="stylesheet">
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet"/>
         @yield('styles')
     </head>
     <body class="fix-header fix-sidebar card-no-border">

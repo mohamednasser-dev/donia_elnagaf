@@ -31,41 +31,26 @@
             <section id="html-headings-default" class="row match-height">
                 <div class="col-sm-12 col-md-12">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body" style="height: 85px;">
                                     <div class="card-block" style="margin-top: -40px;">
                                         <!-- This form to add new news row in database -->
                                         <div class="form-group m-t-40 row">
                                             <label for="example-text-input"
-                                                   class="col-md-3 col-form-label">{{trans('admin.bill_num')}}</label>
-                                            <div class="col-md-3">
+                                                   class="col-md-2 col-form-label">{{trans('admin.bill_num')}}</label>
+                                            <div class="col-md-2">
                                                 {{ Form::hidden('type',$type,["class"=>"form-control center" , "required"]) }}
                                                 {{ Form::text('bill_num',$bill_num,["class"=>"form-control center" , "id" => "txt_bill_num", "required" , "readonly"]) }}
                                             </div>
-                                            <div class="col-md-4">
-                                                <button type="submit"
-                                                        class="btn waves-effect waves-light btn-rounded btn-outline-primary">{{trans('admin.open_new_bill')}}</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body" style="height: 85px;">
-                                    <div class="card-block" style="margin-top: -40px;">
-                                        <!-- This form to add new news row in database -->
-                                        <div class="form-group m-t-40 row">
                                             <label for="example-text-input"
-                                                   class="col-md-3 col-form-label">{{trans('admin.cust_name')}}</label>
-                                            <div class="col-md-9">
+                                                   class="col-md-2 col-form-label">{{trans('admin.cust_name')}}</label>
+                                            <div class="col-md-3">
                                                 <div id="parent" class="input-group">
                                                     @if($customer_bills_selected != null)
-{{--                                                        <select  class="itemName2 form-control" style="text-align-last: right;"--}}
-{{--                                                                 name="cust_id">--}}
-{{--                                                        </select>--}}
+                                                        {{--                                                        <select  class="itemName2 form-control" style="text-align-last: right;"--}}
+                                                        {{--                                                                 name="cust_id">--}}
+                                                        {{--                                                        </select>--}}
                                                         {{ Form::select('cust_id',App\Models\Customer::where('status','active')->where('branch_number',auth()->user()->branch_number)->pluck('name','id'),$customer_bills_selected->cust_id
                                                           ,["class"=>"select2 form-control custom-select" ,"id"=>"cmb_cust_id","style"=>"width: 100%; height:36px;",'placeholder'=>trans('admin.choose_cust') ]) }}
 
@@ -75,9 +60,16 @@
 
                                                     @endif
                                                     <span class="input-group-btn">
-                                                        <a href="" title="اضافة عميل جديد" data-toggle="modal" data-target="#responsive-modal" class="btn waves-effect waves-light btn-success"><i class="fa fa-plus"></i></a>
+                                                        <a href="" title="اضافة عميل جديد" data-toggle="modal"
+                                                           data-target="#responsive-modal"
+                                                           class="btn waves-effect waves-light btn-success"><i
+                                                                class="fa fa-plus"></i></a>
                                                     </span>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="submit"
+                                                        class="btn waves-effect waves-light btn-rounded btn-outline-primary">{{trans('admin.open_new_bill')}}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -254,45 +246,45 @@
             @endif
         </div>
     </div>
-       <!-- Add  modal content -->
-                    <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"
-                         aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">{{trans('admin.add_customer')}}</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    {{ Form::open( ['url'  => ['customer'],'method'=>'post' , 'class'=>'form'] ) }}
-                                    <div class="form-group">
-                                        <label for="recipient-name"
-                                               class="control-label">{{trans('admin.name')}}</label>
-                                        {{ Form::text('name',null,["class"=>"form-control" ,"required"]) }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name"
-                                               class="control-label">{{trans('admin.phone')}}</label>
-                                        {{ Form::text('phone',null,["class"=>"form-control" ,"required"]) }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="recipient-name"
-                                               class="control-label">{{trans('admin.address')}}</label>
-                                        {{ Form::text('address',null,["class"=>"form-control" ,"required"]) }}
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
-                                        {{trans('admin.public_Cancel')}}
-                                    </button>
-                                    {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
-                                    {{ Form::close() }}
-                                </div>
-                            </div>
-                        </div>
+    <!-- Add  modal content -->
+    <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{trans('admin.add_customer')}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ Form::open( ['url'  => ['customer'],'method'=>'post' , 'class'=>'form'] ) }}
+                    <div class="form-group">
+                        <label for="recipient-name"
+                               class="control-label">{{trans('admin.name')}}</label>
+                        {{ Form::text('name',null,["class"=>"form-control" ,"required"]) }}
                     </div>
-                    <!-- /.modal -->
+                    <div class="form-group">
+                        <label for="recipient-name"
+                               class="control-label">{{trans('admin.phone')}}</label>
+                        {{ Form::text('phone',null,["class"=>"form-control" ,"required"]) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name"
+                               class="control-label">{{trans('admin.address')}}</label>
+                        {{ Form::text('address',null,["class"=>"form-control" ,"required"]) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
+                        {{trans('admin.public_Cancel')}}
+                    </button>
+                    {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
+                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
     <!-- /.modal -->
     @if($customer_bills_selected != null)
         {{--edit  modal --}}

@@ -31,7 +31,9 @@ class productComponentsController extends Controller
         $categories = Category::where('type', 'product')->get();
         $bases = Base::pluck('id', 'name');
         $bases = json_encode($bases);
-        return view('admin.productsCompnents.create', compact('bases', 'categories'));
+        $last_barcode = Product::orderBy('barcode','desc')->first();
+        $auto_barcode = $last_barcode->barcode +1 ;
+        return view('admin.productsCompnents.create', compact('bases', 'categories','auto_barcode'));
     }
 
     public function filter_category(Request $request)

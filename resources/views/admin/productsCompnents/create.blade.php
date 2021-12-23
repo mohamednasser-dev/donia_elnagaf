@@ -1,16 +1,5 @@
 @extends('admin_temp')
 @section('styles')
-{{--    <link href="{{ asset('/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"--}}
-{{--          type="text/css"/>--}}
-{{--    <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>--}}
-{{--    <link href="{{ asset('/assets/plugins/switchery/dist/switchery.min.css') }}" rel="stylesheet"/>--}}
-{{--    <link href="{{ asset('/assets/plugins/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>--}}
-{{--    <link href="{{ asset('/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet"/>--}}
-{{--    <link href="{{ asset('/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css') }}"--}}
-{{--          rel="stylesheet"/>--}}
-{{--    <link href="{{ asset('/assets/plugins/multiselect/css/multi-select.css') }}" rel="stylesheet" type="text/css"/>--}}
-{{--    --}}
-
     <link href="{{ asset('/css/pages/file-upload.css') }}" rel="stylesheet">
 @endsection
 @section('content')
@@ -45,7 +34,7 @@
                         <label for="example-text-input"
                                class="col-md-2 col-form-label">{{trans('admin.barcode')}}</label>
                         <div class="col-md-10">
-                            {{ Form::text('barcode',old('barcode'),["class"=>"form-control" ,"required",'placeholder'=>trans('admin.barcode')]) }}
+                            {{ Form::number('barcode',$auto_barcode,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.barcode')]) }}
                             {{--{{ Form::hidden('quantity',0,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.barcode')]) }}--}}
                         </div>
                     </div>
@@ -69,7 +58,6 @@
                         <label for="example-text-input"
                                class="col-md-2 col-form-label">{{trans('admin.category')}}</label>
                         <div class="col-md-10">
-
                                 @foreach($categories as $row)
                                 <div class="demo-checkbox row">
                                     <div class="col-md-2">
@@ -83,28 +71,8 @@
                                 </div>
                                     <br>
                                 @endforeach
-
-                            {{--                            {{ Form::select('category_id',App\Models\Category::where('type','product')->pluck('name','id'),old('category_id')--}}
-                            {{--                               ,["class"=>"form-control custom-select col-12 ",'id'=>'category_id' ]) }}--}}
                         </div>
                     </div>
-{{--                    <div class="form-group m-t-40 row">--}}
-{{--                        <label for="example-text-input"--}}
-{{--                               class="col-md-2 col-form-label">{{trans('admin.image')}}</label>--}}
-{{--                        <div class="col-md-10">--}}
-{{--                            {{ Form::file('image',array('class'=>'form-control')) }}--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    {{--                    <div class="card m-b-20">--}}
-                    {{--                        <div class="card-header" style='text-align:right'><strong> مكونات المنتج </strong>--}}
-                    {{--                            <div class="card-body parent" style='text-align:right' id="parent">--}}
-                    {{--                                <button type='button' value='Add Button' id='addButton'>--}}
-                    {{--                                    <i class="fa fa-plus"></i></button>--}}
-                    {{--                                <div class="panel" style='text-align:right'>--}}
-                    {{--                                </div>--}}
-                    {{--                            </div>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
                     <div class="center">
                         {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
                     </div>

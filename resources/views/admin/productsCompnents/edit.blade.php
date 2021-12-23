@@ -37,7 +37,7 @@
                         <label for="example-text-input"
                                class="col-md-2 col-form-label">{{trans('admin.barcode')}}</label>
                         <div class="col-md-10">
-                            {{ Form::text('barcode',$product->barcode,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.barcode')]) }}
+                            {{ Form::number('barcode',$product->barcode,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.barcode')]) }}
                         </div>
                     </div>
                     {{ Form::hidden('price',0,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.price')]) }}

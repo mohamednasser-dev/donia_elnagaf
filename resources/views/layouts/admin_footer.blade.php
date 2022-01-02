@@ -17,9 +17,11 @@
 <script src="{{ asset('/assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ asset('/assets/plugins/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
 <script src="{{ asset('/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
+
 <script src="{{ asset('/assets/plugins/toastr/toastr.js') }}"></script>
 <script src="{{ asset('/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js')}}"></script>
 <script src="{{ asset('/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/plugins/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
@@ -31,6 +33,44 @@
 <script>
     $(document).ready(function () {
         $(document).ready(function () {
+
+            // For select 2
+            $(".select2").select2();
+
+            $(".ajax").select2({
+                ajax: {
+                    url: "https://api.github.com/search/repositories",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function(data, params) {
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+                        return {
+                            results: data.items,
+                            pagination: {
+                                more: (params.page * 30) < data.total_count
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+
             var table = $('#example').DataTable({
                 "columnDefs": [{
                     "visible": false,

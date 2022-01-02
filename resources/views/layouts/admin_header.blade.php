@@ -17,6 +17,7 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/images/favicon.png') }}">
         <title>{{settings()->name}}</title>
         <link href="{{ asset('/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
         <link href="{{ asset('/assets/plugins/c3-master/c3.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/assets/plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
@@ -29,7 +30,7 @@
         <link href="{{ asset('/css/pages/card-page.css') }}" rel="stylesheet">
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <link href="{{ asset('/css/select2.min.css') }}" rel="stylesheet"/>
+
         @yield('styles')
     </head>
     <body class="fix-header fix-sidebar card-no-border">

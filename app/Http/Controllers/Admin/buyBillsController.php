@@ -214,8 +214,33 @@ class buyBillsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+
+    public function destroy(Request $request ,$id )
     {
-        //
+        $BillProduct = BillProduct::where('id', $id)->first();
+        try {
+            Product_history::where('billProduct_id', $id)->delete();
+            if ($BillProduct->delete()) {
+                //reEnter Product back quantity ..
+                $product = Product::find($BillProduct->product_id);
+                if($request->type == 'back'){
+                    $product->quantity = $product->quantity - $BillProduct->quantity;
+                }else{
+                    $product->quantity = $product->quantity + $BillProduct->quantity;
+                }
+                if ($product->save()) {
+                    //update Bill total
+                    $cust_bill = CustomerBill::find($BillProduct->bill_id);
+                    $cust_bill->total = $cust_bill->total - $BillProduct->total;
+                    $cust_bill->remain = $cust_bill->remain - $BillProduct->total;
+                    $cust_bill->save();
+                    Alert::success('تم', trans('admin.deleteSuccess'));
+                }
+            }
+        } catch (Exception $exception) {
+            Alert::error('تم', trans('admin.error'));
+        }
+        return back();
     }
 }

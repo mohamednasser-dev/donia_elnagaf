@@ -58,7 +58,7 @@
                                                    data-toggle="modal" data-target="#edit-modal"
                                                    data-editid="{{$user->id}}" id="edit_btn"><i class="fa fa-edit"></i></a>
                                                 <form method="get" id='delete-form-{{ $user->id }}'
-                                                      action="{{url('products/'.$user->id.'/delete')}}"
+                                                      action="{{route('delete.bill_product',$user->id)}}"
                                                       style='display: none;'>
                                                 {{csrf_field()}}
                                                 <!-- {{method_field('delete')}} -->

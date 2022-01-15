@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('buy/{id}/delete', 'Admin\BuyController@destroy');
     Route::post('buy_bill_design/{bill_id}/print', 'Admin\BuyController@bill_design');
     Route::get('buy_bill_design_last/{bill_id}/print', 'Admin\BuyController@bill_design_last');
+    Route::get('buy_bill/{id}/delete', 'Admin\buyBillsController@destroy')->name('delete.bill_product');
 
     //buy bills
     Route::resource('buy-bills', 'Admin\buyBillsController');

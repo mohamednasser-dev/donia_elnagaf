@@ -116,7 +116,9 @@
                         <img src="{{ asset('/assets/images/logo.png') }}" alt="homepage" class="dark-logo"
                              style="width: 180px; height: 100px;"/>
                         <br><br>
+                        @if($CustomerBill->Saler_man)
                         اسم البائع : {{$CustomerBill->Saler_man->name}}<br><br>
+                        @endif
                         ت : {{$CustomerBill->Customer->phone}}<br><br>
                     </div>
                 </div>

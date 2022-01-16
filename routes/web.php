@@ -23,6 +23,13 @@ Route::get('/logout_user', 'Admin\LoginController@logout')->name('logout_user');
 Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::resource('settings', 'Admin\SettingsController');
     Route::post('admin/update/branch', 'Admin\usersController@admin_update_branch')->name('admin.update.branch');
+    Route::get('viewprofile/{id}', 'HomeController@viewprofile')->name('viewprofile');
+
+    //viewprofile routes
+    Route::post('employer/update', 'Admin\ProfileController@update')->name('employers.update');
+    Route::post('employer/update/password', 'Admin\ProfileController@updatepassword')->name('employers.update.password');
+    Route::post('employer/update/image', 'Admin\ProfileController@updateimage')->name('employers.update.image');
+
     //users  routes
     Route::resource('users', 'Admin\usersController');
     Route::get('users/{id}/delete', 'Admin\usersController@destroy')->name('users.delete');
@@ -113,6 +120,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     //	products Components
 
     Route::resource('products', 'Admin\productComponentsController');
+    Route::get('/products/create_duplicate/{id}', 'Admin\productComponentsController@create_duplicate')->name('products.create_duplicate');
+
     Route::get('products/{id}/delete', 'Admin\productComponentsController@destroy');
     Route::get('products/edit/price/with_barcode', 'Admin\productComponentsController@edit_price')->name('edit.product.price');
     Route::post('products/search/price/with_barcode', 'Admin\productComponentsController@search_price')->name('search.products.update_price');

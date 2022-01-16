@@ -69,6 +69,9 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{{ route('viewprofile',Auth::user()->id)}}"><i class="ti-user"></i>الملف الشخصي</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li>
                                     <a class="fa fa-power-off" href="{{ route('logout_user') }}">
                                         {{trans('admin.logout')}}

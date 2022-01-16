@@ -7,6 +7,7 @@ use App\Models\Supplier;
 use App\Models\Customer;
 use App\Models\Base;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -91,5 +92,10 @@ class HomeController extends Controller
         unlink($file_name);
 
         return redirect()->back();
+    }
+
+    public function viewprofile(Request $request)
+    {
+        return view('viewprofile');
     }
 }

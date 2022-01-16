@@ -85,16 +85,20 @@
                                 <td class="text-center">{{$user->barcode}}</td>
                                 <td class="text-center">{{$user->category->name}}</td>
                                 <td class="text-lg-center">
+                                    <a class='btn btn-raised btn-success btn-circle' title="اضافه منتج جديد بنفس بيانات المنتج المختار"
+                                       href="{{route('products.create_duplicate',$user->id)}}">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
                                     <a class='btn btn-raised btn-info btn-circle' title="سحب كمية الى مخزن اخر"
                                        href="" data-toggle="modal" data-target="#sahb-modal"
                                        data-product-id="{{$user->id}}" data-quantity="{{$user->quantity}}"
                                        data-cat="{{$user->category_id}}" id="sahb_btn">
                                         <i class="fa fa-mail-reply-all"></i>
                                     </a>
-                                    <a class='btn btn-raised btn-success btn-circle'
+                                    <a class='btn btn-raised btn-warning btn-circle'
                                        href=" {{url('products/'.$user->id.'/edit')}}"
                                        data-editid="{{$user->id}}" id="edit"><i class="fa fa-edit"></i></a>
-                                    <a class='btn btn-raised btn-warning btn-circle'
+                                    <a class='btn btn-raised btn-primary btn-circle' href="javascript:void(this)"
                                        data-product-id="{{$user->id}}" id="add"
                                        data-toggle="modal" data-target="#responsive-modal"><i
                                             class="fa fa-arrow-circle-down fa-arrow-circle-down"></i></a>

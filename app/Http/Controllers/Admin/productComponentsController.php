@@ -23,7 +23,6 @@ class productComponentsController extends Controller
         $selected_cat = Category::orderBy('id', 'asc')->first()->id;
         $products = Product::where('category_id', $selected_cat)->where('deleted','0')->paginate(20);
         return view('admin.productsCompnents.index', compact('products', 'selected_cat'));
-
     }
 
     public function create()
@@ -34,6 +33,17 @@ class productComponentsController extends Controller
         $last_barcode = Product::orderBy('barcode','desc')->first();
         $auto_barcode = $last_barcode->barcode +1 ;
         return view('admin.productsCompnents.create', compact('bases', 'categories','auto_barcode'));
+    }
+
+    public function create_duplicate($id)
+    {
+        $basic_product = Product::find($id);
+        $categories = Category::where('type', 'product')->get();
+        $bases = Base::pluck('id', 'name');
+        $bases = json_encode($bases);
+        $last_barcode = Product::orderBy('barcode','desc')->first();
+        $auto_barcode = $last_barcode->barcode +1 ;
+        return view('admin.productsCompnents.duplicate_create', compact('bases', 'categories','auto_barcode','basic_product'));
     }
 
     public function filter_category(Request $request)

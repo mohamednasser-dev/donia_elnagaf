@@ -32,7 +32,7 @@
                                     <td>{{ ($key+1) }}</td>
                                     <td>{{ $row->User->name }}</td>
                                     <td>{{ $row->type == 'login' ? 'دخول' : 'خروج' }}</td>
-                                    <td>{{ $row->created_at->format('Y-m-d    H:g:s a') }}</td>
+                                    <td>{{ $row->created_at->format('Y-m-d    g:i a') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

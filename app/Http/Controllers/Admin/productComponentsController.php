@@ -31,7 +31,11 @@ class productComponentsController extends Controller
         $bases = Base::pluck('id', 'name');
         $bases = json_encode($bases);
         $last_barcode = Product::orderBy('barcode','desc')->first();
-        $auto_barcode = $last_barcode->barcode +1 ;
+        if($last_barcode){
+            $auto_barcode = $last_barcode->barcode +1 ;
+        }else{
+            $auto_barcode = 100001 ;
+        }
         return view('admin.productsCompnents.create', compact('bases', 'categories','auto_barcode'));
     }
 
@@ -41,9 +45,8 @@ class productComponentsController extends Controller
         $categories = Category::where('type', 'product')->get();
         $bases = Base::pluck('id', 'name');
         $bases = json_encode($bases);
-        $last_barcode = Product::orderBy('barcode','desc')->first();
-        $auto_barcode = $last_barcode->barcode +1 ;
-        return view('admin.productsCompnents.duplicate_create', compact('bases', 'categories','auto_barcode','basic_product'));
+
+        return view('admin.productsCompnents.duplicate_create', compact('bases', 'categories','basic_product'));
     }
 
     public function filter_category(Request $request)

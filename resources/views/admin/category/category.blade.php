@@ -15,13 +15,13 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-{{--                <div class="card-header">--}}
-{{--                    <button alt="default" data-toggle="modal" data-target="#responsive-modal"--}}
-{{--                            class="btn btn-info btn-bg">--}}
-{{--                        {{trans('admin.add_category')}}--}}
-{{--                    </button>--}}
+                <div class="card-header">
+                    <button alt="default" data-toggle="modal" data-target="#responsive-modal"
+                            class="btn btn-info btn-bg">
+                        {{trans('admin.add_category')}}
+                    </button>
 
-{{--                </div>--}}
+                </div>
                 <div class="card-body">
                     <!-- Start home table -->
                     <table class="table full-color-table full-primary-table">

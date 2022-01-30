@@ -130,7 +130,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="table-responsive m-t-10" style="clear: both;">
+                        <div class="table-responsive m-t-10" style="clear: both; height: 600px;" >
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>

@@ -128,9 +128,9 @@
 
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="height: 700px;">
                     <div class="col-md-12">
-                        <div class="table-responsive m-t-10" style="clear: both; height: 600px;" >
+                        <div class="table-responsive m-t-10" style="clear: both;" >
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -152,8 +152,6 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="col-md-12">
                         <div class="table-responsive" style="clear: both;">
                             <table class="table table-hover">
                                 <tbody>
@@ -188,6 +186,11 @@
                             </table>
                         </div>
                     </div>
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive" style="clear: both;">
                             <table class="table">

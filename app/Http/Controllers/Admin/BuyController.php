@@ -118,7 +118,12 @@ class BuyController extends Controller
                 $data['first_pay'] = $request->pay;
             }
         }
-        $data['khasm'] = $request->khasm;
+        if($request->khasm){
+            $data['khasm'] = $request->khasm;
+        }else{
+            $data['khasm'] = 0;
+        }
+
         $data['pay'] = $request->pay;
         $data['remain'] = $request->remain;
         $data['emp_id'] = $request->emp_id;

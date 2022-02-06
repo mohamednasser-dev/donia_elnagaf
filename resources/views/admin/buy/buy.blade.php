@@ -27,6 +27,8 @@
     <div class="app-content content container-fluid">
         <div class="content-wrapper">
             <!-- Headings -->
+            {{ Form::hidden('user_type',auth()->user()->type,["class"=>"form-control center" , "required",'id'=>'txt_user_type']) }}
+
             {{ Form::open( ['url' => ['cust_bills'],'method'=>'post'] ) }}
             <section id="html-headings-default" class="row match-height">
                 <div class="col-sm-12 col-md-12">
@@ -381,7 +383,13 @@
                 $(document).on('keyup', '#txt_pay', function () {
                     //To View Updated remain value afer pay on view
                     pay = document.getElementById("txt_pay").value;
-                    khasm = document.getElementById("txt_khasm").value;
+                    user_type = document.getElementById("txt_user_type").value;
+                    if(user_type == 'admin'){
+                        khasm = document.getElementById("txt_khasm").value;
+                    }else{
+                        khasm = 0;
+                    }
+
                     total = document.getElementById("lbl_total").value;
                     khasmtotla = total - khasm;
                     final_total = khasmtotla - pay;

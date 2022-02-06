@@ -104,7 +104,6 @@ class usersController extends Controller
                 'name' => 'required|unique:users',
                 'email' => 'required|unique:users',
                 'phone' => 'required',
-                'branch_number' => 'required',
                 'image' => '',
                 'specialist' => '',
                 'ident_image' => '',

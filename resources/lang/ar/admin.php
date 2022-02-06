@@ -79,7 +79,7 @@ return [
     'nav_users' => 'الموظفين',
     'view_users' => 'رؤيه الموظفين',
     'nav_permissions' => 'الصلاحيات',
-    'add_new_user' => 'اضافة موظف جدييد',
+    'add_new_user' => 'اضافة موظف جديد',
     'nav_bills' => 'الفواتير',
     'nav_income' => 'الدخل',
     'nav_outgoing' => 'المصروفات',

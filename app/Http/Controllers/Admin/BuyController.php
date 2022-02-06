@@ -65,6 +65,12 @@ class BuyController extends Controller
 
     public function store_cust_bill(Request $request)
     {
+        $last_bill = CustomerBill::where('branch_number',Auth::user()->branch_number)
+            ->orderBy('created_at','desc')->first();
+        if($last_bill->emp_id == null){
+            Alert::warning('تنبية', 'يجب حفظ اخر فاتوره اولا');
+            return back();
+        }
         $data = $this->validate(\request(),
             [
                 'type' => 'required',

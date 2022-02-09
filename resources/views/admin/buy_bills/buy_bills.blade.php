@@ -150,7 +150,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $customer_bills->links() }}
+                                {{ $customer_bills->appends(request()->input())->links()}}
                             </div>
                         </div>
                     </div>

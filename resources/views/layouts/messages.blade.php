@@ -1,4 +1,3 @@
-
 @if(Session::has('success'))
     <div class="col-lg-12 col-md-12">
         <div class="alert alert-success">
@@ -17,7 +16,6 @@
         </div>
     </div>
 @endif
-
 @if(Session::has('flash_message'))
     <script>
         swal("Great Job","{{Session::get('flash_message')}}", "success");

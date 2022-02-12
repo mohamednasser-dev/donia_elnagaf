@@ -308,12 +308,12 @@
                         <div class="form-group">
                             <label for="recipient-name"
                                    class="control-label">{{trans('admin.quantity')}}</label>
-                            {{ Form::number('quantity',null,["class"=>"form-control" ,"required",'id'=>'txt_quantity','min'=>'0']) }}
+                            {{ Form::number('quantity',null,["class"=>"form-control" ,"required",'id'=>'txt_quantity','min'=>'1']) }}
                         </div>
                         <div class="form-group">
                             <label for="recipient-name"
                                    class="control-label">{{trans('admin.price')}}</label>
-                            {{ Form::number('price',null,["class"=>"form-control" ,"required",'step' =>'0.01','id'=>'txt_price','min'=>'1']) }}
+                            {{ Form::number('price',null,["class"=>"form-control" ,"required",'step' =>'0.01','id'=>'txt_price','min'=>'0']) }}
                         </div>
                     </div>
                     <div class="modal-footer">

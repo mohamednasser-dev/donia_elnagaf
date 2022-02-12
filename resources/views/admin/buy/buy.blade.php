@@ -308,7 +308,7 @@
                         <div class="form-group">
                             <label for="recipient-name"
                                    class="control-label">{{trans('admin.quantity')}}</label>
-                            {{ Form::number('quantity',null,["class"=>"form-control" ,"required",'id'=>'txt_quantity','min'=>'1']) }}
+                            {{ Form::number('quantity',null,["class"=>"form-control" ,"required",'id'=>'txt_quantity','min'=>'0']) }}
                         </div>
                         <div class="form-group">
                             <label for="recipient-name"

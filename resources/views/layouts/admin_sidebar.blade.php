@@ -48,8 +48,10 @@
 
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="{{url('products')}}">رؤية المنتجات</a></li>
-                            <li><a href="{{route('edit.product.price')}} ">تعديل السعر بالباركود</a></li>
-                            <li><a href="{{route('product.history')}} ">حركة المنتاجات</a></li>
+                            @if(auth()->user()->type == 'admin')
+                                <li><a href="{{route('edit.product.price')}} ">تعديل السعر بالباركود</a></li>
+                                <li><a href="{{route('product.history')}} ">حركة المنتاجات</a></li>
+                            @endif
                         </ul>
                     </li>
                 @endcan

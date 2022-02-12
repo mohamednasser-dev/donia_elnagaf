@@ -18,12 +18,14 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-2">
-                            <label class="control-label"></label>
-                            <br>
-                            <a href="{{url('products/create')}}"
-                               class="btn btn-info btn-bg">
-                                {{trans('admin.add_product')}}
-                            </a>
+                            @if(auth()->user()->type == 'admin')
+                                <label class="control-label"></label>
+                                <br>
+                                <a href="{{url('products/create')}}"
+                                   class="btn btn-info btn-bg">
+                                    {{trans('admin.add_product')}}
+                                </a>
+                            @endif
                         </div>
                         <div class="col-md-4">
                             <label class="control-label">بحث بالاسم</label>
@@ -32,7 +34,9 @@
                                 {{ Form::hidden('category_id',$selected_cat,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.name')]) }}
                                 {{ Form::text('search',null,["class"=>"form-control" ,"required",'placeholder'=>trans('admin.name')]) }}
                                 <span class="input-group-btn">
-                                    <button title="بحث بالاسم" type="submit" id="check-minutes" class="btn waves-effect waves-light btn-success"><i class="fa fa-search"></i></button>
+                                    <button title="بحث بالاسم" type="submit" id="check-minutes"
+                                            class="btn waves-effect waves-light btn-success"><i
+                                            class="fa fa-search"></i></button>
                                 </span>
                             </div>
                             {{ Form::close() }}
@@ -44,7 +48,7 @@
                                 <select name="category_id" class="form-control custom-select">
                                     @foreach(Categories() as $row)
                                         @if($selected_cat == $row->id)
-                                            <option value="{{$row->id}}" selected > {{$row->name}} </option>
+                                            <option value="{{$row->id}}" selected> {{$row->name}} </option>
                                         @else
                                             <option value="{{$row->id}}">{{$row->name}}</option>
 
@@ -52,7 +56,9 @@
                                     @endforeach
                                 </select>
                                 <span class="input-group-btn">
-                                    <button title="بحث بالمخزن" type="submit" id="check-minutes" class="btn waves-effect waves-light btn-success"><i class="fa fa-search"></i></button>
+                                    <button title="بحث بالمخزن" type="submit" id="check-minutes"
+                                            class="btn waves-effect waves-light btn-success"><i
+                                            class="fa fa-search"></i></button>
                                 </span>
                             </div>
                             {{ Form::close() }}
@@ -85,41 +91,44 @@
                                 <td class="text-center">{{$user->barcode}}</td>
                                 <td class="text-center">{{$user->category->name}}</td>
                                 <td class="text-lg-center">
-                                    <a class='btn btn-raised btn-success btn-circle' title="اضافه منتج جديد بنفس بيانات المنتج المختار"
-                                       href="{{route('products.create_duplicate',$user->id)}}">
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                    <a class='btn btn-raised btn-info btn-circle' title="سحب كمية الى مخزن اخر"
-                                       href="" data-toggle="modal" data-target="#sahb-modal"
-                                       data-product-id="{{$user->id}}" data-quantity="{{$user->quantity}}"
-                                       data-cat="{{$user->category_id}}" id="sahb_btn">
-                                        <i class="fa fa-mail-reply-all"></i>
-                                    </a>
-                                    <a class='btn btn-raised btn-warning btn-circle'
-                                       href=" {{url('products/'.$user->id.'/edit')}}"
-                                       data-editid="{{$user->id}}" id="edit"><i class="fa fa-edit"></i></a>
-                                    <a class='btn btn-raised btn-primary btn-circle' href="javascript:void(this)"
-                                       data-product-id="{{$user->id}}" id="add"
-                                       data-toggle="modal" data-target="#responsive-modal"><i
-                                            class="fa fa-arrow-circle-down fa-arrow-circle-down"></i></a>
+                                    @if(auth()->user()->type == 'admin')
+                                        <a class='btn btn-raised btn-success btn-circle'
+                                           title="اضافه منتج جديد بنفس بيانات المنتج المختار"
+                                           href="{{route('products.create_duplicate',$user->id)}}">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a class='btn btn-raised btn-info btn-circle' title="سحب كمية الى مخزن اخر"
+                                           href="" data-toggle="modal" data-target="#sahb-modal"
+                                           data-product-id="{{$user->id}}" data-quantity="{{$user->quantity}}"
+                                           data-cat="{{$user->category_id}}" id="sahb_btn">
+                                            <i class="fa fa-mail-reply-all"></i>
+                                        </a>
+                                        <a class='btn btn-raised btn-warning btn-circle'
+                                           href=" {{url('products/'.$user->id.'/edit')}}"
+                                           data-editid="{{$user->id}}" id="edit"><i class="fa fa-edit"></i></a>
+                                        <a class='btn btn-raised btn-primary btn-circle' href="javascript:void(this)"
+                                           data-product-id="{{$user->id}}" id="add"
+                                           data-toggle="modal" data-target="#responsive-modal"><i
+                                                class="fa fa-arrow-circle-down fa-arrow-circle-down"></i></a>
 
-                                    <form method="get" id='delete-form-{{ $user->id }}'
-                                          action="{{url('products/'.$user->id.'/delete')}}"
-                                          style='display: none;'>
-                                    {{csrf_field()}}
-                                    <!-- {{method_field('delete')}} -->
-                                    </form>
-                                    <button onclick="if(confirm('{{trans('admin.deleteConfirmation')}}'))
-                                        {
-                                        event.preventDefault();
-                                        document.getElementById('delete-form-{{ $user->id }}').submit();
-                                        }else {
-                                        event.preventDefault();
-                                        }"
-                                            class='btn btn-danger btn-circle' href=" "><i
-                                            class="fa fa-trash" aria-hidden='true'>
-                                        </i>
-                                    </button>
+                                        <form method="get" id='delete-form-{{ $user->id }}'
+                                              action="{{url('products/'.$user->id.'/delete')}}"
+                                              style='display: none;'>
+                                        {{csrf_field()}}
+                                        <!-- {{method_field('delete')}} -->
+                                        </form>
+                                        <button onclick="if(confirm('{{trans('admin.deleteConfirmation')}}'))
+                                            {
+                                            event.preventDefault();
+                                            document.getElementById('delete-form-{{ $user->id }}').submit();
+                                            }else {
+                                            event.preventDefault();
+                                            }"
+                                                class='btn btn-danger btn-circle' href=" "><i
+                                                class="fa fa-trash" aria-hidden='true'>
+                                            </i>
+                                        </button>
+                                        @endif
                                 </td>
                             </tr>
                         @endforeach

@@ -49,7 +49,7 @@
         }
 
         .timedate {
-            font: 10pt;
+            font: 8pt;
         }
 
         .qrcode {
@@ -83,7 +83,7 @@
             }
 
             .timedate {
-                font: 6pt;
+                font: 5pt;
             }
         }
 
@@ -101,36 +101,31 @@
             <div class="card card-body printableArea">
                 <hr>
                 <div class="row">
-                    <div class="col-lg-6" style="width: 48%;">
+                    <div class="col-lg-3" style="width: 25%;">
                         @if($CustomerBill->type == 'back')
-                        {{trans('admin.back_product')}}
+                            {{trans('admin.back_product')}}
                         @endif
-                        <br>
-                        <br>
                         الرقم : {{$CustomerBill->bill_num}}<br><br>
                         تحريرا في : <small class="timedate">{{$CustomerBill->date}} </small><br><br>
+                        @if($CustomerBill->Saler_man)
+                            اسم البائع : {{$CustomerBill->Saler_man->name}}<br><br>
+                        @endif
+                    </div>
+                    <div class="col-lg-3" style="width: 40%;">
                         المطلوب من العميل : {{$CustomerBill->Customer->name}}<br><br>
                         العنوان : {{$CustomerBill->Customer->address}} <br><br>
+                        ت : {{$CustomerBill->Customer->phone}}<br><br>
                     </div>
-                    <div class="col-lg-6" style="width: 48%; text-align: left;">
+                    <div class="col-lg-6" style="width: 35%; text-align: left;">
                         <img src="{{ asset('/assets/images/logo.png') }}" alt="homepage" class="dark-logo"
                              style="width: 180px; height: 100px;"/>
                         <br><br>
-                        @if($CustomerBill->Saler_man)
-                        اسم البائع : {{$CustomerBill->Saler_man->name}}<br><br>
-                        @endif
-                        ت : {{$CustomerBill->Customer->phone}}<br><br>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12" style="width: 48%;">
-
-
-                    </div>
-                </div>
-                <div class="row" style="height: 700px;">
+{{--                style="height: 700px;"--}}
+                <div class="row" >
                     <div class="col-md-12">
-                        <div class="table-responsive m-t-10" style="clear: both;" >
+                        <div class="table-responsive m-t-10" style="clear: both;">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -152,44 +147,36 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="table-responsive" style="clear: both;">
-                            <table class="table table-hover">
-                                <tbody>
-                                <tr>
-                                    <td class="text-center">{{trans('admin.sale_total')}}</td>
-                                    @if($CustomerBill->khasm > 0)
-                                        <td class="text-center">الخصم</td>
-                                    @endif
-                                    @if( $CustomerBill->reservation == '1' && $CustomerBill->second_pay > 0)
-                                        <td class="text-center">المدفوع مسبقا</td>
-                                        <td class="text-center">المدفوع حاليا</td>
-                                    @else
-                                        <td class="text-center">{{trans('admin.sale_pay')}}</td>
-                                    @endif
-                                    <td class="text-center">{{trans('admin.sale_remain')}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">{{$CustomerBill->total}}</td>
-                                    @if( $CustomerBill->khasm > 0)
-                                        <td class="text-center">{{$CustomerBill->khasm}}</td>
-                                    @endif
-                                    @if( $CustomerBill->reservation == '1' && $CustomerBill->second_pay > 0)
-                                        <td class="text-center">{{$CustomerBill->first_pay}}</td>
-                                        <td class="text-center">{{$CustomerBill->second_pay}}</td>
-                                    @else
-                                        <td class="text-center">{{$CustomerBill->pay}}</td>
-                                    @endif
 
-                                    <td class="text-center">{{$CustomerBill->remain}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                     <div class="col-md-12">
 
                     </div>
                 </div>
+                <div class="row" style="justify-content: center;">
+                    <div class="col-lg-3" style="width: 25%;">
+                        الاجمالي : {{$CustomerBill->total}}
+                    </div>
+                    @if($CustomerBill->khasm > 0)
+                        <div class="col-lg-3" style="width: 25%;">
+                            الخصم : {{$CustomerBill->khasm}}
+                        </div>
+                    @endif
+                    @if( $CustomerBill->reservation == '1' && $CustomerBill->second_pay > 0)
+                        <div class="col-lg-3" style="width: 25%;">
+                            المدفوع مسبقا : {{$CustomerBill->first_pay}}<br><br>
+                            المدفوع حاليا : {{$CustomerBill->second_pay}}
+                        </div>
+                    @else
+                        <div class="col-lg-3" style="width: 25%;">
+                            المدفوع : {{$CustomerBill->pay}}
+                        </div>
+                    @endif
+                    <div class="col-lg-3" style="width: 25%;">
+                        الباقي : {{$CustomerBill->remain}}
+                    </div>
+                </div>
+                <br>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive" style="clear: both;">

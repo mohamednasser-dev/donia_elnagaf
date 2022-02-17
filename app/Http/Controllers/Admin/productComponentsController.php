@@ -280,7 +280,7 @@ class productComponentsController extends Controller
     public function product_history()
     {
         $selected_cat = Category::orderBy('id', 'asc')->first()->id;
-        $products = Product_history::orderBy('created_at', 'desc')->paginate(20);
+        $products = Product_history::orderBy('created_at', 'desc')->get();
         $add = Product_history::where('type', 'add')->get()->sum('quantity');
         $remove = Product_history::where('type', 'remove')->get()->sum('quantity');
         $remain = $add - $remove;
@@ -290,7 +290,7 @@ class productComponentsController extends Controller
     public function filter_category_history(Request $request)
     {
         $selected_cat = $request->category_id;
-        $products = Product_history::where('category_id', $request->category_id)->orderBy('created_at', 'desc')->paginate(20);
+        $products = Product_history::where('category_id', $request->category_id)->orderBy('created_at', 'desc')->get();
         $add = Product_history::where('category_id', $request->category_id)->where('type', 'add')->get()->sum('quantity');
         $remove = Product_history::where('category_id', $request->category_id)->where('type', 'remove')->get()->sum('quantity');
         $remain = $add - $remove;
@@ -300,7 +300,7 @@ class productComponentsController extends Controller
     public function filter_product_name_history(Request $request)
     {
         $selected_cat = Category::orderBy('id', 'asc')->first()->id;
-        $products = Product_history::where('product_name', $request->product_name)->orderBy('created_at', 'desc')->paginate(20);
+        $products = Product_history::where('product_name', $request->product_name)->orderBy('created_at', 'desc')->get();
         $add = Product_history::where('product_name', $request->product_name)->where('type', 'add')->get()->sum('quantity');
         $remove = Product_history::where('product_name', $request->product_name)->where('type', 'remove')->get()->sum('quantity');
         $remain = $add - $remove;

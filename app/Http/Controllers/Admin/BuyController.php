@@ -65,7 +65,7 @@ class BuyController extends Controller
 
     public function store_cust_bill(Request $request)
     {
-        $last_bill = CustomerBill::where('branch_number', Auth::user()->branch_number)
+        $last_bill = CustomerBill::where('branch_number', Auth::user()->branch_number)->where('type',$request->type)
             ->orderBy('created_at', 'desc')->first();
         if ($last_bill) {
             if ($last_bill->emp_id == null) {

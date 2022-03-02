@@ -223,12 +223,12 @@ class BuyController extends Controller
             'product_id' => 'required',
             'bill_id' => 'required',
             'quantity' => 'required',
-            'price' => 'required|numeric|between:0,9999.9',
+            'price' => 'required|numeric|between:0,999999.9',
         ]);
         $error_array = array();
         $success_output = '';
         if ($validation->fails()) {
-            Alert::error('خطأ', $validation->messages()->getMessages());
+            Alert::error('خطأ', $validation->errors()->first());
             return back();
         } else {
             $exist_bill = CustomerBill::find($request->get('bill_id'));

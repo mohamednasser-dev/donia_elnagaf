@@ -19,10 +19,10 @@
                     <button data-toggle="modal" data-target="#responsive-modal" class="btn btn-info btn-bg">
                         {{trans('admin.add_outgoings')}}
                     </button>
-
                 </div>
                 <div class="card-body">
                     <!-- Start home table -->
+                    <div class="table-responsive">
                     <table id="myTable" class="table full-color-table full-primary-table">
                         <thead>
                         <tr>
@@ -65,7 +65,7 @@
                         </tbody>
                     </table>
                 {{$outgoings->links()}}
-
+                    </div>
                 <!-- sample modal content -->
                     <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -93,31 +93,24 @@
                                                class="control-label">{{trans('admin.date')}}</label>
                                         {{ Form::date('date',$today,["class"=>"form-control" ,"required"]) }}
                                     </div>
-
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">
-                                        Close
+                                        الغاء
                                     </button>
                                     {{ Form::submit( trans('admin.public_Add') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
                                     {{ Form::close() }}
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /.modal -->
                 </div>
-
             </div>
         </div>
     </div>
 @endsection
-
 @section('scripts')
     <!--stickey kit -->
     <script src="{{ asset('assets/plugins/sticky-kit-master/dist/sticky-kit.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
 @endsection
-

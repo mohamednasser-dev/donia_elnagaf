@@ -17,6 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Start home table -->
+                    <div class="table-responsive">
                     <table id="myTable" class="table full-color-table full-primary-table">
                          <thead>
                             <tr>
@@ -38,6 +39,7 @@
                         </tbody>
                     </table>
                     {{$data->links()}}
+                    </div>
                 </div>
             </div>
         </div>

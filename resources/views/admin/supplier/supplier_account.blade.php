@@ -107,7 +107,8 @@
                 <div class="col-sm-12 col-md-12">
                     <div class="card">
                         <div class="card-body center">
-                            <div class="card-block">    
+                            <div class="card-block">
+                                <div class="table-responsive">
                                 <table id="myTable" class="table full-color-table full-primary-table">
                                     <thead>
                                         <tr>
@@ -142,7 +143,7 @@
                                                 <td class="text-lg-center">
                                                     @if($supplierBill->bill_num > 0 )
                                                         <a  class="btn btn-secondary btn-circle" href=" {{url('supplier/'.$supplierBill->id.'/show_bill')}}">
-                                                            <i class="fa fa-eye"></i> 
+                                                            <i class="fa fa-eye"></i>
                                                         </a>
                                                     @endif
                                                 </td>
@@ -171,8 +172,9 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
-                                </table> 
+                                </table>
                                 {{$supplierSale->links()}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -200,7 +202,7 @@
                             <label for="recipient-name" class="control-label">{{trans('admin.money')}}</label>
                             {{ Form::number('money',null,["class"=>"form-control center" ,"required",'id'=>'txt_money','min'=> '1','max'=> '']) }}
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">{{trans('admin.notes')}}</label>
                             {{ Form::text('notes',null,["class"=>"form-control center" ,'id'=>'notes']) }}

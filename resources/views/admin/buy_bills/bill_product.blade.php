@@ -31,6 +31,7 @@
                         </div>
                         <div class="card-body" style="text-align: center;">
                             <div class="card-block">
+                                <div class="table-responsive">
                                 <table id="supplier_bases_tbl" class="table full-color-table full-primary-table">
                                     <thead>
                                     <tr>
@@ -80,6 +81,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>

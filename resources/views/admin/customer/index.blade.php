@@ -23,6 +23,7 @@
                 </div>
                 <div class="card-body">
                     <!-- Start home table -->
+                    <div class="table-responsive">
                     <table id="example23"
                            class="tablesaw table-striped table-hover table-bordered table tablesaw-columntoggle">
                         <thead>
@@ -87,6 +88,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
                 {{$customers->links()}}
                 <!-- Add  modal content -->
                     <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog"

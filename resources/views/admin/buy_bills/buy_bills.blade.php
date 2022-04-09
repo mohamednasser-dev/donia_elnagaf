@@ -87,6 +87,7 @@
                     <div class="card">
                         <div class="card-body" style="text-align: center;">
                             <div class="card-block">
+                                <div class="table-responsive">
                                 <table id="myTable" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
@@ -150,6 +151,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>

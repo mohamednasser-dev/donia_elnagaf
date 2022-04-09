@@ -26,6 +26,7 @@
                     <div class="card">
                         <div class="card-body" style="text-align: center;">
                             <div class="card-block">
+                                <div class="table-responsive">
                                 <table id="myTable" class="table full-color-table full-primary-table">
                                     <thead>
                                     <tr>
@@ -50,6 +51,7 @@
                                     </tbody>
                                 </table>
                                 {{$bill_bases->links()}}
+                                </div>
                             </div>
                         </div>
                     </div>

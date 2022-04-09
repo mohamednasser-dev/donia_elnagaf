@@ -56,7 +56,7 @@ class categoryController extends Controller
             ]);
         $user = Category::create($data);
         $user->save();
-        Alert::success('تم', trans('admin.added_s'));
+        Alert::success('تم', trans('admin.addedsuccess'));
         return back();
     }
 

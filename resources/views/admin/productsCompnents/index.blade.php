@@ -68,74 +68,75 @@
                 </div>
                 <div class="card-body">
                     <!-- Start home table -->
-                    <table id="table-8344"
-                           class="tablesaw table-striped table-hover table-bordered table tablesaw-columntoggle">
-                        <thead>
-                        <tr>
-                            <th class="text-center">{{trans('admin.product_name')}}</th>
-                            <th class="text-center">{{trans('admin.quantity')}}</th>
-                            <th class="text-center">{{trans('admin.gomla_price')}}</th>
-                            <th class="text-center">{{trans('admin.buy_price')}}</th>
-                            <th class="text-center">{{trans('admin.barcode')}}</th>
-                            <th class="text-center">{{trans('admin.category')}}</th>
-                            <th class="text-center">{{trans('admin.actions')}}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($products as $user)
+                    <div class="table-responsive">
+                        <table id="table-8344" class="table full-color-table full-primary-table">
+                            <thead>
                             <tr>
-                                <td class="text-center">{{$user->name}}</td>
-                                <td class="text-center">{{$user->quantity}}</td>
-                                <td class="text-center">{{$user->gomla_price}}</td>
-                                <td class="text-center">{{$user->selling_price}}</td>
-                                <td class="text-center">{{$user->barcode}}</td>
-                                <td class="text-center">{{$user->category->name}}</td>
-                                <td class="text-lg-center">
-                                    @if(auth()->user()->type == 'admin')
-                                        <a class='btn btn-raised btn-success btn-circle'
-                                           title="اضافه منتج جديد بنفس بيانات المنتج المختار"
-                                           href="{{route('products.create_duplicate',$user->id)}}">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                        <a class='btn btn-raised btn-info btn-circle' title="سحب كمية الى مخزن اخر"
-                                           href="" data-toggle="modal" data-target="#sahb-modal"
-                                           data-product-id="{{$user->id}}" data-quantity="{{$user->quantity}}"
-                                           data-cat="{{$user->category_id}}" id="sahb_btn">
-                                            <i class="fa fa-mail-reply-all"></i>
-                                        </a>
-                                        <a class='btn btn-raised btn-warning btn-circle'
-                                           href=" {{url('products/'.$user->id.'/edit')}}"
-                                           data-editid="{{$user->id}}" id="edit"><i class="fa fa-edit"></i></a>
-                                        <a class='btn btn-raised btn-primary btn-circle' href="javascript:void(this)"
-                                           data-product-id="{{$user->id}}" id="add"
-                                           data-toggle="modal" data-target="#responsive-modal"><i
-                                                class="fa fa-arrow-circle-down fa-arrow-circle-down"></i></a>
-
-                                        <form method="get" id='delete-form-{{ $user->id }}'
-                                              action="{{url('products/'.$user->id.'/delete')}}"
-                                              style='display: none;'>
-                                        {{csrf_field()}}
-                                        <!-- {{method_field('delete')}} -->
-                                        </form>
-                                        <button onclick="if(confirm('{{trans('admin.deleteConfirmation')}}'))
-                                            {
-                                            event.preventDefault();
-                                            document.getElementById('delete-form-{{ $user->id }}').submit();
-                                            }else {
-                                            event.preventDefault();
-                                            }"
-                                                class='btn btn-danger btn-circle' href=" "><i
-                                                class="fa fa-trash" aria-hidden='true'>
-                                            </i>
-                                        </button>
-                                        @endif
-                                </td>
+                                <th class="text-center">{{trans('admin.product_name')}}</th>
+                                <th class="text-center">{{trans('admin.quantity')}}</th>
+                                <th class="text-center">{{trans('admin.gomla_price')}}</th>
+                                <th class="text-center">{{trans('admin.buy_price')}}</th>
+                                <th class="text-center">{{trans('admin.barcode')}}</th>
+                                <th class="text-center">{{trans('admin.category')}}</th>
+                                <th class="text-center">{{trans('admin.actions')}}</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    {{ $products->appends(request()->input())->links()}}
+                            </thead>
+                            <tbody>
+                            @foreach($products as $user)
+                                <tr>
+                                    <td class="text-center">{{$user->name}}</td>
+                                    <td class="text-center">{{$user->quantity}}</td>
+                                    <td class="text-center">{{$user->gomla_price}}</td>
+                                    <td class="text-center">{{$user->selling_price}}</td>
+                                    <td class="text-center">{{$user->barcode}}</td>
+                                    <td class="text-center">{{$user->category->name}}</td>
+                                    <td class="text-lg-center">
+                                        @if(auth()->user()->type == 'admin')
+                                            <a class='btn btn-raised btn-success btn-circle'
+                                               title="اضافه منتج جديد بنفس بيانات المنتج المختار"
+                                               href="{{route('products.create_duplicate',$user->id)}}">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                            <a class='btn btn-raised btn-info btn-circle' title="سحب كمية الى مخزن اخر"
+                                               href="" data-toggle="modal" data-target="#sahb-modal"
+                                               data-product-id="{{$user->id}}" data-quantity="{{$user->quantity}}"
+                                               data-cat="{{$user->category_id}}" id="sahb_btn">
+                                                <i class="fa fa-mail-reply-all"></i>
+                                            </a>
+                                            <a class='btn btn-raised btn-warning btn-circle'
+                                               href=" {{url('products/'.$user->id.'/edit')}}"
+                                               data-editid="{{$user->id}}" id="edit"><i class="fa fa-edit"></i></a>
+                                            <a class='btn btn-raised btn-primary btn-circle'
+                                               href="javascript:void(this)"
+                                               data-product-id="{{$user->id}}" id="add"
+                                               data-toggle="modal" data-target="#responsive-modal"><i
+                                                    class="fa fa-arrow-circle-down fa-arrow-circle-down"></i></a>
 
+                                            <form method="get" id='delete-form-{{ $user->id }}'
+                                                  action="{{url('products/'.$user->id.'/delete')}}"
+                                                  style='display: none;'>
+                                            {{csrf_field()}}
+                                            <!-- {{method_field('delete')}} -->
+                                            </form>
+                                            <button onclick="if(confirm('{{trans('admin.deleteConfirmation')}}'))
+                                                {
+                                                event.preventDefault();
+                                                document.getElementById('delete-form-{{ $user->id }}').submit();
+                                                }else {
+                                                event.preventDefault();
+                                                }"
+                                                    class='btn btn-danger btn-circle' href=" "><i
+                                                    class="fa fa-trash" aria-hidden='true'>
+                                                </i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        {{ $products->appends(request()->input())->links()}}
+                    </div>
                 </div>
             </div>
         </div>

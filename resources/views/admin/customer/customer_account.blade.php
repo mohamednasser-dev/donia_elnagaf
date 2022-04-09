@@ -7,12 +7,13 @@
         <div class="col-md-7 align-self-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">{{trans('admin.cust_account')}}</li>
-                <li class="breadcrumb-item active"><a href="{{url('customer')}}" >{{trans('admin.nav_customers')}}</a> </li>
-                <li class="breadcrumb-item active"><a href="{{url('home')}}" >{{trans('admin.nav_home')}}</a> </li>
+                <li class="breadcrumb-item active"><a href="{{url('customer')}}">{{trans('admin.nav_customers')}}</a>
+                </li>
+                <li class="breadcrumb-item active"><a href="{{url('home')}}">{{trans('admin.nav_home')}}</a></li>
             </ol>
         </div>
     </div>
-        <!-- /.card-header -->
+    <!-- /.card-header -->
     <div class="app-content content container-fluid">
         <div class="content-wrapper">
             <!-- Headings -->
@@ -23,9 +24,10 @@
                             <div class="card-block" style="margin-top: -40px;">
                                 <!-- This form to add new news row in database -->
                                 <div class="form-group m-t-40 row">
-                                    <label for="example-text-input" class="col-md-3 col-form-label">{{trans('admin.cust_name')}}</label>
+                                    <label for="example-text-input"
+                                           class="col-md-3 col-form-label">{{trans('admin.cust_name')}}</label>
                                     <div class="col-md-9">
-                                      {{ Form::text('name',$customer->name,["class"=>"form-control" ,"required" , "readonly"]) }}
+                                        {{ Form::text('name',$customer->name,["class"=>"form-control" ,"required" , "readonly"]) }}
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +38,8 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex no-block">
-                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ asset('assets/images/icon/total2.png') }}" alt="Income"></div>
+                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img
+                                                src="{{ asset('assets/images/icon/total2.png') }}" alt="Income"></div>
                                         <div class="align-self-center">
                                             <h6 class="text-muted m-t-10 m-b-0">{{trans('admin.total')}}</h6>
                                             <h2 class="m-t-0">{{$total}}</h2></div>
@@ -48,7 +51,8 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex no-block">
-                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ asset('assets/images/icon/payed.png') }}" alt="Income"></div>
+                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img
+                                                src="{{ asset('assets/images/icon/payed.png') }}" alt="Income"></div>
                                         <div class="align-self-center">
                                             <h6 class="text-muted m-t-10 m-b-0">{{trans('admin.pay')}}</h6>
                                             <h2 class="m-t-0">{{$pay}}</h2></div>
@@ -60,7 +64,8 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex no-block">
-                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="{{ asset('assets/images/icon/remain.png') }}" alt="Income"></div>
+                                        <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img
+                                                src="{{ asset('assets/images/icon/remain.png') }}" alt="Income"></div>
                                         <div class="align-self-center">
                                             <h6 class="text-muted m-t-10 m-b-0">{{trans('admin.remain')}}</h6>
                                             <h2 class="m-t-0">{{$remain}}</h2></div>
@@ -76,26 +81,27 @@
                         <div class="card-body" style="text-align: center;">
                             <h5 class="center">{{trans('admin.old_payment')}}</h5>
                             {{ Form::open( ['url'  => ['cust_manula_bill'],'method'=>'post' , 'class'=>'form'] ) }}
-                                {{ csrf_field() }}
-                                {{ Form::hidden('cust_id',$customer->id,["class"=>"form-control" ,"required"]) }}
-                                <div class="card-block">
-                                    <div class="row col-md-12" >
-                                        <div>
-                                            <label>{{trans('admin.money')}}</label>
-                                            {!! Form::text('remain',null,['class'=>'form-control center']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="row col-md-12" >
-                                        <div>
-                                            <label>{{trans('admin.notes')}}</label>
-                                            {!! Form::text('notes',null ,['class'=>'form-control center' ]) !!}
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row col-md-12" >
-                                        <button type="submit" class="btn btn-rounded btn-block btn-success">{{trans('admin.public_Save')}}</button>
+                            {{ csrf_field() }}
+                            {{ Form::hidden('cust_id',$customer->id,["class"=>"form-control" ,"required"]) }}
+                            <div class="card-block">
+                                <div class="row col-md-12">
+                                    <div>
+                                        <label>{{trans('admin.money')}}</label>
+                                        {!! Form::text('remain',null,['class'=>'form-control center']) !!}
                                     </div>
                                 </div>
+                                <div class="row col-md-12">
+                                    <div>
+                                        <label>{{trans('admin.notes')}}</label>
+                                        {!! Form::text('notes',null ,['class'=>'form-control center' ]) !!}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row col-md-12">
+                                    <button type="submit"
+                                            class="btn btn-rounded btn-block btn-success">{{trans('admin.public_Save')}}</button>
+                                </div>
+                            </div>
                             {{ Form::close() }}
                         </div>
                     </div>
@@ -105,9 +111,10 @@
                 <div class="col-sm-12 col-md-12">
                     <div class="card">
                         <div class="card-body" style="text-align: center;">
-                            <div class="card-block">    
-                                <table id="myTable" class="table full-color-table full-primary-table">
-                                    <thead>
+                            <div class="card-block">
+                                <div class="table-responsive">
+                                    <table id="myTable" class="table full-color-table full-primary-table">
+                                        <thead>
                                         <tr>
                                             <th class="text-lg-center">{{trans('admin.bill_num')}}</th>
                                             <th class="text-lg-center">{{trans('admin.total')}}</th>
@@ -118,8 +125,8 @@
                                             <th class="text-lg-center">{{trans('admin.actions')}}</th>
                                             <th class="text-lg-center">{{trans('admin.public_delete')}}</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         @foreach($customerBills as $custBill)
                                             <tr>
                                                 <td class="text-lg-center">{{$custBill->bill_num}}</td>
@@ -131,8 +138,10 @@
                                                 <td class="text-lg-center">
                                                     @if($custBill->remain != 0)
                                                         <a class='btn btn-raised btn-success btn-sml'
-                                                           data-bill-id="{{$custBill->id}}" data-bill-remain="{{$custBill->remain}}" id="payment"
-                                                           alt="default" data-toggle="modal" data-target="#edit-modal">{{trans('admin.payment')}}
+                                                           data-bill-id="{{$custBill->id}}"
+                                                           data-bill-remain="{{$custBill->remain}}" id="payment"
+                                                           alt="default" data-toggle="modal"
+                                                           data-target="#edit-modal">{{trans('admin.payment')}}
                                                         </a>
                                                     @endif
                                                 </td>
@@ -142,27 +151,28 @@
                                                         <form method="get" id='delete-form-{{ $custBill->id }}'
                                                               action="{{url('customer_payment/'.$custBill->id.'/delete')}}"
                                                               style='display: none;'>
-                                                            {{csrf_field()}}
-                                                            <!-- {{method_field('delete')}} -->
+                                                        {{csrf_field()}}
+                                                        <!-- {{method_field('delete')}} -->
                                                         </form>
                                                         <button onclick="
                                                             if(confirm('{{trans('admin.deleteConfirmation')}}'))
                                                             {
-                                                                event.preventDefault();
-                                                                document.getElementById('delete-form-{{ $custBill->id }}').submit();
+                                                            event.preventDefault();
+                                                            document.getElementById('delete-form-{{ $custBill->id }}').submit();
                                                             }else {
-                                                                event.preventDefault();
+                                                            event.preventDefault();
                                                             }"
-                                                            class='btn btn-danger btn-circle' href=" ">
+                                                                class='btn btn-danger btn-circle' href=" ">
                                                             <i class="fa fa-trash" aria-hidden='true'></i>
                                                         </button>
                                                     @endif
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    </tbody>
-                                </table> 
-                                {{$customerBills->links()}}
+                                        </tbody>
+                                    </table>
+                                    {{$customerBills->links()}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -181,25 +191,26 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
                     </button>
                 </div>
-                 {{ Form::open( ['url'  => ['cust_payment'],'method'=>'post' , 'class'=>'form'] ) }}
-                    {{ csrf_field() }}
-                    <div class="modal-body">
-                        {{ Form::hidden('bill_id',null,["class"=>"form-control" ,"required",'id'=>'txt_bill_id']) }}
-                        {{ Form::hidden('cust_id',$customer->id,["class"=>"form-control" ,"required"]) }}
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">{{trans('admin.money')}}</label>
-                            {{ Form::number('money',null,["class"=>"form-control center" ,"required",'id'=>'txt_money','min'=> '1']) }}
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">{{trans('admin.notes')}}</label>
-                            {{ Form::text('notes',null,["class"=>"form-control center" ,'id'=>'notes']) }}
-                        </div>
+                {{ Form::open( ['url'  => ['cust_payment'],'method'=>'post' , 'class'=>'form'] ) }}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    {{ Form::hidden('bill_id',null,["class"=>"form-control" ,"required",'id'=>'txt_bill_id']) }}
+                    {{ Form::hidden('cust_id',$customer->id,["class"=>"form-control" ,"required"]) }}
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">{{trans('admin.money')}}</label>
+                        {{ Form::number('money',null,["class"=>"form-control center" ,"required",'id'=>'txt_money','min'=> '1']) }}
                     </div>
-                    <div class="modal-footer">
-                        {{ Form::submit( trans('admin.payment') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"> {{trans('admin.close')}} </button>
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">{{trans('admin.notes')}}</label>
+                        {{ Form::text('notes',null,["class"=>"form-control center" ,'id'=>'notes']) }}
                     </div>
+                </div>
+                <div class="modal-footer">
+                    {{ Form::submit( trans('admin.payment') ,['class'=>'btn btn-info','style'=>'margin:10px']) }}
+                    <button type="button" class="btn btn-default waves-effect"
+                            data-dismiss="modal"> {{trans('admin.close')}} </button>
+                </div>
                 {{ Form::close() }}
             </div>
         </div>
@@ -208,7 +219,7 @@
 @section('scripts')
     <script>
         var id;
-        $(document).on('click', '#payment', function() {
+        $(document).on('click', '#payment', function () {
             $("#txt_bill_id").val($(this).data('bill-id'));
             $("#txt_money").val($(this).data('bill-remain'));
             $('#txt_money').attr('max', $(this).data('bill-remain'));

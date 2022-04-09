@@ -6,88 +6,84 @@
 @section('content')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-themecolor">{{trans('admin.nav_bills')}}</h3>
+            <h3 class="text-themecolor">الحجوزات</h3>
         </div>
         <div class="col-md-7 align-self-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">{{trans('admin.nav_bills')}}</li>
+                <li class="breadcrumb-item">الحجوزات</li>
                 <li class="breadcrumb-item active"><a href="{{url('home')}}">{{trans('admin.nav_home')}}</a></li>
             </ol>
         </div>
     </div>
-    <div class="app-content content container-fluid">
-        <div class="content-wrapper">
-            <section id="html-headings-default" class="row match-height">
-                <div class="col-sm-12 col-md-12">
-                    <div class="card">
-                        <div class="card-body" style="text-align: center;">
-                            <div class="card-block">
-                                <table id="myTable" class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th class="center">{{trans('admin.bill_num')}}</th>
-                                        <th class="center">{{trans('admin.customer')}}</th>
-                                        <th class="center">{{trans('admin.total')}}</th>
-                                        <th class="center">{{trans('admin.pay')}}</th>
-                                        <th class="center">{{trans('admin.remain')}}</th>
-                                        <th class="center">{{trans('admin.date')}}</th>
-                                        <th class="center">الدفع</th>
-                                        <th class="center">{{trans('admin.actions')}}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($customer_bills as $user)
-                                        <tr>
-                                            <td class="text-lg-center">{{$user->bill_num}}</td>
-                                            <td class="text-lg-center">{{$user->Customer->name}}</td>
-                                            <td class="text-lg-center">{{$user->total}}</td>
-                                            <td class="text-lg-center">{{$user->pay}}</td>
-                                            <td class="text-lg-center">{{$user->remain}}</td>
-                                            <td class="text-lg-center">{{$user->date}}</td>
-                                            <td class="text-lg-center">
-                                                @if($user->remain > 0)
-                                                    <form  method="get" id='delete-form-{{ $user->id }}'
-                                                          action="{{url('reservation/'.$user->id.'/pay')}}"
-                                                          style='display: none;'>
-                                                    {{csrf_field()}}
-                                                    <!-- {{method_field('delete')}} -->
-                                                    </form>
-                                                    <button title="دفع المبلغ المتبقي" onclick="
-                                                        if(confirm('هل انت متأكد من الدفع ؟'))
-                                                        {
-                                                        event.preventDefault();
-                                                        document.getElementById('delete-form-{{ $user->id }}').submit();
-                                                        }else {
-                                                        event.preventDefault();
-                                                        }"
-                                                            class='btn btn-success' href=" ">
-                                                        <i class="fa fa-money" aria-hidden='true'></i>
-                                                        دفع الباقي
-                                                    </button>
-                                                @endif
-                                            </td>
-                                            <td class="text-lg-center">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-eye"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu animated lightSpeedIn" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -2px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item" href=" {{url('buy-bills/'.$user->id)}}">{{trans('admin.bill_procusts')}}</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a target="_blank" class="dropdown-item" href=" {{url('buy-bills/'.$user->id.'/print')}}">{{trans('admin.print_bill')}}</a>
-                                                        <a target="_blank" class="dropdown-item" href=" {{url('buy-bills-store/'.$user->id.'/print')}}">طباعة للمخازن</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table full-color-table full-primary-table">
+                        <thead>
+                        <tr>
+                            <th class="center">{{trans('admin.bill_num')}}</th>
+                            <th class="center">{{trans('admin.customer')}}</th>
+                            <th class="center">{{trans('admin.total')}}</th>
+                            <th class="center">{{trans('admin.pay')}}</th>
+                            <th class="center">{{trans('admin.remain')}}</th>
+                            <th class="center">{{trans('admin.date')}}</th>
+                            <th class="center">الدفع</th>
+                            <th class="center">{{trans('admin.actions')}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($customer_bills as $user)
+                            <tr>
+                                <td class="text-lg-center">{{$user->bill_num}}</td>
+                                <td class="text-lg-center">{{$user->Customer->name}}</td>
+                                <td class="text-lg-center">{{$user->total}}</td>
+                                <td class="text-lg-center">{{$user->pay}}</td>
+                                <td class="text-lg-center">{{$user->remain}}</td>
+                                <td class="text-lg-center">{{$user->date}}</td>
+                                <td class="text-lg-center">
+                                    @if($user->remain > 0)
+                                        <form  method="get" id='delete-form-{{ $user->id }}'
+                                               action="{{url('reservation/'.$user->id.'/pay')}}"
+                                               style='display: none;'>
+                                        {{csrf_field()}}
+                                        <!-- {{method_field('delete')}} -->
+                                        </form>
+                                        <button title="دفع المبلغ المتبقي" onclick="
+                                            if(confirm('هل انت متأكد من الدفع ؟'))
+                                            {
+                                            event.preventDefault();
+                                            document.getElementById('delete-form-{{ $user->id }}').submit();
+                                            }else {
+                                            event.preventDefault();
+                                            }"
+                                                class='btn btn-success' href=" ">
+                                            <i class="fa fa-money" aria-hidden='true'></i>
+                                            دفع الباقي
+                                        </button>
+                                    @endif
+                                </td>
+                                <td class="text-lg-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <div class="dropdown-menu animated lightSpeedIn" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -2px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a class="dropdown-item" href=" {{url('buy-bills/'.$user->id)}}">{{trans('admin.bill_procusts')}}</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a target="_blank" class="dropdown-item" href=" {{url('buy-bills/'.$user->id.'/print')}}">{{trans('admin.print_bill')}}</a>
+                                            <a target="_blank" class="dropdown-item" href=" {{url('buy-bills-store/'.$user->id.'/print')}}">طباعة للمخازن</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 @endsection

@@ -22,6 +22,7 @@
                 </div>
                 <div class="card-body">
                     <!-- Start home table -->
+                    <div class="table-responsive">
                     <table id="myTable" class="table full-color-table full-primary-table">
                          <thead>
                             <tr>
@@ -37,13 +38,14 @@
                                     <td>{{ $role->name}}</td>
                                     <td class="text-lg-center">
                                         <a  class="btn btn-success btn-circle" id="edit" href="{{route( 'roles.edit' , $role->id )}}">
-                                            <i class="fa fa-edit"></i> 
+                                            <i class="fa fa-edit"></i>
                                         </a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    </div>
                 {{$roles->links()}}
                 </div>
 

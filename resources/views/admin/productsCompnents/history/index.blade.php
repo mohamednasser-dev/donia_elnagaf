@@ -117,6 +117,7 @@
                 <div class="card-body">
                     <div class="card-title">المنتجات</div>
                     <!-- Start home table -->
+                    <div class="table-responsive">
                     <table id="myTable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
@@ -142,6 +143,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

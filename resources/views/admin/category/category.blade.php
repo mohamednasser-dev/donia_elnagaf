@@ -24,6 +24,7 @@
                 </div>
                 <div class="card-body">
                     <!-- Start home table -->
+                    <div class="table-responsive">
                     <table class="table full-color-table full-primary-table">
                         <thead>
                         <tr>
@@ -68,6 +69,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
                 {{$categories->links()}}
 
                 <!-- sample modal content -->
